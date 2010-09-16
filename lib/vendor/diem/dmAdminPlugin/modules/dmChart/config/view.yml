@@ -1,3 +1,0 @@
-indexSuccess:
-  stylesheets: [ lib.ui-tabs ]
-  javascripts: [ lib.ui-tabs, admin.chart ]

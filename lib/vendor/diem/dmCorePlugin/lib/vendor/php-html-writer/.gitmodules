@@ -1,3 +1,0 @@
-[submodule "vendor/phpunit"]
-	path = vendor/phpunit
-	url = git://github.com/sebastianbergmann/phpunit.git
