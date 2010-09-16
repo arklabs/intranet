@@ -1,0 +1,16 @@
+config/databases.yml
+config/ProjectConfiguration.class.php
+cache/*
+log/*
+logs
+data/dm/*
+web/cache/*
+web/.htaccess
+web/dm*Plugin
+web/sf*
+web/uploads/*
+web/stats/*
+lib/*/doctrine/base
+lib/*/doctrine/dm*Plugin/base
+lib/migration/doctrine/
+nbproject
