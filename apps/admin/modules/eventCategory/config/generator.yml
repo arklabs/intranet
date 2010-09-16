@@ -1,0 +1,37 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: EventCategory
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: event_category
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        event_status_list:
+          label: Situaciones
+      list:
+        display:
+          - '=name'
+          - event_status_list
+          - css_class_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+          - css_class_list
+      form:
+        display:
+          NONE: [name, css_class_list]
+          Situaciones: [event_status_list]
+        class: EventCategoryAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

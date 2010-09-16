@@ -1,0 +1,32 @@
+.ark-clear-left {padding-left: 0px !important;}
+.ark-icon-2-16{
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 15px; height: 15px;
+    background-image: url('/theme/images/events/event-sprite-16.png');
+    margin-right: 3px;
+    float: left;
+}
+.ark-icon-file-modification{
+    background-position: 0 0;
+}
+.ark-icon-file-ssale{
+    background-position: -30px 0;
+}
+.ark-icon-file-realestate{
+    background-position: -15px 0;
+}
+.ark-icon-private{
+    background-position: -75px 0;
+}
+.ark-icon-reminder{
+    background-position: -60px 0;
+}
+.ark-icon-bussiness-meeting{
+	background-position: -45px 0;
+}
+.ark-icon-meeting{
+    background-position: -90px 0;
+}

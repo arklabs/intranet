@@ -1,0 +1,144 @@
+Content:
+
+  Global:
+    main:                   # the main module is required, and must not be removed.
+      components:
+        header:
+        ajaxloader:
+        centerfooter:
+        notifications:
+        logo:
+        footer:
+        myCustomMenu:
+        myStyledList:
+        userInfo:
+        mainDashBoard:
+        legend:
+        tramitlegend:
+        geolocalizador:
+        dateRangeSelector:
+        reportGraphViewer:
+        reportListViewer:
+        reportDashBoard:
+        reportDatesByCityConfig:
+        reportDatesByAgentConfig:
+        reportDatesByTelemarkerConfig:
+        reportCore:
+        reportDashBoardAutoToogle:
+  Usuarios:
+    dm_user:
+    client:
+      page: true
+      name: Cliente|Clientes
+      components:
+        list: 
+        geoClientsList:
+        summary:
+    agent:
+      name: Agente|Agentes
+      components:
+        datesByAgent:
+
+    telemarker:
+      name: Telemarcador|Telemarcadores
+      components:
+        datesByTelemarker:
+        datesByTelemarkerChart:
+
+    source:
+      name: Fuente|Fuentes
+      
+  Localidad:
+    property: 
+      name: Propiedad|Propiedades
+    house:
+      name: Vivienda|Viviendas
+    state:
+      name: Estado|Estados
+    city:
+      name: Ciudad|Ciudades
+      components:
+        datesByCity:
+        datesByCityChart:
+
+  Bancos:
+    bank:
+      name: Banco|Bancos
+
+  Compannias:
+    company:
+      name: Compannia|Compannias
+    employment:
+      name: Empleado|Empleados
+      components:
+        list:
+    company_expenses:
+      name: 'Gastos de la compañía'
+    company_recurring_expenses:
+      name: 'Gastos recurrentes de la compañía'
+    wallet:
+      name: Cartera|Carteras
+
+  Contabilidad:
+    expense:
+      name: Gasto|Gastos
+    income:
+      name: Ingreso|Ingresos
+    client_expenses:
+      name: Gastos del cliente
+      components:
+        list:
+    client_incomes:
+      name: Ingresos del cliente
+      components:
+        list:
+    asset:
+      name: Activo|Activos
+    client_assets:
+      name: Activos del cliente
+      components:
+        list:
+    liabilities:
+      name: Liabilities
+    client_liabilities:
+      name: Client Liabilities
+      components:
+        list:
+    advise:
+      name: Asesoramiento
+
+  IncomingCalls:
+    incomming_call:
+      name: 'Llamadas entrantes'
+          
+  Departamentos: 
+    department: 
+      name: Departamento|Departamentos
+  Procesamiento:
+    client_file:
+      page: true
+      components:
+        list:
+        fullcalendar:
+    file_type:
+    comment:
+      front: false
+      name:  Comentario|Comentarios
+  Calendario:
+    phraseology: 
+      name: Fraseolog&iacute;a | Freaseolog&iacute;as
+    event:
+      name: Evento|Eventos
+      page: true
+      components:
+        geoEventsList:
+        fullcalendar:
+        form:
+        list:
+        perDayDateChart:
+        perMonthDateReport:
+    event_category:
+      name: Categoria|Categorias
+    event_status:
+      name: Situacion|Situaciones
+

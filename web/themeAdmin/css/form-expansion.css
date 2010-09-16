@@ -1,0 +1,19 @@
+.error_list ul, .dm_error_list ul{
+	list-style: none !important;
+}
+.error_list li, .dm_error_list li {
+  border: 1px solid #D7BBB8;
+  padding: 5px;
+  margin-bottom: 5px;
+  background: #F6DCD9 url(/dmAdminPlugin/images/flash/red.gif) repeat-x top left;
+  list-style: none !important;
+}
+.error_list li a, .dm_error_list li a{
+  background-color:transparent !important;
+  background-image:url("/dmCorePlugin//images/16/sprite.png") !important;
+  background-repeat:no-repeat !important;
+  height:16px !important;
+  background-position:0 -96px !important;
+  padding-left: 20px;
+  color: #DD0000 !important;
+}

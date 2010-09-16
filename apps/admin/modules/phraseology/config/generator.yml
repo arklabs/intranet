@@ -1,0 +1,42 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Phraseology
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: phraseology
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        is_active:
+          label: Active
+      list:
+        display:
+          - '=title'
+          - content
+          - pos_rank
+          - neg_rank
+          - is_active
+        sort:
+          - title
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - title
+          - is_active
+          - content
+          - pos_rank
+          - neg_rank
+      form:
+        display:
+          NONE: [title, is_active, pos_rank, neg_rank]
+          Content: [content]
+        class: PhraseologyAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

@@ -1,0 +1,49 @@
+#Event:
+#  cita:
+#    title: Ejemplo de cita
+#    category_id: 1
+#    status_id: 4
+#    date_start: <?php $tmp = new sfDate('2010-06-09'); echo $tmp->dump(); ?>
+#    date_end: <?php $tmp = new sfDate('2010-06-09'); echo $tmp->dump(); ?>
+#    description: Aqui se le puede decir al agente la fraseologia que debe usar, asi como la direccion de la cita y otros datos que pueda tener el telemarcador.
+#    is_active: 1
+#    dm_user_id: 13
+#    created_by: 4
+#    updated_by: 4
+#    is_new: 1
+#  reunion:
+#    title: Ejemplo de Reunion
+#    category_id: 2
+#    status_id: 4
+#    date_start: <?php $tmp = new sfDate('2010-06-14'); echo $tmp->dump(); ?>
+#    date_end: <?php $tmp = new sfDate('2010-06-15'); echo $tmp->dump(); ?>
+#    description: Es importante venir a esta reunion pues se van a presentar nuevos agentes y se va a dar una clase de capacitacion.
+#    is_active: 1
+#    dm_user_id: 13
+#    created_by: 4
+#    updated_by: 4
+#    is_new: 1
+#  recordatorio:
+#    title: Ejemplo de Recordatorio
+#    category_id: 3
+#    status_id: 4
+#    date_start: <?php $tmp = new sfDate('2010-06-24'); echo $tmp->dump(); ?>
+#    date_end: <?php $tmp = new sfDate('2010-06-26'); echo $tmp->dump(); ?>
+#    description: Cierra el plazo para el negocio de la Casa 1
+#    is_active: 1
+#    dm_user_id: 13
+#    created_by: 4
+#    updated_by: 4
+#    is_new: 1
+#  privado:
+#    title: Mi evento privado
+#    category_id: 4
+#    status_id: 4
+#    date_start: <?php $tmp = new sfDate('2010-06-24'); echo $tmp->dump(); ?>
+#    date_end: <?php $tmp = new sfDate('2010-06-26'); echo $tmp->dump(); ?>
+#    description: Aniversario de bodas
+#    is_active: 1
+#    dm_user_id: 13
+#    created_by: 13
+#    updated_by: 13
+#    is_new: 1

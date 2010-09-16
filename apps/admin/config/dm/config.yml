@@ -1,0 +1,6 @@
+all:
+  js:
+    head_inclusion:       [lib.jquery]           # If you want some libraries to be included in the <head> section,
+                                        # declare them here. This degrades performances but is required
+                                        # by some symfony plugins that embed jQuery code.
+                                        # example: [ lib.jquery ]

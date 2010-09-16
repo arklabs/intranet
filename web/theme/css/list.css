@@ -1,0 +1,99 @@
+/************ Lists ************/
+
+/*.content-box-content ul,
+.content-box-content ol {
+                padding: 10px 0;
+                }
+
+/* Unordered List 
+
+.content-box-content ul li {
+                background: url('/theme/images/icons/bullet_black.png') center left no-repeat;
+                padding: 4px 0 4px 20px;
+                }
+
+/* Ordered List 
+
+.content-box-content ol {
+                padding: 0 0 0 24px;
+                }
+
+.content-box-content ol li {
+                list-style: decimal;
+                padding: 4px 0;
+        }
+
+*/
+                
+/************ Table ************/
+
+.content-box-content table {
+                width: 100%;
+                border-collapse: collapse;
+                }
+                
+.content-box-content table thead th {
+                font-weight: bold;
+                font-size: 15px;
+                border-bottom: 1px solid #ddd;
+                }
+                
+.content-box-content tbody {
+                border-bottom: 1px solid #ddd;
+                }
+                
+.content-box-content tbody tr {
+                background: #fff;
+                }
+              
+.content-box-content tbody tr.alt-row {
+                background: #f3f3f3;
+                }
+                
+.content-box-content table td,
+.content-box-content table th {
+                padding: 10px;
+                line-height: 1.3em;
+}        
+				
+.content-box-content table tfoot td .bulk-actions {
+                padding: 15px 0 5px 0;
+} 
+				
+.content-box-content table tfoot td .bulk-actions select {
+                padding: 4px;
+				border: 1px solid #ccc;
+                }      
+				
+/*************** pager ***************/
+
+.content-box-content .pagination {
+                text-align: right;
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 10px;
+		float: right;
+		margin-top: 5px;
+
+                }
+.pagination .pager{ margin: 0px; }
+li.page{ padding-top: 4px; padding-bottom: 4px;}
+li.page a, li.page span {
+              	padding: 5px 7px 5px 7px;
+          }
+
+li.page {
+			border: 1px solid #ddd;
+			-moz-border-radius: 4px;
+
+        }
+li.next, li.last, li.first, li.prev { border: none; margin:0px;} 
+
+li.current {
+                background: #469400 url('/theme/images/bg-button-green.gif') top left repeat-x !important;
+                border-color: #459300 !important;
+                color: #fff !important;
+           }
+				
+li.current span:hover {
+				text-decoration: underline;
+                }

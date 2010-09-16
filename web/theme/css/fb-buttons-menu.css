@@ -1,0 +1,14 @@
+.hidden {height:1px;left:-9999px;overflow:hidden;position:absolute;top:0;width:1px;}
+ .icon-fl{float: left; padding-left: 0px;}
+ .icon-fr{float: right; padding-right: 0px;}
+.fg-button { clear:left; margin:0 4px 4px 10px; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
+.button-bg-green { color: #fff;background: url('/theme/images/bg-menu-item-green.gif') no-repeat scroll right center transparent;}
+.fg-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
+ a.fg-button { float:left;  }
+ button.fg-button { width:auto; overflow:visible; } /* removes extra button width in IE */
+.fg-button-icon-left { padding-left: 2.1em; }
+.fg-button-icon-right { padding-right: 2.1em; }
+.fg-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
+.fg-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
+.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */
+.fg-button.ui-state-loading .ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }

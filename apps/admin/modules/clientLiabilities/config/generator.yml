@@ -1,0 +1,44 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: ClientLiabilities
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: client_liabilities
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        client:   { label: Cliente }
+        colorbox_close_enable: { label: " " }
+      list:
+        actions: []
+        loremize: false
+        display:
+          - '=id'
+          - client_id
+          - liabilities_id
+          - monthly_payment
+          - balance_due
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - client_id
+          - liabilities_id
+          - monthly_payment
+          - balance_due
+      form:
+        display:
+          NONE: [client_id, client, liabilities_id, colorbox_close_enable]
+          Others: [monthly_payment, balance_due]
+        class: ClientLiabilitiesAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

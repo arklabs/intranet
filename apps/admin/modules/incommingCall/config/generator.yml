@@ -1,0 +1,48 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: IncommingCall
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: incomming_call
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        tags_list:
+          label: Tags
+        client_id:        { label: Cliente }
+        time_in_min:      { label: Tiempo, help: Tiempo aproximado que duró la llamada en minutos }
+      list:
+        display:
+          - '=title'
+          - client_id
+          - created_by
+          - created_at
+          - time_in_min
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - title
+          - client_id
+          - time_in_min
+          - description
+          - created_at
+          - updated_at
+          - created_by
+          - updated_by
+      form:
+        display:
+          NONE: [title, client_id, time_in_min]
+          Description: [description]
+          Tags: [tags]
+        class: IncommingCallAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

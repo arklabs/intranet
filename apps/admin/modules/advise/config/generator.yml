@@ -1,0 +1,30 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Advise
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: advise
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=client_id'
+        sort:
+          - client_id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - client_id
+      form:
+        display: {  }
+        class: AdviseAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

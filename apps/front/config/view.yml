@@ -1,0 +1,39 @@
+default:
+  
+  http_metas:
+    content-type: text/html
+  stylesheets:
+    - reset
+    - invalid
+    - style
+    - layout
+    - main
+    - markdown
+    - fullcalendar
+    - sidebar
+    - events
+    - userInfo
+    - logo
+    - notifications
+    - widgetAndZones
+    - facebox
+    - search
+    - lib.tipsy
+    - colorbox-new-theme
+    - tags
+    - legend
+    - collapsable-box
+    #- list
+    #- content-box
+    
+
+  javascripts:
+    #- lib.ui-core
+    #- lib.ui-resizable
+    #- lib.ui-draggable
+    - front
+    - configuration
+    - lib.tipsy
+    - lib.colorbox
+  has_layout:     true
+  layout:         layout

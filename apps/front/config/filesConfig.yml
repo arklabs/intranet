@@ -1,0 +1,32 @@
+events:
+  files:
+    modification:
+      name: Modification
+      renderer_clases:
+        ev-file-modification:
+    realestate:
+      name: Real Estate
+      renderer_clases:
+        ev-file-realestate:
+    realestate2:
+      name: Real State
+      renderer_clases:
+        ev-file-realestate:
+    shortsale:
+      name: Short Sale
+      renderer_clases:
+        ev-file-ssale:
+  departments:
+    procesamiento:
+      name: Procesamiento
+      renderer_clases:
+        ev-stat-pending:
+    contabilidad:
+      name: Contabilidad
+      renderer_clases:
+        ev-stat-in-progress:
+    estructuracion:
+      name: Estructuración
+      renderer_clases:
+        ev-stat-finished:
+    

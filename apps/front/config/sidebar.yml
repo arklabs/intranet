@@ -1,0 +1,69 @@
+side:
+  dashboard:
+    title: Dashboard
+    action: 
+    module:
+    params:
+    default: false
+    child_items:
+  calendario:
+      title: Calendario
+      action:
+      module:
+      params:
+      default: true
+      child_items:
+        calendario:
+          title: Ver Calendario
+          action: renderComponent
+          module: main
+          params: name=fullcalendar&module=main
+          ajax_callable: true
+        calendario2:
+          title: Calendario
+          module: main
+          action: test
+          params:
+          ajax_callable: true
+  tareas:
+      title: Mis tareas 
+      action:
+      module:
+      params:
+      child_items:
+        tarea1:
+          title: Tarea-1
+          module: main
+          action: getEvents
+          params:
+          ajax_callable: true
+        tarea2:
+          title: Tarea-1
+          module: main
+          action: test
+          params:
+          ajax_callable: true
+  cliente:
+      title: Clientes
+      action:
+      module:
+      params:
+      child_items:
+        nuevo_cliente:
+          title: Nuevo Cliente
+          action: new
+          module: client
+          params:
+          ajax_callable: true
+        mis_clientes:
+          title: Mis Clientes
+          action: index
+          module: client
+          params:
+          ajax_callable: true
+        enviar:
+          title: Enviar a Cliente
+          action: test
+          module: main
+          params:
+          ajax_callable: true

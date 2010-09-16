@@ -1,0 +1,58 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: ConditionsSent
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: conditions_sent
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: " " }
+      list:
+        display:
+          - '=id'
+          - client_id
+          - property_id
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - visit
+          - client_id
+          - property_id
+          - description
+          - financial
+          - bank_app
+          - hardship
+          - hardship_affidavit
+          - paystubs
+          - profit_and_loss
+          - taxes
+          - bank_statement
+          - rental
+          - four_five_zero_six
+          - schedule_e
+          - ue_checks
+          - award_letter
+          - attorney_letter
+          - w2
+          - utility_bill
+          - loe
+          - contribution
+          - other
+      form:
+        display:
+          NONE: [client_id, financial, bank_app, hardship, hardship_affidavit, paystubs, profit_and_loss, taxes, bank_statement, rental, four_five_zero_six, schedule_e, ue_checks, award_letter, attorney_letter, w2, utility_bill, loe, contribution, other, Property, colorbox_close_enable]
+          Description: [description]
+        class: ConditionsSentAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

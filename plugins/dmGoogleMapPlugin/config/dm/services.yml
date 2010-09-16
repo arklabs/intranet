@@ -1,0 +1,18 @@
+parameters:
+
+  google_map_tag.class:           dmGoogleMapTag
+  google_map_tag.options:         []
+
+  google_map_helper.class:        dmGoogleMapHelper
+
+services:
+
+  google_map_tag:
+    class:                        %google_map_tag.class%
+    shared:                       false
+    arguments:                    [ %google_map_tag.options% ]
+
+  google_map_helper:
+    class:                        %google_map_helper.class%
+    shared:                       true
+    arguments:                    [ @context ]

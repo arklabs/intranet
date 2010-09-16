@@ -1,0 +1,109 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Event
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: event
+    with_doctrine_route: false
+    config:
+      actions: ~ 
+      fields:
+        fancy_date_time:
+          label: " "
+        colorbox_close_enable:
+          label: " "
+        title:
+          help: Escriba un titulo corto e identificativo para este evento
+        category_id:
+          help: De qu&eacute; tipo es este evento?
+          label: Categor&iacute;a
+        status_id:
+          help: En qu&eacute; fase se encuentra este evento?
+          label: Estado
+        description:
+          help: Describa lo mas detallado posible este evento.
+        asigned:
+          label: Asignado a
+        dm_user_id:
+          label: Asignado a
+        location:
+          label: Localidad
+        client_id: 
+          label: Cliente
+      list:
+        display:
+          - '=title'
+          - category_id
+          - status_id
+          - date_start
+          - date_end
+          - asigned
+        sort:
+          - dm_user_id
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - title
+          - details
+          - category_id
+          - status_id
+          - date_start
+          - date_end
+          - created_at
+          - updated_at
+      form:
+        display:
+          Seleccion de Fecha y Hora: [fancy_date_time, _loader]
+          NONE: [title, description, category_id, status_id, location, city_id, date_start, date_end, phraseology_id, tags, client_id, dm_user_id, colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
+        fields:
+          dm_user_id:
+            label: Usuario
+          title:
+            label: Titulo
+          status_id:
+            label: Estado
+          category_id:
+            label: Categoria
+          date_start:
+            label: Fecha Inicio
+          date_end:
+            label: Fecha fin
+          description:
+            label: Descripcion
+        class: EventAdminForm
+        fields: {  }
+      edit: 
+        actions: 
+          _list: 
+            title: Volver al listado 
+          _save: 
+            title: Guardar este evento
+          _save_and_add: 
+            title: Guardar y adiciona otro
+          _save_and_list: 
+            title: Guardar y volver a la lista
+          _save_and_next: 
+            title: Guardar y siguiente
+          _delete: 
+            title: Borrar este evento
+          _add: 
+            title: Adicionar un evento		  
+          _history: 
+            title: Historial de cambios del evento
+      new: 
+        actions: 
+          _list: 
+            title: Volver al listado 
+          _save: 
+            title: Guardar este evento
+          _save_and_add: 
+            title: Guardar y adiciona otro
+          _save_and_list: 
+            title: Guardar y volver a la lista
+          _save_and_next: 
+            title: Guardar y siguiente

@@ -1,0 +1,56 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: ClientFile
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: client_file
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable:
+          label: " "
+        fancy_date_time:
+          label: " "
+        is_active:
+          label: Active
+        client_link:
+          label: "Ver datos de"
+      list:
+        display:
+          - '=id'
+          - client_id
+          - assigned_to
+          - file_type
+          - created_by
+          - updated_by
+          - description
+          - is_active
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - is_active
+          - client_id
+          - assigned_to
+          - file_type
+          - description
+          - created_by
+          - updated_by
+      form:
+        display:
+          Periodo máximo de duración del trámite: [fancy_date_time]
+          Datos principales: [ client_id, client_link, file_type, department_id, is_active, assigned_to, colorbox_close_enable, date_start, date_end, _timeFocusAvoider]
+          Description: [description]
+          Comentarios: [comments_list]
+        class: ClientFileAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

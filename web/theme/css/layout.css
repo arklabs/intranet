@@ -1,0 +1,36 @@
+
+body{
+  overflow: hidden;
+}
+.dm_layout {
+  width: 100%;
+  margin: auto;
+}
+
+.dm_layout_top {
+  /*background: #aaa;*/
+  background: #fff;
+  height: 0px;
+}
+
+.dm_page_content {
+  visibility: hidden;
+  width: 1000px;
+  float: left;
+  overflow-y: auto;
+}
+
+.dm_layout_left {
+  float: left;
+}
+
+.dm_layout_right {
+  float: left;
+}
+
+.dm_layout_bottom {
+ /* background: #aaa;*/
+  background: #fff;
+  height: 0px;
+}
+

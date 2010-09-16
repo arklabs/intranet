@@ -1,0 +1,54 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Client
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: client
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: 
+        colorbox_close_enable: { label: " " } 
+        first_name:       { label: Nombre }
+        last_name:        { label: Apellido }
+        assigned_to:      { label: Asignado a }
+        live_in:          { label: Habita en }
+        phone:            { label: Telefono }
+        employment_list:  { label: Trabajos }
+        advise_list:      { label: Asesoramiento }
+        password_again: { label: "Password (again)" }
+      list:
+        display:
+          - '=first_name'
+          - '=last_name'
+          - assigned_to
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - first_name
+          - last_name
+          - live_in
+          - assigned_to
+          - source_id
+      form:
+        display:
+          NONE: [username, password, password_again, email]
+          'Datos personales': [first_name, last_name, phone, assigned_to, colorbox_close_enable]
+          Dirección:  [live_in, property_list]
+          Trabajos:    [employment_list ]
+          Contabilidad: [client_expenses_list, client_liabilities_list, client_incomes_list, client_assets_list]
+          Transacciones: [client_file_list]
+          Asesoramiento: [advise_list]
+          Fuente: [source_id]
+        class: ClientAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

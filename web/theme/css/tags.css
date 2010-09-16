@@ -1,0 +1,33 @@
+/* 
+    Document   : tags
+    Created on : Jul 2, 2010, 10:10:08 PM
+    Author     : alberto
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+.tags{
+        text-align: center;
+        margin: 30px 15px 20px 20px;
+        width: 90%;
+        border: 1px solid red;
+}
+.tags a{ margin: 5px 5px;}
+ul.tag-list {
+        text-align: center;
+        list-style: none;
+        margin: 30px 15px 20px 20px;
+        width: 90%;
+}
+ul.tag-list li{
+    list-style: none;
+    display: inline-block;
+    margin: 5px 5px;
+}
+ul.tag-list li.last{
+}
+

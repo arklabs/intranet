@@ -1,0 +1,38 @@
+.ark-clear-left {padding-left: 0px !important;}
+.ark-icon-1-16{
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 15px; height: 15px;
+    background-image: url('/theme/images/sprite15-2.png');
+    margin-right: 3px;
+    float: left;
+}
+.ark-icon-insert-client-file{
+    background-position: 0 0;
+}
+.ark-icon-insert-employment{
+    background-position: -15px 0;
+}
+.ark-icon-insert-expense{
+    background-position: -30px 0;
+}
+.ark-icon-insert-income{
+    background-position: -45px 0;
+}
+.ark-icon-insert-comment{
+    background-position: -60px 0;
+}
+.ark-icon-insert-client{
+    background-position: -75px 0;
+}
+
+.ark-icon-insert-active{
+    background-position: -60px 0;
+}
+.ark-icon-view-client-summary{
+    background-position: -105px 0;
+}
+.ark-icon-insert-liability{
+}

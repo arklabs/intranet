@@ -1,0 +1,16 @@
+.ac_over {
+	background-color: #4173CC !important; 
+	
+}
+.ac_input{
+	border:1px solid #D3D3D3 !important;
+	height:auto !important;
+	margin:0 !important;
+	overflow:hidden !important;
+	padding:5px 5px 5px !important;
+}
+
+.ac_results {
+	border: 1px solid #D3D3D3 !important;
+	background-color: #eee !important;
+}

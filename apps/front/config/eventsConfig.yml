@@ -1,0 +1,39 @@
+events:
+  categories:
+    cita:
+      name: Cita
+      renderer_clases:
+        ev-cat-meeting:
+    reunion:
+      name: Reunion
+      renderer_clases:
+        ev-cat-buissness-meeting:
+    recordatorio:
+      name: Recordatorio
+      renderer_clases:
+        ev-cat-reminder:
+    general:
+      name: General
+      renderer_clases:
+        ev-cat-general:
+    privado:
+      name: Privado
+      renderer_clases:
+        ev-cat-private:
+  status:
+    pendiente:
+      name: Pendiente
+      renderer_clases:
+        ev-stat-pending:
+    concluido:
+      name: Concluido
+      renderer_clases:
+        ev-stat-finished:
+    aplazado:
+      name: Aplazado
+      renderer_clases:
+        ev-stat-deferred:
+    in_progress:
+      name: En Progreso
+      renderer_clases:
+        ev-stat-in-progress:

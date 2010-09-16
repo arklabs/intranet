@@ -1,0 +1,60 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: CompanyExpenses
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: company_expenses
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        starting_date: {label: Fecha}
+        wallet_id:  { label: Cartera }
+      list:
+        display:
+          - '=id'
+          - wallet_id
+          - company_id
+          - expense_id
+          - amount
+          - tax
+          - payment
+          - enabled
+          - max_occurrences
+          - must_occurrences
+          - next_on
+          - last_execution_date
+#          - created_at
+#          - updated_at
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - enabled
+          - company_id
+          - expense_id
+          - amount
+          - tax
+          - payment
+          - description
+          - max_occurrences
+          - must_occurrences
+          - next_on
+          - last_execution_date
+          - created_at
+          - updated_at
+      form:
+        display:
+          NONE: [ wallet_id, company_id, expense_id, amount, tax, payment, max_occurrences, next_on, last_execution_date ]
+          Description: [description]
+        class: CompanyExpensesAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

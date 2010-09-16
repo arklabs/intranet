@@ -1,0 +1,45 @@
+/* 
+    Document   : legend
+    Created on : 17-jul-2010, 13:49:17
+    Author     : marco
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+fieldset.legend
+{
+    float:left;
+    padding: 5px 20px 5px 10px;
+    margin: 5px 10px 0px 0px;
+    border: 1px solid #CCCCCC;
+    background: url("/theme/images/shortcut-button-bg.gif") no-repeat scroll left top #F7F7F7;
+    display:block;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+
+    /*border-width:2px;
+    border-color: #000000;
+    border-style: solid;*/
+}
+
+fieldset.legend ul li div.color{
+    padding-left:10px; 
+    margin-right: 5px;
+    width:15px;
+    display:inline;
+    height:5px;
+    -moz-border-radius: 48px;
+    -webkit-border-radius: 48px;
+}
+fieldset.legend ul{float: left; margin-left: 5px;}
+fieldset.legend ul li
+{
+    list-style: none;
+    margin-left: 0px !important;
+}
+

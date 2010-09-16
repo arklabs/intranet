@@ -1,0 +1,59 @@
+.sidebar {
+    background: transparent url('/theme/images/bg-body.gif') right center repeat-y !important;
+    width: 235px;
+    height: 700px;
+    color: #888;
+    font-size: 11px;
+}
+/************ Sidebar Accordion Menu ************/
+.main-nav {
+        width: 100%;
+        padding: 0;
+        margin: 0 0 0 0px;
+        font-family: Helvetica, Arial, sans-serif;
+        
+}
+
+.main-nav li{
+        list-style: none;
+        padding-bottom: 10px;
+        text-align: right;
+}
+.nav-top-item a.link.dm_parent,
+.nav-top-item span{
+        background: transparent url('/theme/images/bg-menu-item-green.gif') right center no-repeat; /* Background image for default color scheme - green */
+        padding: 10px 15px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+}
+
+.nav-trackable span.link,
+.nav-trackable a.link{
+        padding: 0px 15px 0px;
+        margin-top: 0px;
+        display: block;
+        color: #aaa;
+        font-size: 13px;
+        line-height: 1.2em;
+}
+.nav-trackable a.link:hover{
+    color: #fff;
+}
+
+li.first{padding-top: 5px;}
+li.last{padding-bottom: 0px;}
+
+first.nav-top-item span.dm_current ,last.nav-top-item span.dm_current, .nav-top-item span.dm_current  {
+        background-image: url('/theme/images/bg-menu-item-current.gif') !important;
+        color: #333;
+        font-weight: bold;
+}
+li .nav-trackable .dm_current{
+    background: transparent url('/theme/images/menu-current-arrow.gif') right center no-repeat !important;
+    color: white;
+    font-weight: 300;
+    padding: 0px 15px 0px;
+}

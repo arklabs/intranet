@@ -1,0 +1,56 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Agent
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: agent
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        password_again: { label: "Password (again)" }
+        groups_list:
+          label: Groups
+        permissions_list:
+          label: Permissions
+        is_active:
+          label: Active
+      list:
+        display:
+          - is_active
+          - '=username'
+          - email
+          - first_name
+          - last_name
+          - phone
+          - last_login
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - username
+          - is_active
+          - email
+          - password
+          - last_login
+          - first_name
+          - last_name
+          - phone
+      form:
+        display:
+          NONE: [username, password, password_again, email]
+          'Datos personales': [first_name, last_name, phone, dob]
+          Groups: [groups_list]
+          Permissions: [permissions_list]
+          Clientes: [client_list]
+          Others: [last_login, forgot_password_code]
+        class: AgentAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

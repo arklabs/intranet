@@ -1,0 +1,7 @@
+Liabilities:
+  CreditCard:
+    name:  Credit card
+  EduLoan:
+    name:  Education loan
+  VehicleLoan:
+    name:  Vehicle loan

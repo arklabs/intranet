@@ -1,0 +1,32 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Income
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: income
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: " " }
+      list:
+        display:
+          - '=name'
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name, colorbox_close_enable]
+        class: IncomeAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

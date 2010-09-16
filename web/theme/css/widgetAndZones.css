@@ -1,0 +1,25 @@
+.bg-radial-gradient{
+    background: url('/theme/images/bg-radial-gradient.gif') fixed 230px top no-repeat;
+}
+.hide-zone{visibility: hidden;}
+
+.hide-widget{visibility: hidden;}
+
+.content-min-height{
+    height:600px;
+}
+.no-scroll{
+  overflow: hidden;
+}
+
+.min-border-bottom{margin-bottom: 20px;}
+.min-border-right{margin-right: 20px;}
+.min-border-left{margin-left: 20px;}
+.min-border-top{margin-top: 20px;}
+.min-border-space{margin: 20px;}
+.search-respectfull{
+    padding-top: 30px;
+}
+
+.page_main_signin .sidebar{visibility: hidden;}
+.page_main_signin .search_form{visibility: hidden;}

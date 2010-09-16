@@ -1,0 +1,14 @@
+.profile-links{
+    margin: 10px 10px 20px 0px;
+    padding: 0px;
+    text-align: right;
+}
+
+.profile-links a,
+.profile-links a:active {
+                color:#ccc;
+}
+
+.profile-links a:hover {
+                color:#fff;
+}

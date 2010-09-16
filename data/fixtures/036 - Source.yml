@@ -1,0 +1,9 @@
+Source:
+  radio:
+    name: Radio
+  tv:
+    name: TV
+  internet:
+    name: Internet
+  prensa:
+    name: Prensa

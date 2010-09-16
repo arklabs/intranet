@@ -1,0 +1,44 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: ClientExpenses
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: client_expenses
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        client:   { label: Cliente }
+        colorbox_close_enable: { label: " " }
+      list:
+        actions: []
+        loremize: false
+        display:
+          - '=id'
+          - client_id
+          - expense_id
+          - amount
+          - comments
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - client_id
+          - expense_id
+          - amount
+          - comments
+      form:
+        display:
+          NONE: [client_id, client, expense_id, amount, colorbox_close_enable]
+          Comments: [comments]
+        class: ClientExpensesAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

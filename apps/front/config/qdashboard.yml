@@ -1,0 +1,147 @@
+dashboards:
+  reports:
+    per-agent-dates:
+      title: Citas por <br/>Agente
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-agent:
+      url: main/citasPorAgente
+      params:
+      credentials:
+        viewReportDatesByAgents_front:
+    per-telemarker-dates:
+      title: Citas por <br/>Telemarcador
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-telemarker:
+      url: main/citasPorTelemarcador
+      params:
+      credentials:
+        viewReportDatesByTelemarketer_front:
+    per-city-dates:
+      title: Citas por <br/>Ciudad
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-city:
+      url: main/citasPorCiudad
+      params:
+      credentials:
+        viewReportDatesByCity_front:
+  main: ## quick dashboard for calendar
+    calendario-ev:
+      title: Calendario de <br/>Eventos
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-event-calendar:
+      url: evento/fullCalendar
+      params:
+      credentials:
+        viewEventCalendar_front:
+    listado-eventos:
+      title: Listado de <br/>Eventos
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-list-event:
+      url: event/list
+      params:
+      credentials:
+        listEvents_front:
+    geo-events:
+      title: Geolocalizar <br/>Citas
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-geo-event:
+      params:
+      url: event/geolocalizar
+      credentials:
+        geoListEvents_front:
+    calendario-tr:
+      title: Calendario de <br/>Trámites
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-client-file-calendar:
+      params:
+      url: clientFile/fullCalendar
+      credentials:
+        viewClientFileCalendar_front:
+    listado-tramites:
+      title: Listado de <br/>Trámites
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-list-client-file:
+      params:
+      url: clientFile/list
+      credentials:
+        listClientFiles_front:
+    clientes:
+      title: Listado de <br/>Clientes
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-list-clients:
+      params:
+      url: client/list
+      credentials:
+        listClients_front:
+    geo-clientes:
+      title: Geolocalizar <br/>Clientes
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-geo-client:
+      params:
+      url: client/geolocalizar
+      credentials:
+        geoListClients_front:
+    incommingsCalls:
+      title: Incomming <br/>Calls
+      extra-classes:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-list-incomming-calls:
+      params:
+      url: callCenter/incommingCalls
+      credentials:
+        listIncommingCalls_front:
+    insertCompanies:
+      title: Insertar <br/>Compa&ntilde;&iacute;as
+      extra-classes:
+        color-box-trigger:
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-insert-company:
+      params:
+        dm_embed: 1
+      url: app:admin/+/company/new
+      credentials:
+        insertCompanies_front:
+    insertBanks:
+      title: Insertar <br/>Bancos
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-insert-bank:
+      extra-classes:
+        color-box-trigger:
+      params:
+        dm_embed: 1
+      url: app:admin/+/bank/new
+      credentials:
+        insertBanks_front:
+    reports:
+      title: Ver <br/>Reportes
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-list-reports:
+      extra-classes:
+      params:
+      url: main/reportes
+      credentials:
+        viewReports_front:

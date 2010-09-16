@@ -1,0 +1,16 @@
+#loader{
+    border-radius:48px 48px 48px 48px;
+    -moz-border-radius:48px 48px 48px 48px;
+    background:url("/dmCorePlugin/images/48/loader.gif") no-repeat scroll 10px 10px #FFFFFF;
+    border:3px solid #ABB408; /* otras variantes de border #9ECE00, #57A000*/
+    color:#DDDDDD;
+    cursor:wait;
+    height:48px;
+    opacity:0.7;
+    padding:10px;
+    top:40%;
+    left:60%;
+    width:48px;
+    z-index: 1001;
+    position: absolute;
+}

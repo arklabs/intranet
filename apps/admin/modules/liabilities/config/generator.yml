@@ -1,0 +1,31 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Liabilities
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: liabilities
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+        class: LiabilitiesAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

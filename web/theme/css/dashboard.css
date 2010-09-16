@@ -1,0 +1,96 @@
+.ark-icons-48{
+	 display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat;
+	 width: 48px; height: 48px; 
+	 background-image: url('/theme/images/icons/sprite48.png'); 
+}
+.sprite-holder{ width: 48px; height: 48px; margin: 0px 0px 0px 36px; }
+
+.ark-icon-insert-bank {
+   background-position: 0 0;
+}
+.ark-icon-event-calendar{
+   background-position: -48px 0;
+}
+.ark-icon-client-file-calendar{
+   background-position: -96px 0;
+}
+.ark-icon-list-clients{
+   background-position: -144px 0;
+}
+.ark-icon-insert-company{
+   background-position: -192px 0;
+}
+.ark-icon-list-event{
+   background-position: 0 -48px;
+}
+.ark-icon-geo-event{
+   background-position: -48px -48px;
+}
+.ark-icon-geo-client{
+   background-position: -96px -48px;
+}
+.ark-icon-list-incomming-calls{
+   background-position: -144px -48px;
+}
+.ark-icon-list-reports{
+   background-position: -192px -48px;
+}
+.ark-icon-list-client-file{
+   background-position: 0 -96px;
+}
+.ark-icon-list-report-by-city{
+   background-position: -48px -96px;
+}
+.ark-icon-list-report-by-agent{
+   background-position: -96px -96px;
+}
+.ark-icon-list-report-by-telemarker{
+   background-position: -144px -96px;
+}
+/************ Shortcut Buttons ************/
+.dashboard{ 
+	margin: 60px;
+	text-align: center;
+	
+}
+.shortcut-button {
+                border: 1px solid #ccc;
+                background: #f7f7f7 url('/theme/images/shortcut-button-bg.gif') top left no-repeat;
+                display: block;
+                width: 120px;
+                margin: 0 0 20px 0;
+				padding: 15px 0px 5px 0px; 
+               }
+
+
+.shortcut-button span {
+                display:block;
+                padding-bottom: 10px;
+                text-align: center;
+                color: #555;
+                font-size: 13px;
+                line-height: 1.3em;
+}
+.shortcut-button span span{ padding-bottom: 0px; margin-bottom: 5px;}
+.shortcut-button span img {
+                margin-bottom: 10px;
+				height: 48px;
+                }
+
+.shortcut-button:hover {
+                background: #fff;
+				
+                }
+				
+.shortcut-button span:hover {
+				color: #57a000; 
+                }
+
+ul.shortcut-buttons-set li {
+                float: left;
+                margin: 0 15px 0 0;
+                padding: 0 !important;
+                background: 0;
+                list-style: none !important;
+                }
+

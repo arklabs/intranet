@@ -1,0 +1,20 @@
+
+span.fieldset-title, span.fieldset_icon{
+	float: left;
+}
+.separator{
+	padding-top: 3px;
+}
+.collapsable-box ul li{ list-style: circle; margin-left: 15px; }
+.collapsable-box-header{
+	width: 90px;
+	padding-left: 10px;
+	cursor: pointer;
+	}
+.collapsable-box-header{
+}
+.no-margin: 
+{
+	margin: 0px; 
+	padding: 0px;
+}

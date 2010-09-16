@@ -1,0 +1,10 @@
+FileType:
+  FileType_1:
+    name: Modification
+    css_class_list: ev-file-modification
+  FileType_2:
+    name: 'Real Estate'
+    css_class_list: ev-file-realestate
+  FileType_3:
+    name: 'Short Sale'
+    css_class_list: ev-file-ssale

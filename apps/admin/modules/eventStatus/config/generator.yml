@@ -1,0 +1,33 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: EventStatus
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: event_status
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+          - event_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          Eventos: [event_list]
+        class: EventStatusAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

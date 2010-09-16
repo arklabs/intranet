@@ -1,0 +1,11 @@
+user_rss:
+  url: /rss/:username/:token
+  param: {module: rss, action: index, sf_format: atom}
+
+user_rss1:
+  url: /rss/:username/:token/:date_start
+  param: {module: rss, action: index, sf_format: atom}
+  
+user_rss2:
+  url: /rss/:username/:token/:date_start/:date_end
+  param: {module: rss, action: index, sf_format: atom}

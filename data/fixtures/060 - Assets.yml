@@ -1,0 +1,11 @@
+Asset:
+  CheckingAccount:
+    name:  Checking account
+  SavingsAcc:
+    name:  Savings acounts
+  BankCD:
+    name:  Bank CD
+  House:
+    name:  House
+  Vehicle:
+    name:  Vehicle

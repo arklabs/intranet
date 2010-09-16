@@ -1,0 +1,51 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: ActiveLoans
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: active_loans
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: " " }
+      list:
+        display:
+          - '=id'
+          - client_id
+          - property_id
+          - borrower
+          - bank
+          - appraiser
+          - title
+          - termite
+          - escrow
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - visit
+          - client_id
+          - property_id
+          - description
+          - borrower
+          - bank
+          - appraiser
+          - title
+          - termite
+          - escrow
+      form:
+        display:
+          NONE: [client_id, borrower, bank, appraiser, title, termite, escrow, colorbox_close_enable, Property]
+          Description: [description]
+        class: ActiveLoansAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

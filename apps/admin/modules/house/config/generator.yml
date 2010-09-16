@@ -1,0 +1,40 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: House
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: house
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: " " } 
+      list:
+        display:
+          - '=id'
+          - city_id
+          - client_list
+          - address
+          - zipcode
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - address
+          - city_id
+          - zipcode
+      form:
+        display:
+          Datos Principales: [city_id, address, zipcode, colorbox_close_enable]
+          Clientes que viven en esta dirección: [client_list]
+        class: HouseAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

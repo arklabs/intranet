@@ -1,0 +1,50 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Property
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: property
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: " " }
+        is_the_property_being_modified: {label: Modified?, help: Ha sido esta propiedad modificada antes?}
+      list:
+        display:
+          - '=id'
+          - client_id
+          - house_id
+          - bank_id
+          - active_listing_list
+          - active_mods_list
+          - active_loans_list
+          - conditions_sent_list
+          - mortgage_payment
+          - rent_amount_received
+          - is_the_property_being_modified
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - client_id
+          - house_id
+          - bank_id
+          - mortgage_payment
+          - rent_amount_received
+          - is_the_property_being_modified
+      form:
+        display:
+          NONE: [client_id, house_id, bank_id, mortgage_payment, rent_amount_received, is_the_property_being_modified]
+          'Llamadas entrantes': [active_listing_list, active_mods_list, active_loans_list, conditions_sent_list]
+        class: PropertyAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

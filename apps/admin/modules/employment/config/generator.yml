@@ -1,0 +1,47 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Employment
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: employment
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        client:   { label: Cliente }
+        phone:    { label: Telefono }
+        colorbox_close_enable: { label: " " }
+      list:
+        actions: []
+        loremize: false
+        display:
+          - '=title'
+          - client_id
+          - company_id
+          - phone
+          - start_date
+          - end_date
+        sort:
+          - title
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - title
+          - company_id
+          - client_id
+          - phone
+          - start_date
+          - end_date
+      form:
+        display:
+          NONE: [client, title, client_id, company_id, colorbox_close_enable]
+          Others: [phone, start_date, end_date]
+        class: EmploymentAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

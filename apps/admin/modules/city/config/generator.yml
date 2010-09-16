@@ -1,0 +1,35 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: City
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: city
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: 
+        name:   { label: Ciudad}
+        state_id:  { label: Estado }
+      list:
+        display:
+          - state_id
+          - '=name'
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - state_id
+          - name
+      form:
+        display:
+          NONE: [state_id, name]
+        class: CityAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

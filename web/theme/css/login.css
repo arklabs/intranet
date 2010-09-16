@@ -1,0 +1,85 @@
+html,
+#bd,
+.page_main_signin,
+.dm_page,
+.dm_layout,
+.dm_layout_center,
+.dm_content,
+#bd-content { overflow:hidden; background-color:#F9F9F9; }
+
+#signin_username,
+#signin_password {
+  font-size:1.6em;
+  line-height:1em;
+  padding:0.3em 0.2em;
+}
+
+* {
+font-size:1em;
+margin:0;
+outline:medium none;
+padding:0;
+text-decoration:none;
+}
+
+ul, ol, dir, menu {
+list-style:none outside none;
+}
+
+.dm_signin_form #signin_username, .dm_signin_form #signin_password {
+background-color:#F9F9F9;
+border-color:#E5E5E5;
+}
+
+.dm_signin_form {
+
+    -moz-border-radius:10px 10px 10px 10px;
+    background:url("../images/logo.png") no-repeat scroll 3em 0.8em #FFFFFF;
+    border-style:solid;
+    border-width:1px;
+    float:left;
+    font-size:1.5em;
+    left:56%;
+    margin-left:-13.589em;
+    margin-top:-13.461em;
+    padding:120px 2em 2em;
+    position:absolute;
+    top:54%;
+    width:15.07em;
+    border-color:#E5E5E5;
+}
+html {
+color:#464648;
+}
+
+textarea, input[type="text"], input[type="password"], select {
+color:inherit;
+}
+
+html, textarea, input[type="text"], input[type="password"], select {
+font-family:'lucida grande','lucida sans unicode','lucida sans',lucida,arial,helvetica,sans-serif;
+}
+
+textarea, input[type="text"], input[type="password"], select {
+background:none repeat scroll 0 0 #FFFFFF;
+border:1px solid #CCCCCC;
+}
+
+.dm_form_elements label { display:block; margin-bottom:0.2em; line-height:1; }
+ul.dm_form_elements  { font-size:0.7em; padding-top:0.2em; }
+.dm_form_elements ul.error_list { font-size:0.7em; padding-top:0.2em; color: red; }
+
+ul.error_list li { display:inline; margin:0; padding:0; }
+li.dm_form_element  { margin-bottom:1em; }
+
+
+
+.submit { text-align:right; margin-bottom:0; font-size: 0.7em; float: right; margin-right: 2em}
+#remember-me-option span { position:relative; top:-2px; }
+#remember-me-option span label { display: inline; }
+
+
+code, kbd, samp, pre, tt, var, textarea, input, select, isindex, listing, xmp, plaintext {
+font:inherit;
+white-space:normal;
+}

@@ -1,0 +1,10 @@
+js:
+
+  dmGoogleMapPlugin:
+    
+    api:              http://maps.google.com/maps/api/js?sensor=false
+
+    widgetShowForm:   widget/showForm
+    
+    launcher:         launcher
+    dmGoogleMap:      dmGoogleMap

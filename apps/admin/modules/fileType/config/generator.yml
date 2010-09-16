@@ -1,0 +1,33 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: FileType
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: file_type
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+          - client_file_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          'Client files': [client_file_list]
+        class: FileTypeAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

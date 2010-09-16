@@ -1,0 +1,128 @@
+/*.fc-event a div.ev-ct-holder.fc-event-time{
+	background: url('/theme/images/events/reunion2.png') top left no-repeat;
+	padding-left: 15px;
+} */
+.fc-event a { float: left;padding: 2px 0px 1px 0px}
+.fc-event a span { }
+.ev-new{
+    /*border: 1px dashed green;*/
+}
+
+.ev-img-tit-sp{ padding-left: 17px; height: 100%; float: left;}
+
+.ev-ct-holder{
+    float: left;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-image: url('/theme/images/events/event-sprite-16.png');
+    margin:0px 1px 0px 1px;
+    padding: 0px;
+    width: 15px !important;
+    height: 15px;
+}
+/***************************************************************
+            *** EVENTS FILE TYPES ***
+****************************************************************/
+.ev-file-modification a {
+}
+.ev-file-modification div.ev-ct-holder{
+    background-position: 0 0;
+}
+.ev-file-ssale a {
+}
+.ev-file-ssale div.ev-ct-holder{
+    background-position: -30px 0;
+}
+.ev-file-realestate a {
+}
+.ev-file-realestate div.ev-ct-holder{
+    background-position: -15px 0;
+}
+
+/***************************************************************
+            *** EVENTS CATEGORIES ***
+****************************************************************/
+
+.ev-cat-meeting a {
+}
+.ev-cat-meeting div.ev-ct-holder{
+    background-position: -90px 0;
+}
+
+.ev-cat-buissness-meeting a{
+}
+.ev-cat-buissness-meeting div.ev-ct-holder{
+	background-position: -45px 0;
+    /*background: url('/theme/images/events/reunion2.png') top left no-repeat; */
+}
+
+.ev-cat-reminder a{
+}
+.ev-cat-reminder div.ev-ct-holder{
+    background-position: -60px 0;
+}
+
+.ev-cat-general a{
+}
+.ev-cat-general div.ev-ct-holder{
+    background: url('/theme/images/events/general2.png') top left no-repeat;
+}
+
+.ev-cat-private a{
+}
+.ev-cat-private div.ev-ct-holder{
+    background-position: -75px 0;
+}
+
+/***************************************************************
+            *** EVENTS STATUS ***
+****************************************************************/
+
+.ev-stat-no-show a{
+	background-color: #7F00FF; /*some websafe violet test 9999FF*/
+    border-color: #7F00FF;
+    color: whitesmoke;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.5);
+}
+.ev-stat-cancelled a{
+	background-color: #CC3333; /*some websafe red*/
+    border-color: #CC3333;
+    color: whitesmoke;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.4);
+}
+.ev-stat-pending a{
+    background-color: #D76161; /*some websafe red*/
+    border-color: #D76161;
+    color: whitesmoke;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.4);
+}
+.ev-stat-closed a{
+	background-color: #9ECE00; /*some websafe lighter geen*/
+    border-color: #9ECE00;
+    color: whitesmoke;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.4);
+}
+.ev-stat-finished a{
+    background-color: #ABB408; /*some websafe hard geen*/
+    border-color: #ABB408;
+    color: whitesmoke;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.4);
+}
+.ev-stat-reassigned a{
+	background-color: #09C2F1; /* light blue*/
+    border-color: #09C2F1;
+    color: whitesmoke;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.4);
+}
+.ev-stat-assigned a{
+    background-color: #2F929F; /* blue*/
+    border-color: #2F929F;
+    color: whitesmoke;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.4);
+}
+.ev-stat-follow a{ 
+    background-color: #EFA32D;  /*some websafe yellow*/
+    color: whitesmoke;
+    border-color: #EFA32D;
+    text-shadow:1px 0 0 rgba(255, 255, 255, 0.4);
+}

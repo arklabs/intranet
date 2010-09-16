@@ -1,0 +1,25 @@
+# Defines default options for nahoRichWidgets
+# $Id: app.yml 16368 2009-03-17 15:03:49Z naholyr $
+
+all:
+  jscalendar:
+    format_date: %date% %calendar%
+    format_datetime: %date% %time% %calendar%
+    path: /nahoWidgetsPlugin/jscalendar
+    skins: /nahoWidgetsPlugin/jscalendar/skins
+    theme: aqua
+    style: skins/aqua/theme
+    lang: ~ # automatic from user culture
+    include_js: true
+    include_css: true
+    image: %app_jscalendar_path%/img.gif
+    trigger_label: ...
+    setup: 
+      firstDay: 1
+      #weekNumbers: true
+      showOthers: true
+      showsTime: true
+      timeFormat: 12
+
+
+
