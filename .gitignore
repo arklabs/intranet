@@ -13,4 +13,5 @@ web/stats/*
 lib/*/doctrine/base
 lib/*/doctrine/dm*Plugin/base
 lib/migration/doctrine/
+lib/vendor/*
 nbproject
