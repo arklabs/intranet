@@ -11,17 +11,15 @@ generator:
       actions: ~
       fields:
         colorbox_close_enable: { label: " " }
-        is_the_property_being_modified: {label: Modified?, help: Ha sido esta propiedad modificada antes?}
+        is_the_property_being_modified:
+          label: Modified?
+          help: Ha sido esta propiedad modificada antes?
       list:
         display:
           - '=id'
           - client_id
           - house_id
           - bank_id
-          - active_listing_list
-          - active_mods_list
-          - active_loans_list
-          - conditions_sent_list
           - mortgage_payment
           - rent_amount_received
           - is_the_property_being_modified
@@ -40,10 +38,13 @@ generator:
           - mortgage_payment
           - rent_amount_received
           - is_the_property_being_modified
+          - years_on_property
+          - people_on_property
+          - use_of_property
+          - type_of_property
       form:
         display:
-          NONE: [client_id, house_id, bank_id, mortgage_payment, rent_amount_received, is_the_property_being_modified]
-          'Llamadas entrantes': [active_listing_list, active_mods_list, active_loans_list, conditions_sent_list]
+          NONE: [client_id, house_id, bank_id, mortgage_payment, rent_amount_received, years_on_property, people_on_property, use_of_property, type_of_property, is_the_property_being_modified]
         class: PropertyAdminForm
         fields: {  }
       edit: ~

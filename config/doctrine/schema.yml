@@ -57,9 +57,16 @@ Telemarker:
 
 House:
   columns:
+    parcel:       { type: string(16), notnull: true, unique: true }
     address:      { type: string(128), notnull: true }
     city_id:      { type: integer, notnull: true }
     zipcode:      { type: integer }
+    year_built:   { type: integer(4) }
+    sqft:         { type: integer }
+    ltsz:         { type: integer }
+    rooms:        { type: integer(2) }
+    beds:         { type: integer(2) }
+    baths:        { type: integer(2) }
   relations:
     City:
       local:        city_id
@@ -71,9 +78,14 @@ Property:
     client_id:                      { type: integer, notnull: true, primary: true }
     house_id:                       { type: integer, notnull: true, primary: true }
     bank_id:                        { type: integer }
+    years_on_property:              { type: integer }
+    people_on_property:             { type: integer }
     mortgage_payment:               { type: float }
     rent_amount_received:           { type: float }
-    is_the_property_being_modified: { type: enum, values: [yes,no] }
+    use_of_property:                { type: string(64) }
+    type_of_property:               { type: string(64) }
+    is_the_property_being_modified: { type: boolean, notnull: true, default: false }
+    loan_rate_type:                 { type: string(32) }
   relations:
     House:
       local:      house_id
