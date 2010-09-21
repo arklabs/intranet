@@ -107,6 +107,16 @@ House:
     address:      { type: string(128), notnull: true 	}
     city_id:      { type: integer, notnull: true 		}
     zipcode:      { type: integer 						}
+    parcel:       { type: string(16), notnull: true, unique: true }
+    address:      { type: string(128), notnull: true }
+    city_id:      { type: integer, notnull: true }
+    zipcode:      { type: integer }
+    year_built:   { type: integer(4) }
+    sqft:         { type: integer }
+    ltsz:         { type: integer }
+    rooms:        { type: integer(2) }
+    beds:         { type: integer(2) }
+    baths:        { type: integer(2) }
   relations:
     City:
       local:        city_id
@@ -118,9 +128,14 @@ Property:
     client_id:                      { type: integer, notnull: true, primary: true }
     house_id:                       { type: integer, notnull: true, primary: true }
     bank_id:                        { type: integer }
+    years_on_property:              { type: integer }
+    people_on_property:             { type: integer }
     mortgage_payment:               { type: float }
     rent_amount_received:           { type: float }
-    is_the_property_being_modified: { type: enum, values: [yes,no] }
+    use_of_property:                { type: string(64) }
+    type_of_property:               { type: string(64) }
+    is_the_property_being_modified: { type: boolean, notnull: true, default: false }
+    loan_rate_type:                 { type: string(32) }
   relations:
     House:
       local:      house_id
@@ -358,11 +373,9 @@ Event:
       local: phraseology_id
       foreign: id
       onDelete: RESTRICT
-      type: one
     City:
       local: city_id
       foreign: id
-      type: one
       onDelete: RESTRICT
     DmUser:
       local: dm_user_id
@@ -381,8 +394,8 @@ Event:
     Client:
       local: client_id
       foreign: id
-      type: one
       onDelete: SET NULL
+
 EventCategory:
   columns:
     name:             { type: string(128), notnull: true }
@@ -391,10 +404,12 @@ EventCategory:
     EventStatus:
       class:  EventStatus
       refClass:  EventCategoryStatus
+
 EventStatus:
   columns:
     name:             { type: string(128), notnull: true  }
     css_class_list:   { type: string(255), notnull: false }
+
 EventCategoryStatus:
   columns:
     event_status_id:   { type: integer, notnull: true      }
@@ -408,6 +423,7 @@ EventCategoryStatus:
       local: event_category_id
       foreign: id
       onDelete: CASCADE
+
 EventComment:
   actAs:              [ Timestampable, DmBlameable ]
   columns:
@@ -423,6 +439,7 @@ EventComment:
       local:          dm_user_id
       foreign:        id
       onDelete:       CASCADE
+
 Phraseology:
   columns: 
     title: 			    { type: string(255), notnull: true  		}
@@ -430,6 +447,7 @@ Phraseology:
     pos_rank: 			{ type: integer, notnull: true, default: 0 	}
     neg_rank: 			{ type: integer, notnull: true, default: 0 	}
     is_active: 			{ type: boolean, default: true 				}
+
 Advise: 
   columns:
     client_id:         { type: integer, notnull: true }
@@ -500,3 +518,94 @@ CompanyRecurringExpenses:
       local:      expense_id
       foreign:    id
       onDelete:   CASCADE
+
+Account:
+  columns:
+    wallet_id:  { type: integer, notnull: true }
+    account_type_id: { type: integer, notnull: true }
+    heading: { type: string(64), notnull: true }
+    number:  { type: integer, notnull: true }
+    bank_id: { type: integer, notnull: true }
+    include_in_the_budget: { type: boolean, notnull: true }
+    closed: { type: boolean, notnull: true, default: false }
+    balance: { type: decimal }
+    overdrawn: { type: decimal }
+  relations:
+    Bank:
+      local:  bank_id
+      foreign: id
+      onDelete: RESTRICT
+    Wallet:
+      local:  wallet_id
+      foreign: id
+      onDelete: RESTRICT
+    AccountType:
+      local:  account_type_id
+      foreign: id
+      onDelete: RESTRICT
+
+AccountType:
+  columns:
+    name:  { type: string(64), notnull: true }
+
+Transaction:
+  columns:
+    date:  {type: date, notnull: true}
+    amount: { type: decimal, notnull: true }
+    type:   { type: enum, values: [Gasto, Ingreso], notnull: true }
+    category_id: { type: integer, notnull: true }
+    account_id: { type: integer, notnull: true }
+    validated:  { type: boolean, notnull: true, default: false }
+    payment_id:     { type: integer, notnull: true }
+    payee_id:   { type: integer }
+    description: { type: clob }
+  relations:
+    Category:
+      local:  category_id
+      foreign: id
+      onDelete: RESTRICT
+    Account:
+      local:  account_id
+      foreign: id
+      onDelete: CASCADE
+    Payment:
+      local:  payment_id
+      foreign: id
+      onDelete: RESTRICT
+    Payee:   #Beneficiario
+      local:  payee_id
+      foreign: id
+      onDelete: Restrict
+
+AutomatedTransaction:
+  inheritance:
+    extends: Transaction
+    type: column_aggregation
+    keyField: type
+    keyValue: AutomatedTransaction
+  columns:
+    enabled:  { type: boolean, notnull: true, default: false }
+    max_ocurrences:  { type: integer }
+    every:    { type: integer, notnull: true }
+    Unit:     { type: enum, values: [Day, Week, Month, Year], notnull: true }
+    next_on:  { type: date }
+
+Payee:
+  columns:
+    name:  {type: string(64), notnull: true}
+
+Payment:
+  columns:
+    name:  {type: string(64), notnull: true}
+
+Category:
+  columns:
+    wallet_id:  { type: integer, notnull: true }
+    name:   { type: string(64), notnull: true }
+    income: { type: boolean, notnull: true, default: false }
+    parent_category:  { type: integer, notnull: false, default: null }
+  relations:
+    Wallet:
+      local:  wallet_id
+      foreign: id
+      onDelete: CASCADE

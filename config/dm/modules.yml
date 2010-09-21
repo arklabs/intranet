@@ -85,9 +85,9 @@ Content:
     bank:
       name: Banco|Bancos
 
-  Compannias:
+  Compañias:
     company:
-      name: Compannia|Compannias
+      name: Compañia|Compañias
     employment:
       name: Empleado|Empleados
       components:
@@ -118,6 +118,32 @@ Content:
       name: Client Liabilities
       components:
         list:
+
+    wallet:
+      name: Cartera|Carteras
+
+    account:
+      name: Cuenta|Cuentas
+
+    account_type:
+      name: Tipo de cuenta|Tipos de cuenta
+
+    transaction:
+      name: Transacción|Transacciones
+
+    automated_transaction:
+      name: Transacción recurrente|Transacciones recurrentes
+
+    payee:
+      name: Beneficiario|Beneficiarios
+
+    payment:
+      name: Tipo de pago|Tipos de pago
+
+    category:
+      name: Categoría|Categorías
+      
+
     advise:
       name: Asesoramiento
 

@@ -15,9 +15,10 @@ generator:
         display:
           - '=id'
           - city_id
-          - client_list
           - address
           - zipcode
+          - parcel
+          - ltsz
         sort:
           - id
           - asc
@@ -30,9 +31,16 @@ generator:
           - address
           - city_id
           - zipcode
+          - parcel
+          - sqft
+          - ltsz
+          - rooms
+          - beds
+          - baths
+          - year_built
       form:
         display:
-          Datos Principales: [city_id, address, zipcode, colorbox_close_enable]
+          Datos Principales: [parcel, city_id, address, zipcode, rooms, beds, baths, year_built, sqft, ltsz, colorbox_close_enable]
           Clientes que viven en esta dirección: [client_list]
         class: HouseAdminForm
         fields: {  }
