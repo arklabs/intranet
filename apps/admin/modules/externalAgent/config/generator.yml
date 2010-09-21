@@ -1,0 +1,87 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: ExternalAgent
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: external_agent
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        groups_list:
+          label: Groups
+        permissions_list:
+          label: Permissions
+        is_active:
+          label: Active
+        is_super_admin:
+          label: 'Super admin'
+        extag_company_id: 
+          help: Compa&ntilde;&iacute;a para la que trabaja el agente.
+          label: Compa&ntilde;&iacute;a 
+        extag_source_id: 
+          help: C&oacute;mo se enter&oacute; el agente.
+          label: Fuente 
+        phone: 
+          label: Tel&eacute;fono del agente.
+        first_name: 
+          label: Nombre del agente.
+        last_name: 
+          label: Apellido del agente.
+        email: 
+          label: Email del agente.
+        colorbox_close_enable:
+          label: " "
+      list:
+        display:
+          - '=first_name'
+          - '=last_name'
+          - created_by
+          - extag_company_id
+          - extag_source_id
+          - email
+          - is_active
+          - phone
+          - created_at
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - username
+          - is_active
+          - is_super_admin
+          - email
+          - algorithm
+          - salt
+          - password
+          - last_login
+          - forgot_password_code
+          - first_name
+          - last_name
+          - phone
+          - assigned_to
+          - live_in
+          - ssn
+          - dob
+          - extag_source_id
+          - extag_company_id
+          - created_at
+          - updated_at
+          - created_by
+          - updated_by
+      form:
+        display:
+          NONE: [username, password, password_again]
+          Informacion de agente externo: [ first_name, last_name,email, phone, extag_company_id, extag_source_id, colorbox_close_enable]
+          'Llamadas entrantes': [incomming_call_list]
+          Comentarios: [comment_list]
+        class: ExternalAgentAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

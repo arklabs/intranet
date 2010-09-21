@@ -1,0 +1,33 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: IncommingCallReason
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: incomming_call_reason
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+          - incomming_call_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          'Llamadas entrantes': [incomming_call_list]
+        class: IncommingCallReasonAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

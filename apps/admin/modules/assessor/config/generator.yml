@@ -1,0 +1,90 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Assessor
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: assessor
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        groups_list:
+          label: Groups
+        permissions_list:
+          label: Permissions
+        is_active:
+          label: Active
+        is_super_admin:
+          label: 'Super admin'
+      list:
+        display:
+          - '=username'
+          - created_by
+          - updated_by
+          - source_id
+          - comment_list
+          - incomming_call_list
+          - groups_list
+          - permissions_list
+          - email
+          - algorithm
+          - salt
+          - password
+          - is_active
+          - is_super_admin
+          - last_login
+          - forgot_password_code
+          - first_name
+          - last_name
+          - phone
+          - assigned_to
+          - live_in
+          - ssn
+          - dob
+          - company_id
+          - created_at
+          - updated_at
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - username
+          - is_active
+          - is_super_admin
+          - email
+          - algorithm
+          - salt
+          - password
+          - last_login
+          - forgot_password_code
+          - first_name
+          - last_name
+          - phone
+          - assigned_to
+          - live_in
+          - ssn
+          - dob
+          - source_id
+          - company_id
+          - created_at
+          - updated_at
+          - created_by
+          - updated_by
+      form:
+        display:
+          NONE: [username, is_active, is_super_admin, created_by, updated_by, source_id]
+          Groups: [groups_list]
+          Permissions: [permissions_list]
+          Comentarios: [comment_list]
+          'Llamadas entrantes': [incomming_call_list]
+          Others: [email, algorithm, salt, password, last_login, forgot_password_code, first_name, last_name, phone, assigned_to, live_in, ssn, dob, company_id]
+        class: AssessorAdminForm
+        fields: {  }
+      edit: ~
+      new: ~
