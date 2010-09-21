@@ -17,6 +17,8 @@ generator:
           label: Permissions
         is_active:
           label: Active
+        colorbox_close_enable:
+          label: " "
       list:
         display:
           - is_active
@@ -44,12 +46,9 @@ generator:
           - phone
       form:
         display:
-          NONE: [username, password, password_again, email]
+          NONE: [username, password, password_again, email, colorbox_close_enable]
           'Datos personales': [first_name, last_name, phone, dob]
           Groups: [groups_list]
-          Permissions: [permissions_list]
-          Clientes: [client_list]
-          Others: [last_login, forgot_password_code]
         class: AgentAdminForm
         fields: {  }
       edit: ~

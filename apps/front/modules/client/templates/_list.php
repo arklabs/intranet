@@ -72,7 +72,7 @@ echo $table;
 
    function reload(){
        $('#loader').show();
-       $('.client_list > .dm_widget_inner').load('/index.php/+/main/renderComponent?mod=client&name=list',{},function(){
+       $('.incomming_call_client_list > .dm_widget_inner').load('/index.php/+/main/renderComponent?mod=client&name=list',{},function(){
             //initDatatable();
 	    initButtonMenus();
             $('#loader').hide();

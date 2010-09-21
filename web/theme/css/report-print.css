@@ -1,0 +1,15 @@
+/*#graph{ width: 650px;}*/
+#graph{ width: 2000px;}
+#widgetField span{margin-left: -27px;}
+body {
+	overflow: visible !important;
+}
+.dm_page_content{
+	height: 100%;
+	width: 100%;
+}
+.content-min-height{
+	height: 100%;
+	width: 100%;
+}
+.sidebar, .main_report_dash_board,#sfWebDebug,#print-report-trigger, #load-report-trigger, #dm_page_bar, #dm_page_bar_toggler, #dm_media_bar, #dm_media_bar_toggler, #dm_tool_bar {display: none;}

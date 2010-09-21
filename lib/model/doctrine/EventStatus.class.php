@@ -12,5 +12,14 @@
  */
 class EventStatus extends BaseEventStatus
 {
-
+	public static function getSuccessfullDateStatus(){
+    	return Doctrine::getTable('EventStatus')->createQuery('s')
+    			->where('s.name = ?','Cerrado')
+    			->fetchOne();
+    }
+    public static function getAssignedStatus(){
+    	return Doctrine::getTable('EventStatus')->createQuery('s')
+    			->where('s.name = ?','Asignado')
+    			->fetchOne();
+    }
 }

@@ -44,4 +44,7 @@ class agentComponents extends myFrontModuleComponents
 
       //$this->setTemplate('_reportList.php');
     }
+    public function executeList(sfWebRequest $request){
+    	$this->agentPager = $this->getPager(Doctrine::getTable('Agent')->createQuery());
+    }
 }

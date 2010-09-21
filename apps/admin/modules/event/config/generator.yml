@@ -60,6 +60,7 @@ generator:
         display:
           Seleccion de Fecha y Hora: [fancy_date_time, _loader]
           NONE: [title, description, category_id, status_id, location, city_id, date_start, date_end, phraseology_id, tags, client_id, dm_user_id, colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
+          Comentarios: [event_comment_list]	  
         fields:
           dm_user_id:
             label: Usuario

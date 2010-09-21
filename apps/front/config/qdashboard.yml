@@ -1,4 +1,65 @@
 dashboards:
+  incomming-calls: 
+    clientes: 
+      title: Clientes
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-clients:
+      url: incommingCall/clienteLlamando
+      params:
+      credentials:
+        listIncommingCalls_front:
+    afiliados: 
+      title: Afiliados 
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-insert-company:
+      url: incommingCall/afiliadoLlamando
+      params:
+      credentials:
+        listIncommingCalls_front:	
+    external-agent: 
+      title: Agentes externos
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-agent:
+      url: incommingCall/agenteExternoLlamando
+      params:
+      credentials:
+        listIncommingCalls_front:
+    agent: 
+      title: Agentes
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-agent:
+      url: incommingCall/agenteLlamando
+      params:
+      credentials:
+        listIncommingCalls_front:
+    assessor: 
+      title: Asesor
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-agent:
+      url: main/citasPorAgente
+      params:
+      credentials:
+        listIncommingCalls_front:
+    historial: 
+      title: Historial
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-agent:
+      url: incommingCall/historialDeLlamadas
+      params:
+      credentials:
+        viewIncommingCallsHistory_front:
   reports:
     per-agent-dates:
       title: Citas por <br/>Agente
@@ -61,6 +122,16 @@ dashboards:
       url: event/geolocalizar
       credentials:
         geoListEvents_front:
+    fraseologias:
+      title: Estudiar <br/>Fraseologías
+      holder-classes: 
+        ark-icons-48:
+        ark-icon-phraseology:
+      extra-classes:
+      params:
+      url: event/fraseologias
+      credentials:
+        viewReports_front:
     calendario-tr:
       title: Calendario de <br/>Trámites
       extra-classes:
@@ -108,7 +179,7 @@ dashboards:
         ark-icons-48:
         ark-icon-list-incomming-calls:
       params:
-      url: callCenter/incommingCalls
+      url: main/registroDeLlamadas
       credentials:
         listIncommingCalls_front:
     insertCompanies:

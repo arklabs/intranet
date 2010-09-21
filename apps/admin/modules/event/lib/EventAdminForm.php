@@ -50,10 +50,11 @@ class EventAdminForm extends BaseEventForm
         $this->setWidget('dm_user_id', new sfWidgetFormChoice(array('choices'=>$eventAssignToChoices, 'multiple'=>false, 'expanded'=>false)));
         $this->setValidator('dm_user_id', new sfValidatorAnd(array(new arkEmptyGroupValidator(),new sfValidatorChoice(array('choices'=>array_keys($eventAssignToChoices), 'multiple'=>false)))));
   	 }
-  	 if ($this->isNew() || ($this->thisUserOwnTheEvent() && $this->getObject()->getEventCategory()->getName() != 'Cita') || $context->getUser()->hasPermission('eventChangeDates'))
-  	 	$this->setFancyDateTimeSelector();
+  	 if ($this->isNew() || ($this->thisUserOwnTheEvent() && $this->getObject()->getEventCategory()->getName() != 'Cita') || $context->getUser()->hasPermission('eventChangeDates') || $context->getUser()->isSuperAdmin()){
+  	 	$this->setFancyDateTimeSelector(0);
+  	 }
 	 else
-	  	$this->setFancyDateTimeSelector(true);
+	  	$this->setFancyDateTimeSelector(1);
 	 
 	 $this->setWidget('phraseology_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'phraseology','url'=>$this->getHelper()->link('app:admin/+/phraseology/getPhraseologyJsonList')->getHref())));
   	 $this->setWidget('client_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'client','url'=>$this->getHelper()->link('app:admin/+/client/getJsonClientList')->getHref())));
@@ -64,7 +65,7 @@ class EventAdminForm extends BaseEventForm
      
      if ($this->isNew() || (!$context->getUser()->hasPermission('eventChangeStatus') && !$this->thisUserOwnTheEvent()) && !$context->getUser()->isSuperAdmin()){ // poniendo pendiente la nueva cita
   	 	$this->setWidget('status_id', new sfWidgetFormInputHidden());
-  	 	if (!$this->isNew()){
+  	 	if ($this->isNew()){
 	  	    $this->getWidget('status_id')->setAttribute('value', Doctrine::getTable('EventStatus')->getDefaultValue());
   	 	}
   	 }

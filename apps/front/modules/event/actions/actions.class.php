@@ -345,6 +345,78 @@ class eventActions extends myFrontModuleActions
 
     $this->pdf = $pdf;
   }
+  public function executeRefreshStatus(sfWebRequest $request){
+  	  try{
+  		$eventId = $request->getParameter('ev-id');
+  		if (!$eventId) return false;
+  		 
+  		$event = Doctrine::getTable('Event')->findById($eventId);
+  		$event = $event[0];
+  		if (!$event)  return false;
+  		
+  		if ($event->getEventStatus()!="Pendiente" && $event->getDmUserId()!=''){
+  			$user = $event->getDmUser();
+  			echo $this->getHelper()->tag('label.assigned', 'Asignado a '.$user[0]);
+  			return true;
+  		} 
+  		else
+  		{
+  			$response = $this->getHelper()->tag('label.pending', 'Pendiente');
+  			$response.= $this->getHelper()->open('select.ev-asign-agent-list', array('id'=>$event->getId()));
+  			$agents = Doctrine::getTable('Agent')->createQuery()->execute();
+  			$response.= $this->getHelper()->open('option',array('value'=>-1)).'Seleccione un agente'.$this->getHelper()->close('option');
+  			foreach ($agents as $a){
+  				$response.= $this->getHelper()->open('option', array('value'=>$a->getId())).$a.$this->getHelper()->close('option');
+  			}
+  			$response.= $this->getHelper()->close('select');
+  			$response.='<img src="/theme/images/loader-small.gif" style="display: none; float: right;" class="ev-status small-loader" id="'.$event->getId().'">';
+  			echo $response; 
+  			return true;
+  		}
+  		return true;
+  	  }catch(Exception $e){
+  	  	echo $e->getMessage(); return false;
+  	  }
+  }
+  public function executeChangeDate(sfWebRequest $request){
+  	 try{
+	  	  $eventId = $request->getParameter('event');
+	  	  if (!$eventId) return false;
+	  	  $newDate = $request->getParameter('new-date');
+	  	  if (!$newDate) return false;
 
+	  	  $event = Doctrine::getTable('Event')->findById($eventId);
+	  	  $event = $event[0];
+	  	  $event->setDateStart($newDate);
+	  	  $event->setDateEnd($newDate);
+	  	  $event->setStatusId(EventStatus::getAssignedStatus()->getId());
+	  	  $event->save();
+	  	  return true;
+  	 }catch(Exception $e){
+  	 	echo $e->getMessage(); return false;
+  	 }
+  }
+  public function executeAssignAgent(sfWebRequest $request){
+  		$eventId = $request->getParameter('ev-id');
+  		if (!$eventId) return false;
+  		 
+  		$event = Doctrine::getTable('Event')->findById($eventId);
+  		$event = $event[0];
+  		
+  		$agentId = $request->getParameter('ag-id');
+  		
+  		$agent = Doctrine::getTable('Agent')->findById($agentId);
+  		$agent = $agent[0];
+  		
+  		try{
+  			echo $agent->getId();
+  			$event->setDmUserId($agent->getId());
+  			$eventStatusAssigned = Doctrine::getTable('EventStatus')->findByName('Asignado');
+  			$event->setStatusId($eventStatusAssigned[0]->getId());
+  			$event->save();
+  			echo '';
+  			return true;
+  		}catch(Exception $e){echo $e->getMessage(); return false;}
+  }
 
 }

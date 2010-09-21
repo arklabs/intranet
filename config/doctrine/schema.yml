@@ -47,19 +47,66 @@ Agent:
     type: column_aggregation
     keyField: type
     keyValue: Agent
-
 Telemarker:
   inheritance:
     extends: DmUser
     type: column_aggregation
     keyField: type
     keyValue: Telemarker
-
+Affiliate:
+  inheritance:
+    extends: DmUser
+    type: column_aggregation
+    keyField: type
+    keyValue: Affiliate
+  columns: 
+    aff_company_id: 	  { type: integer, notnull: false	}
+    aff_source_id: 		  { type: integer, notnull: false   }
+  relations: 
+    AffiliateCompany: 
+      class: Company
+      local: aff_company_id
+      foreign: id 
+      foreignAlias: AffiliateCompany
+    AffiliateSource:
+      class: Source
+      local:        source_id
+      foreign:      id
+Assessor: 
+  inheritance:
+    extends: DmUser
+    type: column_aggregation
+    keyField: type
+    keyValue: Assessor
+  columns: 
+    ass_source_id: 		  { type: integer, notnull: false   }
+  relations: 
+    AssessorSource:
+      class: Source
+      local:        ass_source_id
+      foreign:      id
+ExternalAgent: 
+  inheritance:
+    extends: DmUser
+    type: column_aggregation
+    keyField: type
+    keyValue: ExternalAgent
+  columns: 
+    extag_company_id: 	 { type: integer, notnull: false	}
+    extag_source_id: 		 { type: integer, notnull: false   	}
+  relations: 
+    ExternalAgentCompany: 
+      class: Company
+      local: extag_company_id
+      foreign: id
+    Source:
+      local:        source_id
+      foreign:      id
 House:
   columns:
-    address:      { type: string(128), notnull: true }
-    city_id:      { type: integer, notnull: true }
-    zipcode:      { type: integer }
+    address:      { type: string(128), notnull: true 	}
+    city_id:      { type: integer, notnull: true 		}
+    zipcode:      { type: integer 						}
   relations:
     City:
       local:        city_id
@@ -267,18 +314,24 @@ ClientLiabilities:
       onDelete:   CASCADE
 
 IncommingCall:
-  actAs: [Timestampable, DmBlameable, DmVersionable, DmTaggable]
+  actAs: [Timestampable, DmBlameable, DmTaggable]
   columns:
-    client_id:        { type: integer, notnull: true }
-    title:            { type: string(128), notnull: true }
+    dm_user_id:       { type: integer, notnull: true }
     time_in_min:      { type: integer, notnull: true, default: 0}
     description:      { type: clob }
+    reason_id: 		  { type: integer, notnull: true }
   relations:
-    Client:
-      local:    client_id
+    IncommingCallReason: 
+      local: reason_id
+      foreign: id
+      onDelete: RESTRICT 
+    DmUser:
+      local:    dm_user_id
       foreign:  id
       onDelete: CASCADE
-
+IncommingCallReason: 
+  columns: 
+    name: 			 { type: string(255), notnull: true}
 Source:
   columns:
     name:       { type: string(64), notnull: true }
@@ -355,6 +408,21 @@ EventCategoryStatus:
       local: event_category_id
       foreign: id
       onDelete: CASCADE
+EventComment:
+  actAs:              [ Timestampable, DmBlameable ]
+  columns:
+    event_id:   	{ type: integer, notnull: true }
+    dm_user_id:       { type: integer }
+    text:             { type: clob }
+  relations:
+    Event:
+      local: event_id
+      foreign: id 
+      onDelete:       CASCADE
+    DmUser:
+      local:          dm_user_id
+      foreign:        id
+      onDelete:       CASCADE
 Phraseology:
   columns: 
     title: 			    { type: string(255), notnull: true  		}

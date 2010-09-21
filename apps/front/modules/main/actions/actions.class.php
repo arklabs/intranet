@@ -8,7 +8,6 @@ class mainActions extends myFrontModuleActions
     {
         parent::preExecute();
         $this->forwardSecureUnless($dmUser = $this->getUser()->getDmUser());
-
     }
     public function executeTest(sfWebRequest $request){
         $this->getUser()->setFlash('notice', 'calendar loaded');

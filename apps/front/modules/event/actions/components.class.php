@@ -150,7 +150,7 @@ class eventComponents extends myFrontModuleComponents
     //$Test->Render(sfConfig::get('sf_root_dir').'/web/cache/perDayDateChart.png');
     }
   }
-
+  
   public function executePerMonthDateReport()
   {
     $this->dates = Doctrine::getTable('Event')->getEventsByCategoryAssignedTo(1);
@@ -160,6 +160,24 @@ class eventComponents extends myFrontModuleComponents
   {
     // Your code here
   }
+  public function executeAgentAssignDatesWithRangeSelector(){
+  	 $this->dateEnd = new sfDate(time());
+     $this->dateStart = $this->dateEnd->copy();
+     $this->dateEnd = $this->dateEnd->dump();
+     $this->dateStart->subtractWeek(2);
+     $this->dateStart = $this->dateStart->dump();
+  }
+  public function executeAgentAssignDates(){
+  	  $endDate = new sfDate($this->getRequestParameter('date_end', time()));
+  	  $startDate = new sfDate($this->getRequestParameter('date_start', $endDate->copy()->subtractWeek(2)->get()));
 
+  	  $userId = ($this->getUser()->getGuardUser())?$this->getUser()->getGuardUser()->getId():-1;
+      $q = null;
+      Doctrine::getTable('Event')->starting($startDate->dump(), $q)->ending($endDate->dump(), $q);
 
+      $this->agentList = Doctrine::getTable('Agent')->createQuery()->execute();
+      
+      $this->eventPager = $this->getPager($q);
+  }
 }
+ 

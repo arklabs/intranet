@@ -12,5 +12,15 @@
  */
 class Phraseology extends BasePhraseology
 {
-
+	public function getSuccessfullDates(){
+		return Doctrine::getTable('Phraseology')->createQuery('p')
+		->leftJoin('p.Event e')
+		->where('e.status_id = ?', EventStatus::getSuccessfullDateStatus()->getId())
+		->andWhere('p.id = ?', $this->getId())
+		->execute();
+		
+	} 
+	public function getSuccessfullDatesCount(){
+		return $this->getSuccessfullDates()->count();
+	}
 }

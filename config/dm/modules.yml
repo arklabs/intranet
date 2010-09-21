@@ -17,6 +17,7 @@ Content:
         tramitlegend:
         geolocalizador:
         dateRangeSelector:
+        incommingCallDashboard: 
         reportGraphViewer:
         reportListViewer:
         reportDashBoard:
@@ -25,8 +26,27 @@ Content:
         reportDatesByTelemarkerConfig:
         reportCore:
         reportDashBoardAutoToogle:
+        assignDatesRangeSelector:
   Usuarios:
     dm_user:
+    affiliate: 
+      page: false
+      name: Afiliado|Afiliados 
+      front: true
+      components:
+        list: 
+    externalAgent: 
+      page: false
+      name: Agente Externo | Agentes Externos 
+      front: true
+      components:
+        list: 
+    assessor: 
+      page: false
+      name: Asesor|Asesores
+      front: true
+      components:
+        list: 
     client:
       page: true
       name: Cliente|Clientes
@@ -38,7 +58,7 @@ Content:
       name: Agente|Agentes
       components:
         datesByAgent:
-
+        list: 
     telemarker:
       name: Telemarcador|Telemarcadores
       components:
@@ -72,12 +92,6 @@ Content:
       name: Empleado|Empleados
       components:
         list:
-    company_expenses:
-      name: 'Gastos de la compañía'
-    company_recurring_expenses:
-      name: 'Gastos recurrentes de la compañía'
-    wallet:
-      name: Cartera|Carteras
 
   Contabilidad:
     expense:
@@ -107,10 +121,20 @@ Content:
     advise:
       name: Asesoramiento
 
-  IncomingCalls:
+  Llamadas Entrantes:
+    incomming_call_reason: 
+      name: Razon de la llamada | Razones de llamadas    
     incomming_call:
       name: 'Llamadas entrantes'
-          
+      components: 
+        historyDatesRangeSelector: 
+        clientList:
+        externalAgentList:
+        agentList:
+        assessorList: 
+        internalAgentList:
+        affiliateList:  
+        list: 
   Departamentos: 
     department: 
       name: Departamento|Departamentos
@@ -127,9 +151,10 @@ Content:
   Calendario:
     phraseology: 
       name: Fraseolog&iacute;a | Freaseolog&iacute;as
+      components: 
+        list: 
     event:
       name: Evento|Eventos
-      page: true
       components:
         geoEventsList:
         fullcalendar:
@@ -137,6 +162,8 @@ Content:
         list:
         perDayDateChart:
         perMonthDateReport:
+        agentAssignDates:
+        agentAssignDatesWithRangeSelector: 
     event_category:
       name: Categoria|Categorias
     event_status:

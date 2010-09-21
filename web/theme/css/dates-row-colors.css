@@ -1,0 +1,6 @@
+@CHARSET "ISO-8859-1";
+.pending{ color: whitesmoke; background-color: #D76161 !important; padding: 1px 3px 1px 3px; -moz-border-radius: 2px;-webkit-border-radius: 2px;}
+.assigned{ color: whitesmoke; background-color: #2F929F !important; padding: 1px 3px 1px 3px; -moz-border-radius: 2px;-webkit-border-radius: 2px; white-space: nowrap;line-height: 18px;}
+.ev-asign-agent-list { 5px;-moz-border-radius: 4px;-webkit-border-radius: 4px;}
+.reag-time{color: #57A000; width: 70px;border: 0; background-color: transparent;cursor:pointer;}
+.reag-time:hover{color: #777777; }

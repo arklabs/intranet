@@ -12,15 +12,18 @@ generator:
       fields:
         tags_list:
           label: Tags
-        client_id:        { label: Cliente }
+        dm_user_id:        { label: Cliente }
         time_in_min:      { label: Tiempo, help: Tiempo aproximado que duró la llamada en minutos }
+        tags: { help: Palabras claves de la llamada}
+        reason_id: {label: Razon de llamada}
+        colorbox_close_enable: 
+          label: " "
       list:
         display:
-          - '=title'
-          - client_id
+          - dm_user_id
+          - '=reason_id'
           - created_by
           - created_at
-          - time_in_min
         sort:
           - created_at
           - desc
@@ -29,8 +32,7 @@ generator:
         sortable: false
       filter:
         display:
-          - title
-          - client_id
+          - dm_user_id
           - time_in_min
           - description
           - created_at
@@ -39,8 +41,7 @@ generator:
           - updated_by
       form:
         display:
-          NONE: [title, client_id, time_in_min]
-          Description: [description]
+          NONE: [dm_user_id, reason_id, description, colorbox_close_enable]
           Tags: [tags]
         class: IncommingCallAdminForm
         fields: {  }
