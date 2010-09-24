@@ -36,10 +36,9 @@ class rssActions extends sfActions
           $inTwoMonthDay->clearTime();
       }
       
-      $q = Doctrine::getTable('Event')->createQuery();
-      $q = Doctrine::getTable('Event')->starting($this->date_start = $firstMonthDay->dump(), $q);
-      $q = Doctrine::getTable('Event')->ending($this->date_end = $inTwoMonthDay->dump(), $q);
-      $q = Doctrine::getTable('Event')->forUser($this->ownerUser->getId(), $q);
+      $q = null;
+Doctrine::getTable('Event')->starting($this->date_start = $firstMonthDay->dump(), $q)->ending($this->date_end = $inTwoMonthDay->dump(), $q)->forUser($this->ownerUser->getId(), $q);
+
       $this->entries = $q->execute();
  }
 
