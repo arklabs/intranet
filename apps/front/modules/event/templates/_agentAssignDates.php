@@ -107,7 +107,7 @@ echo _close('form');
         $('.apply-new-date').click(function(){
 	       	$('.small-loader[id="'+$(this).attr('id')+'"]').show();
 	       	$.ajax({
-	           	url: '/+/event/changeDate',
+	           	url: '/index.php/+/event/changeDate',
 	            data: 'new-date='+$(this).parent().find('.reag-date').html()+' '+$(this).parent().find('.reag-time').val()+'&event='+$(this).attr('id'),
 	            success: function(){
 	            	id = this.data;
@@ -131,7 +131,7 @@ echo _close('form');
    
    function reload(){
        $('#loader').show();
-       $('.list-container').load('/+/main/renderComponent?mod=event&name=agentAssignDates&date_start='+getRangeDateStart()+'&date_end='+getRangeDateEnd(),{},function(){
+       $('.list-container').load('/index.php/+/main/renderComponent?mod=event&name=agentAssignDates&date_start='+getRangeDateStart()+'&date_end='+getRangeDateEnd(),{},function(){
             //initDatatable();
             $('#loader').hide();
             loadNotifications();
@@ -168,7 +168,7 @@ echo _close('form');
 	  $('img.ev-status[id="'+eventId+'"]').show();
 		$.ajax({
 				type: 'POST',
-				url: '/+/event/assignAgent',
+				url: '/index.php/+/event/assignAgent',
 				data: 'ag-id='+$(thisObject).find('option:selected').val()+'&ev-id='+$(thisObject).attr('id'),
 				success: function(){
 					evId = this.data.split('=');
@@ -187,7 +187,7 @@ echo _close('form');
 	  $('img.ev-status[id="'+eventId+'"]').show();
 	  $.ajax({
 			type: 'GET',
-			url: '/+/event/refreshStatus',
+			url: '/index.php/+/event/refreshStatus',
 			data: 'ev-id='+eventId,
 			success: function(response){
 				id = this.data.substr(6);
