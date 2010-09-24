@@ -63,7 +63,7 @@ class eventComponents extends myFrontModuleComponents
   }
 
   public function executePerDayDateChart()
-  {
+  { 
     $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
     $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
     

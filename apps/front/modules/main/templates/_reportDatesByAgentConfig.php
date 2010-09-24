@@ -1,6 +1,6 @@
 <script type="text/javascript">
     function getGraphModuleName(){
-        return "Event";
+        return "event";
     }
     function getGraphComponentName(){
         return "perDayDateChart";

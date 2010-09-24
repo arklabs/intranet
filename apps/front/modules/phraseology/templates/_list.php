@@ -38,7 +38,7 @@ echo $table;
 	   $('a.pos-votation').click(function(){
            $.ajax({
                type: 'POST',
-               url: '/+/phraseology/vote',
+               url: '/index.php/+/phraseology/vote',
                data: 'value=1&ph-id='+ $(this).attr('ph-id'),
                success: function(){
                			id = this.data.split('=');
@@ -51,7 +51,7 @@ echo $table;
        $('a.neg-votation').click(function(){
            $.ajax({
                type: 'POST',
-               url: '/+/phraseology/vote',
+               url: '/index.php/+/phraseology/vote',
                data: 'value=-1&ph-id='+ $(this).attr('ph-id'),
                success: function(){
                			id = this.data.split('=');

@@ -1,6 +1,6 @@
 <script type="text/javascript">
     function getGraphModuleName(){
-        return "City";
+        return "city";
     }
     function getGraphComponentName(){
         return "datesByCityChart";

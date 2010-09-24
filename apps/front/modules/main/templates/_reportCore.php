@@ -4,7 +4,7 @@ use_stylesheet('another-ui/jquery-ui-1.8.2.custom.css','', array('media'=>'print
 //use_stylesheet('widgetAndZones','', array('media'=>'print'));
 use_stylesheet('report-print', '',array('media'=>'print'));
 echo _open('div.min-border-space');
-echo get_partial('main/ajaxLoader');
+echo get_partial('main/ajaxloader');
 
 echo dm_get_widget('main', 'reportDashBoard', array(
   'css_class' => ''

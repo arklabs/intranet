@@ -67,7 +67,7 @@ echo _tag('div.min-border-top.list-container', '');
          $('#load-dates-trigger').click(function(){
              $('#loader').show();
              $.ajax({
-                 	 url: '/+/main/renderComponent?mod=event&name=agentAssignDates&date_start='+getRangeDateStart()+'&date_end='+getRangeDateEnd(),
+                 	 url: '/index.php/+/main/renderComponent?mod=event&name=agentAssignDates&date_start='+getRangeDateStart()+'&date_end='+getRangeDateEnd(),
                  	 success: function(response){
             	     	$('.list-container').html(response);
             	     	$('#loader').hide();
