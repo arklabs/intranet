@@ -2,6 +2,7 @@
 use_javascript('lib.dataTable');
 use_stylesheet('another-ui/jquery-ui-1.8.2.custom');
 use_stylesheet('dataTable');
+use_stylesheet('tipsy-addons');
 use_helper('Date');
 
 // Plugin : List
@@ -12,10 +13,9 @@ $table = _table('.data_table')->head(
   _tag('input', array('type'=>'checkbox', 'class'=>'check-all')),
   __('Titulo'),
   __('Estado'),
-  __('Categoria'),
-  __('Fecha Inicio'),
-  __('Fecha Fin'),
-  __('Creado Por')
+  __('Fecha'),
+  __('Hora'),
+  __('Marcador')
 );
 
 foreach ($eventPager as $event)
@@ -24,11 +24,10 @@ foreach ($eventPager as $event)
   $date_end = new sfDate($event->getDateEnd());
   $table->body(
   _tag('input', array('type'=>'checkbox', 'value'=>$event->getId(), 'name'=>'ids[]')),
-  sprintf('<a href="%s" rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $event->getId(),'dm_embed'  => 1))->getHref(), $event->getDescription(), $event->getTitle()),
+  sprintf('<a href="%s" rel="ajax-tipsy" id="%s"  class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $event->getId(),'dm_embed'  => 1))->getHref(), $event->getId(), $event->getTitle()),
   $event->getEventStatus(),
-  $event->getEventCategory(),
-  format_date($date_start->dump(), ($date_start->getHour()!= 0)?'MMM d, y h:m a':'MMM d, y','en'),
-  format_date($date_end->dump(), ($date_end->getHour()!= 0)?'MMM d, y h:m a':'MMM d, y','en'),
+  format_date($date_start->dump(),'MMM d, y','en'),
+  format_date($date_start->dump(),'H:m','en'),
   $event->CreatedBy
   );
 }
@@ -43,7 +42,21 @@ echo _close('form');
    function loadControls(){ // this js function is called on front.js after datatable loads.
         $('.dataTables_length').prepend(prepend); // put html rendered in partial before "show n entries" control
         $('.dataTables_length').append(append); // put html rendered in partial after "show n entries" control
-        $('a[rel=tipsy]').tipsy({fade: true, gravity: 'n'});
+        $('a[rel=ajax-tipsy]').tipsy({
+                        html: true,
+                        title: function(){
+                                 tit = $.ajax({
+                                       type: "GET",
+                                       url: "/index.php/+/event/getEventBasics/",
+                                       data: "event-id="+$(this).attr('id'),
+                                       async: false,
+                                       success: function(response){
+                                       }
+                                 }).responseText;
+                                 return tit;
+                        },
+                        live: true
+        });
 
         // other js handling with datatable content here.
         $('a.button#new').click(function(){
@@ -59,7 +72,21 @@ echo _close('form');
             }
         });
         $('.dataTables_paginate.fg-buttonset > .fg-button, .dataTables_paginate.fg-buttonset > span >.fg-button').click(function(){
-            $('a[rel=tipsy]').tipsy({fade: true, gravity: 'n'});
+                $('a[rel=ajax-tipsy]').tipsy({
+                            html: true,
+                            title: function(){
+                                     tit = $.ajax({
+                                           type: "GET",
+                                           url: "/index.php/+/event/getEventBasics/",
+                                           data: "event-id="+$(this).attr('id'),
+                                           async: false,
+                                           success: function(response){
+                                           }
+                                     }).responseText;
+                                     return tit;
+                            },
+                            live: true
+            });
         });
        
        $('.check-all').click(
@@ -90,14 +117,13 @@ echo _close('form');
         bJQueryUI: true,
         bPaginate: true,
         sPaginationType: "full_numbers",
-        aaSorting: [ [5, "asc"], [6, "asc"],[2, "asc"] ],
+        aaSorting: [ [5, "asc"], [2, "asc"] ],
 	aoColumns: [
 		      {"bSortable": false},
 		      {"bSortable": true, "sClass": "title-col"},
 		      null,
-		      null,
 		      {"bSortable": true, "sType": "date"},
-		      {"bSortable": true, "sType": "date"},
+		      {"bSortable": true, "sType": "string"},
 		      null,
 		   ]
       });

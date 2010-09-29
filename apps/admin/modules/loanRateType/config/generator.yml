@@ -1,0 +1,33 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: LoanRateType
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: loan_rate_type
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+          - property_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          Propiedades: [property_list]
+        class: LoanRateTypeAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

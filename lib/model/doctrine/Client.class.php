@@ -16,4 +16,18 @@ class Client extends BaseClient
   {
     return $this->getFirstName().' '.$this->getLastName();
   }
+   public function  save(Doctrine_Connection $conn = null) {
+        parent::save($conn);
+        // adding user to telemarketer default group by default
+        if (!$this->hasGroup('cliente')){
+            $group = Doctrine::getTable('DmGroup')->findByName('cliente');
+            if (count($group) <= 0)
+            {
+                $g = Doctrine::getTable('DmGroup')->create(array('name'=>'cliente', 'description'=>'Todos los clientes'));
+                $g->save();
+            }
+
+            $this->addGroupByName('cliente');
+        }
+    }
 }

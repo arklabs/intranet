@@ -53,32 +53,17 @@ generator:
         sortable: false
       filter:
         display:
-          - username
-          - is_active
-          - is_super_admin
-          - email
-          - algorithm
-          - salt
-          - password
-          - last_login
-          - forgot_password_code
+          - '=username'
           - first_name
           - last_name
+          - email
           - phone
-          - assigned_to
-          - live_in
-          - ssn
-          - dob
-          - extag_source_id
-          - extag_company_id
-          - created_at
-          - updated_at
-          - created_by
-          - updated_by
+          - company_id
+          - source_id
+          - incomming_call_list
       form:
         display:
-          NONE: [username, password, password_again]
-          Informacion de agente externo: [ first_name, last_name,email, phone, extag_company_id, extag_source_id, colorbox_close_enable]
+          Informacion de agente externo: [ first_name, last_name, email, phone, extag_company_id, extag_source_id, colorbox_close_enable]
           'Llamadas entrantes': [incomming_call_list]
           Comentarios: [comment_list]
         class: ExternalAgentAdminForm

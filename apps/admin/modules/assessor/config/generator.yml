@@ -18,34 +18,18 @@ generator:
           label: Active
         is_super_admin:
           label: 'Super admin'
+        colorbox_close_enable:
+          label: ' '
       list:
         display:
           - '=username'
-          - created_by
-          - updated_by
-          - source_id
-          - comment_list
-          - incomming_call_list
-          - groups_list
-          - permissions_list
-          - email
-          - algorithm
-          - salt
-          - password
-          - is_active
-          - is_super_admin
-          - last_login
-          - forgot_password_code
           - first_name
           - last_name
+          - email
           - phone
-          - assigned_to
-          - live_in
-          - ssn
-          - dob
           - company_id
-          - created_at
-          - updated_at
+          - source_id
+          - incomming_call_list
         sort:
           - created_at
           - desc
@@ -78,12 +62,11 @@ generator:
           - updated_by
       form:
         display:
-          NONE: [username, is_active, is_super_admin, created_by, updated_by, source_id]
-          Groups: [groups_list]
-          Permissions: [permissions_list]
+          Datos Personales: [first_name, last_name, email, phone, assigned_to, company_id,  source_id, colorbox_close_enable]
           Comentarios: [comment_list]
           'Llamadas entrantes': [incomming_call_list]
-          Others: [email, algorithm, salt, password, last_login, forgot_password_code, first_name, last_name, phone, assigned_to, live_in, ssn, dob, company_id]
+          Groups: [groups_list]
+          Permissions: [permissions_list]
         class: AssessorAdminForm
         fields: {  }
       edit: ~

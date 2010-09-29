@@ -5,10 +5,6 @@
  * No redirection nor database manipulation ( insert, update, delete ) here
  */
 
-require_once(dmOs::join(sfConfig::get('dm_core_dir'), 'lib/vendor/pChart/pChart/pChart.class.php'));
-require_once(dmOs::join(sfConfig::get('dm_core_dir'), 'lib/vendor/pChart/pChart/pData.class.php'));
-require_once(dmOs::join(sfConfig::get('sf_root_dir'), 'lib/ark/arkPCache.class.php'));
-
 class agentComponents extends myFrontModuleComponents
 {
     public function executeDatesByAgent(){
@@ -33,7 +29,7 @@ class agentComponents extends myFrontModuleComponents
               'Agent' => $agent,
               'num_events' => $agentDates,
               'num_fevents' => $agentDatesFinished,
-		          'efectividad' => (($agentDatesFinished*100)/max($agentDates,1)).'%'
+		'efectividad' => round((($agentDatesFinished*100)/max($agentDates,1)),0).'%'
           ));
           //print_r($agentDates->toarray());
       	  //print_r($agentDatesFinished->toarray());

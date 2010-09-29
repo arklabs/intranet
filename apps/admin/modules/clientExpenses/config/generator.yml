@@ -9,17 +9,22 @@ generator:
     with_doctrine_route: false
     config:
       actions: ~
-      fields:
-        client:   { label: Cliente }
-        colorbox_close_enable: { label: " " }
+      fields: 
+        client_id: { label: Cliente }
+        expense_id: { label: Tipo de Gasto }
+        amount: { label: Monto }
+        payment: { label: Pago }
+        payment_recurrence: { label: Recurrencia }
+        comments: { label: Comentarios }
+        colorbox_close_enable: { label: ' '}
       list:
-        actions: []
-        loremize: false
         display:
           - '=id'
           - client_id
           - expense_id
           - amount
+          - payment
+          - payment_recurrence
           - comments
         sort:
           - id
@@ -33,11 +38,13 @@ generator:
           - client_id
           - expense_id
           - amount
+          - payment
+          - payment_recurrence
           - comments
       form:
         display:
-          NONE: [client_id, client, expense_id, amount, colorbox_close_enable]
-          Comments: [comments]
+          Cliente: [cliente, client_id]
+          Informaci&oacute;n del Gasto: [expense_id, amount, payment, payment_recurrence, comments, colorbox_close_enable]
         class: ClientExpensesAdminForm
         fields: {  }
       edit: ~

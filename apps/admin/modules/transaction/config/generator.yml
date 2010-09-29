@@ -1,0 +1,61 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Transaction
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: transaction
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=id'
+          - category_id
+          - account_id
+          - payment_id
+          - payee_id
+          - date
+          - amount
+          - type
+          - validated
+          - description
+          - enabled
+          - max_ocurrences
+          - every
+          - unit
+          - next_on
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - validated
+          - enabled
+          - date
+          - amount
+          - type
+          - category_id
+          - account_id
+          - payment_id
+          - payee_id
+          - description
+          - max_ocurrences
+          - every
+          - unit
+          - next_on
+      form:
+        display:
+          NONE: [validated, enabled, category_id, account_id, payment_id, payee_id]
+          Description: [description]
+          Others: [date, amount, type, max_ocurrences, every, unit, next_on]
+        class: TransactionAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

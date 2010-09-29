@@ -48,7 +48,7 @@ Content:
       components:
         list: 
     client:
-      page: true
+      page: false
       name: Cliente|Clientes
       components:
         list: 
@@ -64,15 +64,17 @@ Content:
       components:
         datesByTelemarker:
         datesByTelemarkerChart:
-
     source:
       name: Fuente|Fuentes
-      
-  Localidad:
+  Propiedades:
     property: 
       name: Propiedad|Propiedades
-    house:
-      name: Vivienda|Viviendas
+    loan_rate_type:
+      name: Tipo de Pago|Tipos de Pago
+    property_use:
+      name: Usos | Uso
+    property_type:
+      name: Tipo de propiedad | Tipos de Propiedad
     state:
       name: Estado|Estados
     city:
@@ -153,6 +155,15 @@ Content:
     incomming_call:
       name: 'Llamadas entrantes'
       components: 
+        reportCallsPerMonthConfig:
+        callsPerMonthGraph:
+        callsPerMonthList:
+        reportCallsPerDayConfig:
+        callsPerDayGraph:
+        callsPerDayList:
+        reportCallsPerReasonConfig: 
+        callsPerReasonGraph:
+        callsPerReasonList:
         historyDatesRangeSelector: 
         clientList:
         externalAgentList:
@@ -166,7 +177,7 @@ Content:
       name: Departamento|Departamentos
   Procesamiento:
     client_file:
-      page: true
+      page: false
       components:
         list:
         fullcalendar:
@@ -174,6 +185,9 @@ Content:
     comment:
       front: false
       name:  Comentario|Comentarios
+    document:
+      front: false
+      name: Documento|Documentos
   Calendario:
     phraseology: 
       name: Fraseolog&iacute;a | Freaseolog&iacute;as
@@ -191,7 +205,10 @@ Content:
         agentAssignDates:
         agentAssignDatesWithRangeSelector: 
     event_category:
-      name: Categoria|Categorias
+      name: Categor&iacute;a|Categor&iacute;as
     event_status:
-      name: Situacion|Situaciones
-
+      name: Situaci&oacute;n|Situaciones
+    event_feed_back:
+      name: Feed Back|Feed Back
+    event_service:
+      name: Servicio|Servicios

@@ -12,23 +12,17 @@ Client:
     keyField: type
     keyValue: Client
   columns:
-    assigned_to:  { type: integer }
-    live_in:      { type: integer }
-    ssn:          { type: integer }
+    home_phone:   { type: string(32)}
+    licence:      { type: string(32)}
+    assigned_to:  { type: integer   }
+    ssn:          { type: integer   }
     dob:          { type: timestamp }
-    source_id:    { type: integer }
+    source_id:    { type: integer, notnull: true }
   relations:
     Source:
       local:        source_id
       foreign:      id
-      onDelete:     RESTRICT
-    House:
-      local:        live_in
-      foreign:      id
-      onDelete:     CASCADE
-    Property:
-      class:  House
-      refClass:  Property
+      type: one 
     Agent:
       local:    assigned_to
       foreign:  id
@@ -102,45 +96,45 @@ ExternalAgent:
     Source:
       local:        source_id
       foreign:      id
-House:
-  columns:
-    address:      { type: string(128), notnull: true 	}
-    city_id:      { type: integer, notnull: true 		}
-    zipcode:      { type: integer 						}
-    parcel:       { type: string(16), notnull: true, unique: true }
-    address:      { type: string(128), notnull: true }
-    city_id:      { type: integer, notnull: true }
-    zipcode:      { type: integer }
-    year_built:   { type: integer(4) }
-    sqft:         { type: integer }
-    ltsz:         { type: integer }
-    rooms:        { type: integer(2) }
-    beds:         { type: integer(2) }
-    baths:        { type: integer(2) }
-  relations:
-    City:
-      local:        city_id
-      foreign:      id
-      onDelete:     RESTRICT
-
 Property:
   columns:
-    client_id:                      { type: integer, notnull: true, primary: true }
-    house_id:                       { type: integer, notnull: true, primary: true }
-    bank_id:                        { type: integer }
-    years_on_property:              { type: integer }
-    people_on_property:             { type: integer }
-    mortgage_payment:               { type: float }
-    rent_amount_received:           { type: float }
-    use_of_property:                { type: string(64) }
-    type_of_property:               { type: string(64) }
-    is_the_property_being_modified: { type: boolean, notnull: true, default: false }
-    loan_rate_type:                 { type: string(32) }
+    client_id:                      { type: integer, notnull: true }
+    address:                        { type: string(255), notnull: true  }
+    bank_id:                        { type: integer     }
+    parcel:                         { type: integer     }
+    city_id:                        { type: integer, notnull: true }
+    rooms_number:                   { type: integer     }
+    bath_rooms_number:              { type: integer     }
+    zipcode:                        { type: integer(5)  }
+    sqft:                           { type: integer     }
+    lote:                           { type: integer     }
+    year_built:                     { type: integer(4)  }
+    years_on_property:              { type: integer(3)  }
+    people_on_property:             { type: integer(2)  }
+    rent_amount_received:           { type: float       }
+    tasa:                           { type: float       }
+    modified_year:                  { type: string(4)   }
+    brought_year:                   { type: string(4)   }
+    current_debt:                   { type: float       }
+    estimated_current_value:        { type: float       }
+    property_payment:               { type: float       }
+    taxes_included_in_payment:      { type: boolean     }
+    property_type_id:               { type: integer     }
+    property_use_id:                { type: integer     }
+    property_loan_rate_type_id:     { type: integer     }
   relations:
-    House:
-      local:      house_id
+    LoanRateType:
+      local:      property_loan_rate_type_id
       foreign:    id
-      onDelete:   RESTRICT
+      type: one
+    PropertyUse:
+      local:      property_use_id
+      foreign:    id
+      type: one
+    PropertyType:
+      local:      property_type_id
+      foreign:    id
+      type: one
     Bank:
       local:  bank_id
       foreign:  id
@@ -149,13 +143,24 @@ Property:
       local:      client_id
       foreign:    id
       onDelete:   CASCADE
-
+    City:
+      local:        city_id
+      foreign:      id
+      type: one
+LoanRateType:
+  columns:
+    name: { type: string(64)}
+PropertyUse:
+  columns:
+    name: { type: string(64)}
+PropertyType:
+  columns:
+    name: { type: string(64)}
 State:
   columns:
     name:
       type: string(32)
       notnull: true
-
 City:
   columns:
     state_id:     { type: integer, notnull: true }
@@ -164,8 +169,7 @@ City:
     State:
       local:    state_id
       foreign:  id
-      onDelete: RESTRICT
-
+      type: one 
 Department:
   columns:
     name: { type: string(255), notnull: true }
@@ -233,12 +237,18 @@ Company:
 
 Employment:
   columns:
-    company_id:   { type: integer, notnull: true }
-    client_id:    { type: integer, notnull: true }
-    title:        { type: string(64), notnull: true }
-    phone:        { type: string(32) }
-    start_date:   { type: timestamp, notnull: true }
-    end_date:     { type: timestamp }
+    address:            { type: string(255)               }
+    zipcode:            { type: integer(5)                }
+    phone:              { type: string(32)                }
+    fax:                { type: string(32)                }
+    website:            { type: string(255)               }
+    ocupation:          { type: string(255)               }
+    years:              { type: string(255)               }
+    income_value:       { type: float                     }
+    income_recurrence:  { type: enum, values: [HORA, SEMANA, MES, ANNO ] }
+    client_id:          { type: integer, notnull: true    }
+    company_id:         { type: integer, notnull: true    }
+    city_id:            { type: integer                   }
   relations:
     Client:
       local:    client_id
@@ -248,21 +258,27 @@ Employment:
       local:    company_id
       foreign:  id
       onDelete: CASCADE
+    City:
+      local: city_id
+      foreign: id
+      type: one
 
 Expense:
   columns:
-    name:         { type: string(64), notnull: true }
+    name:               { type: string(64), notnull: true }
 
 Income:
   columns:
-    name:           { type: string(64), notnull: true }
+    name:               { type: string(64), notnull: true }
 
 ClientExpenses:
   columns:
-    client_id:      { type: integer, notnull: true }
-    expense_id:     { type: integer, notnull: true }
-    amount:         { type: float, notnull: true }
-    comments:       { type: clob }
+    client_id:          { type: integer, notnull: true }
+    expense_id:         { type: integer, notnull: true }
+    amount:             { type: float, notnull: true }
+    payment:            { type: float, notnull: true }
+    payment_recurrence:  { type: enum, values: [ SEMANAL, MENSUAL, ANUAL] }
+    comments:           { type: clob }
   relations:
     Client:
       local:      client_id
@@ -278,6 +294,7 @@ ClientIncomes:
     client_id:      { type: integer, notnull: true }
     income_id:      { type: integer, notnull: true }
     amount:         { type: float, notnull: true }
+    recurrence:  { type: enum, values: [ SEMANAL, MENSUAL, ANUAL] }
     comments:       { type: clob }
   relations:
     Client:
@@ -356,19 +373,29 @@ Event:
   actAs:   [Timestampable, DmTaggable, DmBlameable, DmVersionable]
   columns:
     title:            { type: string(128), notnull: true  }
-    category_id:      { type: integer, notnull: true      }
-    status_id:        { type: integer, notnull: true      }
     date_start:       { type: timestamp, notnull: true    }
     date_end:         { type: timestamp, notnull: true 	  }
     description:      { type: clob, notnull: true         }
     is_active:        { type: boolean, notnull: true, default: true }
-    dm_user_id:       { type: integer, notnull: false     }
     is_new:           { type: boolean, default: true, notnull: true }
-    location:         { type: string(255) 				  }
-    city_id:          { type: integer, notnull: true, default: 1	}
+    address:          { type: string(255), notnull: false }
+    bolsa:            { type: integer}
+    dm_user_id:       { type: integer, notnull: false     }
+    category_id:      { type: integer, notnull: true      }
+    status_id:        { type: integer, notnull: true      }
+    city_id:          { type: integer, notnull: true	}
     client_id:        { type: integer 					  }
+    property_id:      { type: integer, notnull: true }
     phraseology_id:   { type: integer 					  }
+    service_id:       { type: integer, notnull: true }
   relations:
+    EventService:
+      local: service_id
+      foreign: id
+      type: one
+    Property:
+      local: property_id
+      foreign: id
     Phraseology: 
       local: phraseology_id
       foreign: id
@@ -395,10 +422,39 @@ Event:
       local: client_id
       foreign: id
       onDelete: SET NULL
-
+    Document:
+      class:     Document
+      refClass:  EventDocument
+EventDocument:
+  columns:
+    event_id:         { type: integer, notnull: true       }
+    document_id:      { type: integer, notnull: true       }
+  relations:
+    Document:
+      local: document_id
+      foreign: id
+    Event:
+      local: event_id
+      foreign: id
+Document:
+  columns:
+    name:             { type: string(255), notnull: true   }
+EventService:
+  columns:
+    name:             { type: string(255), notnull: true   }
+EventFeedBack:
+  actAs: [Timestampable, DmBlameable]
+  columns:
+    event_id:         { type: integer, notnull: true      }
+    comments:         { type: clob, notnull: true         }
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one 
 EventCategory:
   columns:
-    name:             { type: string(128), notnull: true }
+    name:             { type: string(128), notnull: true  }
     css_class_list:   { type: string(255), notnull: false }
   relations: 
     EventStatus:
@@ -423,23 +479,6 @@ EventCategoryStatus:
       local: event_category_id
       foreign: id
       onDelete: CASCADE
-
-EventComment:
-  actAs:              [ Timestampable, DmBlameable ]
-  columns:
-    event_id:   	{ type: integer, notnull: true }
-    dm_user_id:       { type: integer }
-    text:             { type: clob }
-  relations:
-    Event:
-      local: event_id
-      foreign: id 
-      onDelete:       CASCADE
-    DmUser:
-      local:          dm_user_id
-      foreign:        id
-      onDelete:       CASCADE
-
 Phraseology:
   columns: 
     title: 			    { type: string(255), notnull: true  		}

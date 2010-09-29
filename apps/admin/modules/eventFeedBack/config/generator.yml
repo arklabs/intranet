@@ -1,0 +1,40 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: EventFeedBack
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: event_feed_back
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        comments: {label: Comentarios }
+      list:
+        display:
+          - '=id'
+          - event_id
+          - comments
+          - created_at
+          - updated_at
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - event_id
+          - comments
+          - created_at
+          - updated_at
+      form:
+        display:
+          Feedback: [event_id, evento, comments]
+        class: EventFeedBackAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

@@ -1,0 +1,52 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Account
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: account
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=id'
+          - bank_id
+          - wallet_id
+          - account_type_id
+          - transaction_list
+          - heading
+          - number
+          - include_in_the_budget
+          - closed
+          - balance
+          - overdrawn
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - include_in_the_budget
+          - closed
+          - wallet_id
+          - account_type_id
+          - heading
+          - number
+          - bank_id
+          - balance
+          - overdrawn
+      form:
+        display:
+          NONE: [include_in_the_budget, closed, bank_id, wallet_id, account_type_id]
+          Transacciones: [transaction_list]
+          Others: [heading, number, balance, overdrawn]
+        class: AccountAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

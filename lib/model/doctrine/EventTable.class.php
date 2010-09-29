@@ -93,6 +93,17 @@ class EventTable extends myDoctrineTable
         return $this;
     }
 
+    public function nonPending(Doctrine_Query &$q = null){
+        if (is_null($q))
+        {
+            $q = Doctrine_Query::create()
+            ->from('Event e');
+        }
+        $alias = $q->getRootAlias();
+        $defStatus = Doctrine::getTable('EventStatus')->getDefaultValue();
+        $q->andWhere(sprintf('%s.status_id <> ?', $alias), $defStatus);
+        return $this;
+    }
     public function starting($start, Doctrine_Query &$q = null){
         if (is_null($q))
         {

@@ -12,5 +12,18 @@
  */
 class Telemarker extends BaseTelemarker
 {
-
+     public function  save(Doctrine_Connection $conn = null) {
+        parent::save($conn);
+        // adding user to telemarketer default group by default
+        if (!$this->hasGroup('telemarcador')){
+            $group = Doctrine::getTable('DmGroup')->findByName('telemarcador');
+            if (count($group) <= 0)
+            {
+                $g = Doctrine::getTable('DmGroup')->create(array('name'=>'telemarcador', 'description'=>'Todos los telemarcadores'));
+                $g->save();
+            }
+            
+            $this->addGroupByName('telemarcador');
+        }
+    }
 }

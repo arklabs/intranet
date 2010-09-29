@@ -1,0 +1,1 @@
+## This File has been auto generated 2010-09-27all:  is_secure: on  credentials: []new:  credentials: payment_adicionar_entradasdelete:  credentials: payment_borrar_entradasindex:  credentials: payment_listar_contenidoupdate:  credentials: payment_modificar_entradas

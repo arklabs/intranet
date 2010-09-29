@@ -1,3 +1,4 @@
+<?php use_stylesheet('tipsy-addons');?>
 <?php use_javascript('ui-core');?>
 <?php use_javascript('ui-resizable');?>
 <?php use_javascript('ui-draggable');?>

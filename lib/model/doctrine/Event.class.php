@@ -16,4 +16,59 @@ class Event extends BaseEvent
          $user = $this->getDmUser();
          return $user[0]->__toString();
     }
+    public function  __toString() {
+        return sprintf('%s - %s', $this->getEventCategory(), $this->getAddress());
+    }
+    public function buildEventInformationBasics(){
+      $info = '';
+      $context = sfContext::getInstance();
+      
+      $info.= $context->getHelper()->tag('h3 style="color: white important!;"', $this);
+
+      $marketer = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Marcador: ').$this->getCreatedBy());
+      $contact = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Contacto: ').$this->getCreatedAt());
+
+      $startDate = explode(' ', $this->getDateStart()); $startHour = $startDate[1];$startDate = $startDate[0];
+      $endDate = explode(' ', $this->getDateEnd()); $endHour = $endDate[1];$endDate = $endDate[0];
+
+      $date = (($startDate != $endDate)?$startDate.' - '.$endDate: $startDate);
+      $hour = (($startHour != $endHour)?$startHour.' - '.$endHour: $startHour);
+      $fecha = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Fecha: ').$date);
+      $hora = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Hora: ').$hour);
+      $address= $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Direcci&oacute;n: ').(($this->getAddress())?$this->getAddress():$this->getProperty()->getAddress()));
+      $cell = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Cell: ').$this->getClient()->getPhone());
+      $home = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Casa: ').$this->getClient()->getHomePhone());
+      $pays = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pagos: ').$this->getProperty()->getPropertyPayment().($this->getProperty()->getTaxesIncludedInPayment()?' + Taxes y Aseg.':''));
+      $tasa = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Inter&eacute;s: ').round($this->getProperty()->getTasa(),1).'%');
+      $debe = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Debe: ').$this->getProperty()->getCurrentDebt().' '.$this->getProperty()->getPropertyLoanRateTypeId());
+      $bank = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Banco: ').$this->getProperty()->getBank());
+      $compro = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Compr&oacute;: ').$this->getProperty()->getBroughtYear());
+      $modifico = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Modific&oacute;: ').$this->getProperty()->getModifiedYear());
+      $parcela = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Parcela: ').$this->getProperty()->getParcel());
+      $sqft = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pies Cuad: ').$this->getProperty()->getSqft());
+      $lote = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Lote: ').$this->getProperty()->getLote());
+      $yearBuilt = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'A&ntilde;o Const: ').$this->getProperty()->getYearBuilt());
+      $rooms =$context->getHelper()->tag('label',  $context->getHelper()->tag('b', 'Cuartos: ').$this->getProperty()->getRoomsNumber());
+      $bath = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Ba&ntilde;os: ').$this->getProperty()->getBathRoomsNumber());
+      $yearsOnProp = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'A&ntilde;os en Prop: ').$this->getProperty()->getYearsOnProperty());
+      $peopOnProp = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pers en Prop: ').$this->getProperty()->getPeopleOnProperty());
+      $cliente =  $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Cliente: ').$this->getClient());
+      $estimatedValue = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Valor Estimado: ').$this->getProperty()->getEstimatedCurrentValue());
+      $detalles= $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Detalles: ')).$context->getHelper()->tag('p',$this->getDescription());
+
+      $table = $context->getHelper()->table('v-align=top')->head('','');
+      $table->body($marketer, $contact);
+      $table->body($fecha, $hora);
+      $table->body($cell,$home );
+      $table->body($cliente, $yearsOnProp);
+      $table->body($address, $parcela);
+      $table->body($sqft, $lote);
+      $table->body($rooms, $bath);
+      $table->body($yearBuilt, $bank);
+      $table->body($compro, $modifico);
+      $table->body($estimatedValue, $debe);
+      $table->body($pays, $tasa);
+      $table->body($detalles,'');
+      return $info.$table;
+  }
 }

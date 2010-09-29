@@ -48,7 +48,22 @@
    background-position: -144px -96px;
 }
 .ark-icon-phraseology{
-	background-position: 0 -144px;
+    background-position: 0 -144px;
+}
+.ark-icon-incomming-call-client{
+    background-position: -48px -144px;
+}
+.ark-icon-incomming-call-affiliate{
+    background-position: -144px -144px;
+}
+.ark-icon-incomming-call-agent{
+    background-position: -192px -144px;
+}
+.ark-icon-incomming-call-external-agent{
+    background-position: 0 -192px;
+}
+.ark-icon-assign-dates{
+    background-position: -96px -144px;
 }
 /************ Shortcut Buttons ************/
 .dashboard{ 

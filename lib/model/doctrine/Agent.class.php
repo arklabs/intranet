@@ -27,4 +27,19 @@ class Agent extends BaseAgent
     public function countClients() {
         return $this->getClientsQuery()->count();
     }
+
+    public function  save(Doctrine_Connection $conn = null) {
+        parent::save($conn);
+        // adding user to telemarketer default group by default
+        if (!$this->hasGroup('agente')){
+            $group = Doctrine::getTable('DmGroup')->findByName('agente');
+            if (count($group) <= 0)
+            {
+                $g = Doctrine::getTable('DmGroup')->create(array('name'=>'agente', 'description'=>'Todos los agentes'));
+                $g->save();
+            }
+
+            $this->addGroupByName('agente');
+        }
+    }
 }

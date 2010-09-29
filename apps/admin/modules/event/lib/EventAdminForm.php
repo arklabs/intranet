@@ -21,7 +21,7 @@ class EventAdminForm extends BaseEventForm
   protected function correctAvailableUserList(){
       // getting all available groups
       $allGroups = Doctrine::getTable('DmGroup')->createQuery('g')->execute();
-      $result = array();
+      $result = array(''=>'');
       foreach ($allGroups as $group){
          if (!$this->isADefaultDiemGroup($group->getName()))
             $result[-1*$group->getId()] = 'Todos los '.$group->getName();
@@ -37,31 +37,42 @@ class EventAdminForm extends BaseEventForm
   
   protected function configureGeneralFeatures(){
   	$context = dmContext::getInstance();
-    $request = $context->getRequest();
+        $request = $context->getRequest();
   	 if (!$context->getUser()->hasPermission('eventAssign') && !$context->getUser()->isSuperAdmin()){
-        $this->setWidget('dm_user_id', new sfWidgetFormInputHidden());
-        $this->getWidget('dm_user_id')->setLabel(' ');
+            $this->setWidget('dm_user_id', new sfWidgetFormInputHidden());
+            $this->getWidget('dm_user_id')->setLabel(' ');
+         }
         if (!$this->isNew())
         	$this->getWidget('dm_user_id')->setAttribute('value',$context->getUser()->getDmUser()->getId());
-  	 }
   	 elseif ($this->isNew()) 
   	 {
   	 	$eventAssignToChoices = $this->correctAvailableUserList();
-        $this->setWidget('dm_user_id', new sfWidgetFormChoice(array('choices'=>$eventAssignToChoices, 'multiple'=>false, 'expanded'=>false)));
-        $this->setValidator('dm_user_id', new sfValidatorAnd(array(new arkEmptyGroupValidator(),new sfValidatorChoice(array('choices'=>array_keys($eventAssignToChoices), 'multiple'=>false)))));
-  	 }
+                $this->setWidget('dm_user_id', new sfWidgetFormChoice(array('choices'=>$eventAssignToChoices, 'multiple'=>false, 'expanded'=>false)));
+                $this->setValidator('dm_user_id', new sfValidatorAnd(array(new arkEmptyGroupValidator(),new sfValidatorChoice(array('choices'=>array_keys($eventAssignToChoices), 'multiple'=>false, 'required'=>false)))));
+                $this->getValidator('dm_user_id')->setOption('required', false);
+         }
   	 if ($this->isNew() || ($this->thisUserOwnTheEvent() && $this->getObject()->getEventCategory()->getName() != 'Cita') || $context->getUser()->hasPermission('eventChangeDates') || $context->getUser()->isSuperAdmin()){
   	 	$this->setFancyDateTimeSelector(0);
   	 }
 	 else
 	  	$this->setFancyDateTimeSelector(1);
 	 
-	 $this->setWidget('phraseology_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'phraseology','url'=>$this->getHelper()->link('app:admin/+/phraseology/getPhraseologyJsonList')->getHref())));
-  	 $this->setWidget('client_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'client','url'=>$this->getHelper()->link('app:admin/+/client/getJsonClientList')->getHref())));
+     $this->setWidget('phraseology_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'phraseology','url'=>$this->getHelper()->link('app:admin/+/phraseology/getPhraseologyJsonList')->getHref())));
+     if ($this->isNew()){
+        $this->setWidget('client_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'client','url'=>$this->getHelper()->link('app:admin/+/client/getJsonClientList')->getHref())));
+        $this->setWidget('property_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'property','url'=>$this->getHelper()->link('app:admin/+/property/getJsonPropertyList')->getHref())));
+        $this->setWidget('new_property', new sfWidgetLinkTextWithToolTipForDiemBackend(array(
+                                            'title'=> 'Si el sistema no logra autocompletar la propiedad que buscar, haga clic aqui para agergar una.',
+                                            'url'=> $this->getHelper()->link('app:admin/+/property/new')->getHref(),
+                                            'value'=>'Nueva Propiedad'
+                                         )));
+     }
+     else
+         $this->setWidget('new_property', new sfWidgetFormInputHidden());
      $this->setWidget('category_id', new arkAlternativeEventChoiceWidget(array('WatchLabel'=>'Cita','WatchedWidgetHtmlId'=>'sf_admin_form_field_client_id','model' => $this->getRelatedModelName('EventCategory'), 'add_empty' => false)), array());
      $this->getWidget('category_id')->setAttribute('id','watchedSelectBox');
 
-     $this->getValidatorSchema()->setPostValidator(new arkForceDateClientRelation());
+     $this->getValidatorSchema()->setPostValidator(new sfValidatorAnd(array(new arkForceDateClientRelation(), new arkValidateClientPropertyRelation)));
      
      if ($this->isNew() || (!$context->getUser()->hasPermission('eventChangeStatus') && !$this->thisUserOwnTheEvent()) && !$context->getUser()->isSuperAdmin()){ // poniendo pendiente la nueva cita
   	 	$this->setWidget('status_id', new sfWidgetFormInputHidden());
@@ -69,7 +80,67 @@ class EventAdminForm extends BaseEventForm
 	  	    $this->getWidget('status_id')->setAttribute('value', Doctrine::getTable('EventStatus')->getDefaultValue());
   	 	}
   	 }
+     $this->setBackAndNewClientWidgets($request);
+     $this->validateDocumentList();
+     $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
+        
   }
+
+  public function correctPropertyList($clientId){
+      $propertyList = Doctrine::getTable('Property')->getPropertiesOfClient($clientId);
+      $choices = array();
+      foreach ($propertyList as $prop){
+            $choices[$prop->getId()] = $prop;
+      }
+      if ($this->isNew())
+        $this->setWidget('property_id', new sfWidgetFormChoice(array('choices'=>$choices)));
+      else
+      {
+        $this->setWidget('property_id', new sfWidgetLinkTextWithToolTipForDiemBackend(array(
+                                            'title'=> 'Clic para ver los detalles de esta propiedad',
+                                            'url'=> $this->getHelper()->link('app:admin/+/property/edit')->params(array('pk'=>$this->getObject()->getProperty()->getId()))->getHref(),
+                                            'value'=>$this->getObject()->getProperty()
+                                         )));
+      }
+      $this->setWidget('new_property', new sfWidgetFormInputHidden());
+  }
+  protected function setBackAndNewClientWidgets($request){
+      $defaults = $request->getParameter('defaults', null);
+      if (!$this->isNew()){
+          $pk = $this->getObject()->getClient()->getId();
+          $myClientWidget = new sfWidgetLinkTextWithToolTipForDiemBackend(array(
+            'title'=> 'Volver a este Cliente',
+            'url'=> $this->getHelper()->link('app:admin/+/client/edit')->params(array('pk'=>$pk))->getHref(),
+            'value'=>$this->getObject()->getClient()
+         ));
+         $myNewClientWidget = new sfWidgetFormInputHidden();
+         $this->setWidget('client_id', new sfWidgetFormInputHidden());
+         $this->correctPropertyList($pk);
+      }elseif ((is_array($defaults) && $pk = $defaults['client_id']) || ($pk = $request->getParameter('pk'))){
+          $client = Doctrine::getTable('Client')->findById($pk);
+          if(count($client)){
+              $myClientWidget = new sfWidgetLinkTextWithToolTipForDiemBackend(array(
+                'title'=> 'Volver a este Cliente',
+                'url'=> $this->getHelper()->link('app:admin/+/client/edit')->params(array('pk'=>$pk))->getHref(),
+                'value'=>$client[0]
+             ));
+          }
+          $myNewClientWidget = new sfWidgetFormInputHidden();
+          $this->setWidget('client_id', new sfWidgetFormInputHidden());
+          $this->correctPropertyList($pk);
+      }else{
+              $myClientWidget = new sfWidgetFormInputHidden();
+              $myNewClientWidget = new sfWidgetLinkTextWithToolTipForDiemBackend(array(
+                'title'=> 'Si el sistema no logra autocompletar el cliente que busca, haga clic aqui para agegarlo al sistema antes de agregar la nueva cita.',
+                'url'=> $this->getHelper()->link('app:admin/+/client/new')->getHref(),
+                'value'=>'Nuevo Cliente'
+             ));
+          }
+      
+      $this->setWidget('cliente', $myClientWidget);
+      $this->setWidget('new_client', $myNewClientWidget);
+  }
+
 
   protected function configureFormForFront(){
   	 $this->configureGeneralFeatures();
@@ -82,10 +153,11 @@ class EventAdminForm extends BaseEventForm
   protected function thisUserOwnTheEvent(){
   	if ($this->isNew()) 
   		return false;
-    $tmp = $this->getObject()->getDmUser()->toarray();
-    $event_user_id = $tmp[0]['id'];
-    
-    return $this->getObject()->getCreatedBy()->getId() == $event_user_id; 
+        $tmp = $this->getObject()->getDmUser()->toarray();
+        if (count($tmp) == 0) return false;
+        $event_user_id = $tmp[0]['id'];
+
+        return $this->getObject()->getCreatedBy()->getId() == $event_user_id;
   }
   
   protected function setFancyDateTimeSelector($lock_dates = false){
@@ -107,7 +179,16 @@ class EventAdminForm extends BaseEventForm
         $this->getWidget('date_end')->setAttribute('value', $date->dump());
     }
   }
-  
+
+  protected function validateDocumentList(){
+      $context = dmContext::getInstance();
+      if (!$context->getUser()->hasPermission('EventCollectDocuments') && !($context->getUser()->isSuperAdmin())){
+          $this->setWidget('document_list', new sfWidgetFormInputHidden());
+          $this->setWidget('event_feed_back_list', new sfWidgetFormInputHidden());
+
+      }
+          
+  }
   public function configure()
   {
     parent::configure();
@@ -121,6 +202,7 @@ class EventAdminForm extends BaseEventForm
   }
 
   public function  save($con = null) {
+     
       if ($this->values['dm_user_id']!=dmContext::getInstance()->getUser()->getDmUser()->getId())
             $this->values['is_new'] = 1;
       elseif (!$this->isNew() && dmContext::getInstance()->getRequest()->hasParameter('dm_embed') && dmContext::getInstance()->getUser()->getDmUser()->getId() != $this->getObject()->getCreatedBy()->getId() ){ // vienes del frontend y quieres modificar un evento que no es tuyo

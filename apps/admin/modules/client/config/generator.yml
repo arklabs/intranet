@@ -14,13 +14,15 @@ generator:
         first_name:       { label: Nombre }
         last_name:        { label: Apellido }
         assigned_to:      { label: Asignado a }
-        live_in:          { label: Habita en }
-        phone:            { label: Telefono }
+        phone:            { label: Cell }
+        home_phone:       { label: Casa Tel. }
         employment_list:  { label: Trabajos }
         advise_list:      { label: Asesoramiento }
         password_again:   { label: "Password (again)" }
-        created_by: 	  {	label: Creado Por	}
-        created_at: 	  { label: El dia }
+        created_by:       {	label: Creado Por	}
+        created_at:       { label: Contacto }
+        licence:          { label: Licencia }
+        source_id:        { label: Fuente }
       list:
         display:
           - '=first_name'
@@ -44,14 +46,12 @@ generator:
           - source_id
       form:
         display:
-          NONE: [username, password, password_again, email]
-          'Datos personales': [first_name, last_name, phone, colorbox_close_enable]
-          Asesoramiento: [advise_list]
-          Fuente: [source_id]
-          Dirección:  [live_in, property_list]
+          'Datos personales': [first_name, last_name, email, phone, home_phone, dob, ssn, source_id, colorbox_close_enable]
+          Propiedades:  [property_list]
           Trabajos:    [employment_list ]
-          Contabilidad: [client_expenses_list, client_liabilities_list, client_incomes_list, client_assets_list]
-          Trámites: [client_file_list]
+          Citas: [event_list]
+          Contabilidad: [client_expenses_list, client_incomes_list]
+          #Trámites: [client_file_list]
         class: ClientAdminForm
         fields: {  }
       edit: ~

@@ -1,0 +1,35 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Document
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: document
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        event_list:
+          label: Eventos
+      list:
+        display:
+          - '=name'
+          - event_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          Eventos: [event_list]
+        class: DocumentAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

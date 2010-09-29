@@ -52,5 +52,41 @@ class DmUser extends PluginDmUser
    public function countActiveEventsByStatus($statusId, $dstart, $dend) {
        return $this->getActiveEventsByStatusQuery($statusId, $dstart, $dend)->count();
    }
+   public static function buildUsername($first_name, $last_name){
 
+        $first_name = $first_name;
+        // preventing white spaces in last_name
+        $tmp = explode(' ',$last_name);
+        $last_name = $tmp[0];
+        // first method: first letter of name + last name
+        $username = $first_name[0].$last_name;
+        $username = self::slugify($username);
+        if (!DmUserTable::usernameExist($username))
+                return $username;
+        // second method: last $username + year + month + day of creation
+        $time = time();
+        $hash = Date('Y', $time).Date('m', $time).Date('d', $time).Date('i', $time).Date('s', $time);
+        $i = 0;
+        for ($i=1;$i<=3;$i++){
+                $username= $username.substr($hash,$i*2,2);
+                $i++;
+                if (!DmUserTable::usernameExist($username))
+                  return $username;
+        }
+        return $username;
+    }
+  public static function buildPassword($username){
+      return substr(sha1($username), 0,5); // 5 primeras letras del hash del nombre de usuario
+  }
+  public static function slugify($text)
+	{
+	   $text = str_ireplace("á", "a", $text);
+	   $text = str_ireplace("é", "e", $text);
+	   $text = str_ireplace("í", "i", $text);
+	   $text = str_ireplace("ó", "o", $text);
+	   $text = str_ireplace("ú", "u", $text);
+	   $text = str_ireplace("ñ", "n", $text);
+	   $text = strtolower($text);
+	   return $text;
+	}
 }

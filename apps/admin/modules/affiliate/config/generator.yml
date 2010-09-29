@@ -72,7 +72,6 @@ generator:
           - updated_by
       form:
         display:
-          NONE: [username, password, password_again, email]
           'Informacion Personal': [first_name, last_name, phone, aff_company_id, aff_source_id, colorbox_close_enable]
           'Llamadas entrantes': [incomming_call_list]
         class: AffiliateAdminForm

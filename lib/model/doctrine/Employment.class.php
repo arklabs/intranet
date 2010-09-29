@@ -13,7 +13,7 @@
 class Employment extends BaseEmployment
 {
   public function  __toString() {
-    return $this->getTitle().' - '.$this->getClient();
+    return $this->getCompany().' - '.$this->getOcupation();
   }
 
 

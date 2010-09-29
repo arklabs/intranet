@@ -14,8 +14,6 @@ generator:
           label: " "
         colorbox_close_enable:
           label: " "
-        title:
-          help: Escriba un titulo corto e identificativo para este evento
         category_id:
           help: De qu&eacute; tipo es este evento?
           label: Categor&iacute;a
@@ -23,18 +21,34 @@ generator:
           help: En qu&eacute; fase se encuentra este evento?
           label: Estado
         description:
-          help: Describa lo mas detallado posible este evento.
+          label: Descripci&oacute;n
         asigned:
           label: Asignado a
         dm_user_id:
           label: Asignado a
-        location:
-          label: Localidad
         client_id: 
           label: Cliente
+        date_start:
+          label: Fecha Inicio
+        date_end:
+          label: Fecha fin
+        description:
+          label: Descripci&oacute;n
+        service_id:
+          label: Servicio
+        document_list:
+          label: Documentos recogidos
+        new_client:
+          label: ' '
+        new_property:
+          label: ' '
+        property_id:
+          label: Propiedad
+        address:
+          label: Direcci&oacute;n
+          help: Dejar en blanco en caso de coincidir con la de la Propiedad
       list:
         display:
-          - '=title'
           - category_id
           - status_id
           - date_start
@@ -48,7 +62,6 @@ generator:
         sortable: false
       filter:
         display:
-          - title
           - details
           - category_id
           - status_id
@@ -58,24 +71,10 @@ generator:
           - updated_at
       form:
         display:
+          Cliente: [cliente, client_id, new_client, property_id, new_property]
           Seleccion de Fecha y Hora: [fancy_date_time, _loader]
-          NONE: [title, description, category_id, status_id, location, city_id, date_start, date_end, phraseology_id, tags, client_id, dm_user_id, colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
-          Comentarios: [event_comment_list]	  
-        fields:
-          dm_user_id:
-            label: Usuario
-          title:
-            label: Titulo
-          status_id:
-            label: Estado
-          category_id:
-            label: Categoria
-          date_start:
-            label: Fecha Inicio
-          date_end:
-            label: Fecha fin
-          description:
-            label: Descripcion
+          Informaci&oacute;n del evento: [ title, address, description, category_id, status_id,  city_id, date_start, date_end, phraseology_id, tags,  dm_user_id, service_id, colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
+          Feed Back: [ event_feed_back_list,document_list]
         class: EventAdminForm
         fields: {  }
       edit: 

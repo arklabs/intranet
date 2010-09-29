@@ -77,8 +77,8 @@ echo $table;
 		  aoColumns: [
 					      {"bSortable": true},
 					      {"bSortable": true},
-					      {"bSortable": true, "sClass": "title-col"},
 					      {"bSortable": false},
+					      {"bSortable": true},
 					      {"bSortable": true, "sType": "date"},
 					 ]
 	      });

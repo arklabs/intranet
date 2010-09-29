@@ -1,0 +1,33 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Payee
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: payee
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+          - transaction_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          Transacciones: [transaction_list]
+        class: PayeeAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

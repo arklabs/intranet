@@ -17,6 +17,19 @@ class eventActions extends myFrontModuleActions
         self::$_eventsConfig = sfYaml::load($configFile);
   }
 
+  public function executeGetEventBasics(sfWebRequest $request){
+      $eventId = $request->getParameter('event-id', NUll);
+      if (!$eventId) {
+          echo ''; return true;
+      }
+      $event = Doctrine::getTable('Event')->findById($eventId);
+      if (!count($event)){
+          echo ''; return true;
+      }
+      echo $event[0]->buildEventInformationBasics();
+      return true;
+
+  }
   public function executeGetMyEvents(sfWebRequest $request)
   {
     try{
@@ -56,7 +69,7 @@ class eventActions extends myFrontModuleActions
                                                                         'dm_embed'  => 1
                                                                       )), */
                                         'allDay'=>($tmp->getHour() == 0)?true:false,
-                                        'description'=>$event->getDescription(),
+                                        'description'=>$event->buildEventInformationBasics(),
                                     );
                 array_push($events, $eventDescription);
             }
@@ -67,7 +80,7 @@ class eventActions extends myFrontModuleActions
             return false;
         }
   }
-
+  
   public function executeViewEvent(sfWebRequest $request)
   {
     $eventId = $request->getParameter('id');

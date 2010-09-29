@@ -1,0 +1,33 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: AccountType
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: account_type
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+          - account_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          Cuentas: [account_list]
+        class: AccountTypeAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

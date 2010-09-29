@@ -14,6 +14,6 @@ class Property extends BaseProperty
 {
   public function __toString()
   {
-    return $this->getClient().' - '.$this->getHouse()->getAddress();
+    return $this->getClient().' - '.$this->getAddress();
   }
 }

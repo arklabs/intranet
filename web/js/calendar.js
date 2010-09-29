@@ -51,7 +51,16 @@ function fullcalendarinit() {
                      }
                      if ((view.name == 'month' || event.allDay) && event.description!='') {
                          element.attr("original-title", event.description);
-                         element.tipsy({fade: true, gravity: "sw", live: true});
+                         element.tipsy({fade: true, gravity: "sw", live: true,  html: true, title: function(){
+                                 tit = $.ajax({
+                                       type: "GET",
+                                       url: "/index.php/+/event/getEventBasics/",
+                                       data: "event-id="+event.id,
+                                       async: false
+                                 }).responseText;
+                                 return tit;
+                            }
+                        });
                      }
                 },
                 loading: function(isLoading){

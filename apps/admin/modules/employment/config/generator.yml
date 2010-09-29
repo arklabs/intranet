@@ -10,37 +10,50 @@ generator:
     config:
       actions: ~
       fields:
-        client:   { label: Cliente }
-        phone:    { label: Telefono }
-        colorbox_close_enable: { label: " " }
+        company_id: {label: Compa&ntilde;&iacute;a }
+        city_id:    { label: Ciudad}
+        address: {label: Direcci&oacute;n }
+        zipcode: {label: C&oacute;digo Postal }
+        phone: {label: Tel&eacute;fono  }
+        website: {label: Sitio web  }
+        ocupation: {label: Ocupaci&oacute;n  }
+        years: {label: A&ntilde;os, help: A&ntilde;os que lleva en ese trabajo.}
+        income_value: {label: Ingreso  }
+        income_recurrence: { label: Recurrencia, help: 'Cada cu&aacute;nto tiempo obtiene el ingreso anterior.'}
+        colorbox_close_enable: {label: ' '}
       list:
-        actions: []
-        loremize: false
         display:
-          - '=title'
+          - '=id'
           - client_id
           - company_id
-          - phone
-          - start_date
-          - end_date
+          - ocupation
+          - years
         sort:
-          - title
+          - id
           - asc
         table_method: getAdminListQuery
         table_count_method: ~
         sortable: false
       filter:
         display:
-          - title
-          - company_id
-          - client_id
+          - id
+          - address
+          - zipcode
           - phone
-          - start_date
-          - end_date
+          - fax
+          - website
+          - ocupation
+          - years
+          - income_value
+          - income_recurrence
+          - client_id
+          - company_id
+          - city_id
       form:
         display:
-          NONE: [client, title, client_id, company_id, colorbox_close_enable]
-          Others: [phone, start_date, end_date]
+          Cliente: [cliente, client_id]
+          Informaci&oacute;n de la compa&ntilde;&iacute;a: [company_id, city_id, address, zipcode, phone, fax, website, colorbox_close_enable]
+          Informaci&oacute;n del cliente en el trabajo: [ ocupation, years, income_value, income_recurrence]
         class: EmploymentAdminForm
         fields: {  }
       edit: ~

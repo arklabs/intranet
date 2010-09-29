@@ -1,0 +1,5 @@
+.tipsy-inner{ text-align: left; max-width: 600px;}
+.tipsy-inner table tr td{ vertical-align: top; padding-right: 3px;}
+.tipsy-inner table tr td p {max-width: 200px; text-align: justify; line-height: 12px;}
+.tipsy-inner table tr td label { white-space: nowrap;}
+.tipsy-inner h3 { color: white !important; font-size: 125%;}
