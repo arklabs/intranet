@@ -22,9 +22,6 @@ class incommingCallRealStateActions extends autoIncommingCallRealStateActions
 
           try {
             $event = $form->save();
-            $this->getUser()->setFlash('notice', $notice);
-            $redirection = $this->getRouteArrayForAction('edit', $event);
-            $this->redirect($redirection);
             if ($request->hasParameter('dm_embed') && $request->hasParameter('dm_embed') == 1){
                 echo '<script type="text/javascript"> if (parent.reload) parent.reload(); parent.$.fn.colorbox.close();</script>'; die;
             }
