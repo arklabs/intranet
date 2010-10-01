@@ -124,7 +124,7 @@ class eventComponents extends myFrontModuleComponents
                 if (!array_key_exists($e->getDmUserId(), $agents)){
                     $agents[$e->getDmUserId()] = array();
                 }
-                if (!array_key_exists($e->getEventStatus()->getName(), $agents[$e->getDmUser()]))
+                if (!array_key_exists($e->getEventStatus()->getName(), $agents[$e->getDmUserId()]))
                     $agents[$e->getDmUserId()][$e->getEventStatus()->getName()] = 0;
                 $agents[$e->getDmUserId()][$e->getEventStatus()->getName()]++;
                 $agents[$e->getDmUserId()]['Total']++;
@@ -186,7 +186,7 @@ class eventComponents extends myFrontModuleComponents
                 if (!array_key_exists($e->getDmUserId(), $agents)){
                     $agents[$e->getDmUserId()] = array();
                 }
-                if (!array_key_exists($e->getEventStatus()->getName(), $agents[$e->getDmUser()]))
+                if (!array_key_exists($e->getEventStatus()->getName(), $agents[$e->getDmUserId()]))
                     $agents[$e->getDmUserId()][$e->getEventStatus()->getName()] = 0;
                 $agents[$e->getDmUserId()][$e->getEventStatus()->getName()]++;
                 $agents[$e->getDmUserId()]['Total']++;

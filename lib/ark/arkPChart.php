@@ -21,6 +21,9 @@ class arkPChart{
      $this->pData = new pData();
      $this->arkPCache = new arkPCache(sfConfig::get('sf_root_dir').'/web/cache/');
      $this->pChart = new pChart($this->CanvasWidth,$this->CanvasHeight);
+     $this->pChart->setColorPalette(8,255,0,0);
+     $this->pChart->setColorPalette(9,0,255,0);
+     $this->pChart->setColorPalette(10,0,0,255);
    }
 
    public function addSerie($serieName, $serieArray, $isAbsciseLabelSerie = false){
@@ -46,6 +49,7 @@ class arkPChart{
    
    // creates $pChart instance and prepare chart 
    public function draw(){
+
         if($this->arkPCache->IsInCache($this->ChartPrefix,$this->pData->GetData())){
 		$this->FileName = "/cache/".$this->arkPCache->GetHash($this->ChartPrefix,$this->pData->GetData());
 	}
@@ -68,7 +72,7 @@ class arkPChart{
             $this->pChart->drawLegend(860,30,$this->pData->GetDataDescription(),255,255,255);
             $this->pChart->setFontProperties(dmOs::join(sfConfig::get('dm_core_dir'), 'lib/vendor/pChart/Fonts/tahoma.ttf'),10);
             $this->pChart->drawTitle(60,22,$this->GraphTitle,255,255,255,585);
-
+            
             $this->arkPCache->WriteToCache($this->ChartPrefix,$this->pData->GetData(),$this->pChart);
             $this->FileName = "/cache/".$this->arkPCache->GetHash($this->ChartPrefix,$this->pData->GetData());
             $this->pChart->Render(sfConfig::get('sf_root_dir').'/web'.$this->FileName);
