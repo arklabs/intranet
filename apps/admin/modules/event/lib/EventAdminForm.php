@@ -81,7 +81,7 @@ class EventAdminForm extends BaseEventForm
      $this->getWidget('category_id')->setAttribute('id','watchedSelectBox');
      $this->getValidatorSchema()->setPostValidator(new sfValidatorAnd(array(new arkForceDateClientRelation(), new arkValidateClientPropertyRelation())));
      
-     if ($this->isNew() || ((!$context->getUser()->hasPermission('eventChangeStatus') && !$this->thisUserOwnTheEvent()) && !$context->getUser()->isSuperAdmin())){ // poniendo pendiente la nueva cita
+     if ($this->isNew() || (!$this->eventIsAssignedToThisUser() && (!$context->getUser()->hasPermission('eventChangeStatus') && !$this->thisUserOwnTheEvent()) && !$context->getUser()->isSuperAdmin())){ // poniendo pendiente la nueva cita
   	 	$this->setWidget('status_id', new sfWidgetFormInputHidden());
   	 	if ($this->isNew()){
 	  	    $this->getWidget('status_id')->setAttribute('value', Doctrine::getTable('EventStatus')->getDefaultValue());
@@ -159,11 +159,24 @@ class EventAdminForm extends BaseEventForm
   protected function thisUserOwnTheEvent(){
   	if ($this->isNew()) 
   		return false;
-	$tmp = $this->getObject()->getDmUser()->toarray();
-	if (count($tmp) == 0) return false;
-	$event_user_id = $tmp[0]['id'];
+	$tmp = $this->getObject()->getDmUser();
 
-	return $this->getObject()->getCreatedBy()->getId() == $event_user_id;
+	if (!count($tmp)) return false;
+
+	$event_user_id = $tmp[0]->getId();
+
+	return ($this->getObject()->getCreatedBy()->getId() == $event_user_id);
+  }
+
+  protected function eventIsAssignedToThisUser(){
+      if ($this->isNew())
+  		return false;
+	$tmp = $this->getObject()->getDmUser();
+
+	if (!count($tmp)) return false;
+	$event_user_id = $tmp[0]->getId();
+        $context = dmContext::getInstance();
+	return ($context->getUser()->getDmUser()->getId()  == $event_user_id);
   }
   
   protected function setFancyDateTimeSelector($lock_dates = false){
