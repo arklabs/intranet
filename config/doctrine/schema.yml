@@ -15,9 +15,9 @@ Client:
     home_phone:   { type: string(32)}
     licence:      { type: string(32)}
     assigned_to:  { type: integer   }
-    ssn:          { type: integer   }
+    ssn:          { type: string(32)}
     dob:          { type: timestamp }
-    source_id:    { type: integer, notnull: true }
+    source_id:    { type: integer }
   relations:
     Source:
       local:        source_id
@@ -47,79 +47,77 @@ Telemarker:
     type: column_aggregation
     keyField: type
     keyValue: Telemarker
-Affiliate:
-  inheritance:
-    extends: DmUser
-    type: column_aggregation
-    keyField: type
-    keyValue: Affiliate
+PropertyList:
+  actAs: [Timestampable, DmVersionable, DmBlameable]
   columns: 
-    aff_company_id: 	  { type: integer, notnull: false	}
-    aff_source_id: 		  { type: integer, notnull: false   }
-  relations: 
-    AffiliateCompany: 
-      class: Company
-      local: aff_company_id
-      foreign: id 
-      foreignAlias: AffiliateCompany
-    AffiliateSource:
-      class: Source
-      local:        source_id
-      foreign:      id
-Assessor: 
-  inheritance:
-    extends: DmUser
-    type: column_aggregation
-    keyField: type
-    keyValue: Assessor
-  columns: 
-    ass_source_id: 		  { type: integer, notnull: false   }
-  relations: 
-    AssessorSource:
-      class: Source
-      local:        ass_source_id
-      foreign:      id
-ExternalAgent: 
-  inheritance:
-    extends: DmUser
-    type: column_aggregation
-    keyField: type
-    keyValue: ExternalAgent
-  columns: 
-    extag_company_id: 	 { type: integer, notnull: false	}
-    extag_source_id: 		 { type: integer, notnull: false   	}
-  relations: 
-    ExternalAgentCompany: 
-      class: Company
-      local: extag_company_id
-      foreign: id
-    Source:
-      local:        source_id
-      foreign:      id
-Property:
-  columns:
-    client_id:                      { type: integer, notnull: true }
     address:                        { type: string(255), notnull: true  }
-    bank_id:                        { type: integer     }
     parcel:                         { type: integer     }
-    city_id:                        { type: integer, notnull: true }
     rooms_number:                   { type: integer     }
     bath_rooms_number:              { type: integer     }
     zipcode:                        { type: integer(5)  }
     sqft:                           { type: integer     }
     lote:                           { type: integer     }
     year_built:                     { type: integer(4)  }
+    property_type_id:               { type: integer     }
+    city_id:                        { type: integer, notnull: true }
+  relations:
+    PropertyCondition:
+      class:  PropertyCondition
+      refClass:  ConditionSent
+    PropertyType:
+      local:      property_type_id
+      foreign:    id
+      type: one
+    City:
+      local:        city_id
+      foreign:      id
+      type: one
+PropertyOnSell:
+  inheritance:
+    extends: PropertyList
+    type: column_aggregation
+    keyField: type
+    keyValue: PropertyOnSell
+  columns:
+    price:        { type: integer}
+    mls:          { type: string(10) }
+    agent_id:     { type: integer }
+    ref_agent_id: { type: integer }
+    hoa:          { type: string(255)}
+    ss:           { type: enum, values: [NO, YES]}
+    apr:          { type: enum, values: [NO, YES]}
+    comments:     { type: clob}
+    status:       { type: enum, values: [ON SALE, IN SCROW, SOLD, ON HOLD, CANCELLED]}
+  relations:
+    Agent:
+      local: agent_id
+      foreign: id
+      type: one
+    RefAgent:
+      class: Agent
+      foreign: id
+      local: ref_agent_id
+      type: one
+Property:
+  inheritance:
+    extends: PropertyList
+    type: column_aggregation
+    keyField: type
+    keyValue: Property
+  columns:
+    client_id:                      { type: integer }
+    bank_id:                        { type: integer     }
     years_on_property:              { type: integer(3)  }
     people_on_property:             { type: integer(2)  }
     rent_amount_received:           { type: float       }
     tasa:                           { type: float       }
     modified_year:                  { type: string(4)   }
     brought_year:                   { type: string(4)   }
+    balance:                        { type: string(32)  }
     current_debt:                   { type: float       }
     estimated_current_value:        { type: float       }
     property_payment:               { type: float       }
     taxes_included_in_payment:      { type: boolean     }
-    property_type_id:               { type: integer     }
     property_use_id:                { type: integer     }
     property_loan_rate_type_id:     { type: integer     }
   relations:
@@ -131,10 +129,6 @@ Property:
       local:      property_use_id
       foreign:    id
       type: one
-    PropertyType:
-      local:      property_type_id
-      foreign:    id
-      type: one
     Bank:
       local:  bank_id
       foreign:  id
@@ -143,10 +137,6 @@ Property:
       local:      client_id
       foreign:    id
       onDelete:   CASCADE
-    City:
-      local:        city_id
-      foreign:      id
-      type: one
 LoanRateType:
   columns:
     name: { type: string(64)}
@@ -156,6 +146,24 @@ PropertyUse:
 PropertyType:
   columns:
     name: { type: string(64)}
+PropertyTransaction:
+  columns:
+    name: { type: string(255), notnull: true }
+PropertyCondition:
+  columns:
+    name: { type: string(255), notnull: true }
+ConditionSent:
+  actAs: [Timestampable, DmVersionable]
+  columns:
+    property_list_id: { type: integer, notnull: true }
+    property_condition_id: { type: integer, notnull: true }
+  relations:
+    PropertyList:
+      local: property_list_id
+      foreign: id
+    PropertyCondition:
+      local: property_condition_id
+      foreign: id
 State:
   columns:
     name:
@@ -348,19 +356,109 @@ ClientLiabilities:
 IncommingCall:
   actAs: [Timestampable, DmBlameable, DmTaggable]
   columns:
-    dm_user_id:       { type: integer, notnull: true }
-    time_in_min:      { type: integer, notnull: true, default: 0}
-    description:      { type: clob }
-    reason_id: 		  { type: integer, notnull: true }
+    first_name:    { type: string(255), notnull: true }
+    last_name:     { type: string(255), notnull: true }
+    cel:           { type: string(25)}
+    home_phone:    { type: string(25)}
+    comments:      { type: clob }
+IncommingCallInventrary:
+  inheritance:
+    extends: IncommingCall
+    type: column_aggregation
+    keyField: type
+    keyValue: IncommingCallInventrary
+  columns:
+    property_id: { type: integer }
+    caller_id:   { type: integer }
   relations:
-    IncommingCallReason: 
+    PropertyOnSell:
+      local: property_id
+      foreign: id
+      type: one
+    IncommingCallUsualCallers:
+      local: caller_id
+      foreign: id
+      type: one
+IncommingCallRealState:
+  inheritance:
+    extends: IncommingCall
+    type: column_aggregation
+    keyField: type
+    keyValue: IncommingCallRealState
+  columns:
+    agent_id:    { type: integer }
+    caller_id:   { type: integer }
+    file_type_id: { type: integer }
+  relations:
+    Agent:
+      local: agent_id
+      foreign: id
+      type: one
+    IncommingCallUsualCallers:
+      local: caller_id
+      foreign: id
+      type: one
+    FileType:
+      local: file_type_id
+      foreign: id
+      type: one
+IncommingCallActiveMod:
+  inheritance:
+    extends: IncommingCall
+    type: column_aggregation
+    keyField: type
+    keyValue: IncommingCallActiveMod
+  columns:
+    property_id: { type: integer }
+    agent_id:    { type: integer }
+    caller_id:   { type: integer }
+    reason_id:   { type: integer }
+  relations:
+    PropertyList:
+      local: property_id
+      foreign: id
+      type: one
+    Agent:
+      local: agent_id
+      foreign: id
+      type: one
+    IncommingCallUsualCallers: 
+      local: caller_id
+      foreign: id 
+      type: one 
+    IncommingCallReason:
       local: reason_id
       foreign: id
-      onDelete: RESTRICT 
-    DmUser:
-      local:    dm_user_id
-      foreign:  id
-      onDelete: CASCADE
+      type: one
+IncommingCallProspect:
+  inheritance:
+    extends: IncommingCall
+    type: column_aggregation
+    keyField: type
+    keyValue: IncommingCallProspect
+  columns:
+    source_id: { type: integer }
+  relations:
+    Source:
+      local: source_id
+      foreign: id
+    FileType:
+      class: FileType
+      refClass: IncommingCallProspectInterest
+IncommingCallProspectInterest:
+  columns:
+     incomming_call_prospect_id: {type: integer }
+     file_type_id: {type: integer }
+  relations:
+    IncommingCallProspect:
+      local: incomming_call_prospect_id
+      foreign: id
+    FileType:
+      local: file_type_id
+      foreign: id
+IncommingCallUsualCallers:
+  columns:
+    name: { type: string(255), notnull: true }
 IncommingCallReason: 
   columns: 
     name: 			 { type: string(255), notnull: true}
@@ -389,7 +487,7 @@ Event:
     phraseology_id:   { type: integer 					  }
     service_id:       { type: integer, notnull: true }
   relations:
-    EventService:
+    FileType:
       local: service_id
       foreign: id
       type: one
@@ -439,9 +537,7 @@ EventDocument:
 Document:
   columns:
     name:             { type: string(255), notnull: true   }
-EventService:
-  columns:
-    name:             { type: string(255), notnull: true   }
+
 EventFeedBack:
   actAs: [Timestampable, DmBlameable]
   columns:

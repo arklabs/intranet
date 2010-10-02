@@ -43,7 +43,7 @@ class eventActions extends myFrontModuleActions
             $end = date('Y-m-d h:i', $end);
             $user = $this->getUser()->getDmUser()->getId();
             $q = null;
-            Doctrine::getTable('Event')->starting($start, $q)->ending($end, $q)->forUser($user, $q);
+            Doctrine::getTable('Event')->starting($start, $q)->ending($end, $q)->forUser($this->getUser()->getDmUser(), $q);
             
             $events = array();
             $eventList = $q->execute();
@@ -422,7 +422,6 @@ class eventActions extends myFrontModuleActions
   		$agent = $agent[0];
   		
   		try{
-  			echo $agent->getId();
   			$event->setDmUserId($agent->getId());
   			$eventStatusAssigned = Doctrine::getTable('EventStatus')->findByName('Asignado');
   			$event->setStatusId($eventStatusAssigned[0]->getId());

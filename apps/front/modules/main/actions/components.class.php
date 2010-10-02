@@ -97,11 +97,11 @@ class mainComponents extends myFrontModuleComponents
     $this->menu
     ->addChild('Dashboard', '@homepage')->liClass('nav-top-item no-childs')->end()
     ->addChild('Reportes', _link('main/reportes'))->liClass('nav-top-item no-childs')->credentials(array('viewReports_front'))->end()
-    ->addChild('Registro de llamadas', _link('main/registroDeLlamadas'))->liClass('nav-top-item no-childs')->credentials(array('listIncommingCalls_front'))->end()
-    ->addChild('Eventos y Trámites')->label('<span>Eventos y Trámites</span>')->liClass('nav-top-item')->credentials(array('listClientFiles_front', 'listEvents_front', 'viewClientFileCalendar_front', 'viewEventCalendar_front'))
+    ->addChild('Recepci&oacute;n', _link('main/recepcion'))->liClass('nav-top-item no-childs')->credentials(array('listIncommingCalls_front'))->end()
+    ->addChild('Citas')->label('<span>Citas</span>')->liClass('nav-top-item')->credentials(array('listClientFiles_front', 'listEvents_front', 'viewClientFileCalendar_front', 'viewEventCalendar_front'))
             ->addChild('Calendario de Eventos',$this->getHelper()->link('evento/fullCalendar'))->liClass('nav-trackable')->credentials('viewEventCalendar_front')->end()
             ->addChild('Listado de Eventos',  $this->getHelper()->link('event/list'))->liClass('nav-trackable')->credentials('listEvents_front')->end()
-            ->addChild('Asignar Citas',  $this->getHelper()->link('event/asignarCitas'))->liClass('nav-trackable')->credentials('eventAssign')->end()
+            ->addChild('Asignar Citas',  $this->getHelper()->link('event/asignarCitas'))->liClass('nav-trackable')->credentials('assignDates_front')->end()
             ->addChild('Consultar Fraseologias',  $this->getHelper()->link('event/fraseologias'))->liClass('nav-trackable')->end()
             ->addChild('Calendario de Trámites',  $this->getHelper()->link('clientFile/fullCalendar'))->liClass('nav-trackable')->credentials('viewClientFileCalendar_front')->end()
             ->addChild('Listado de Trámites',  $this->getHelper()->link('clientFile/list'))->liClass('nav-trackable')->credentials('listClientFiles_front')->end()
@@ -275,22 +275,6 @@ class mainComponents extends myFrontModuleComponents
     // Your code here
   }
 
-  public function executeIncommingCallDashboard()
-  {
-    if (is_null(self::$_ParsedDashYamlFile)){
-          // parse sidebar configuration yml file.
-          $configFile = sfConfig::get('sf_app_dir') . '/config/qdashboard.yml';
-            if (!file_exists($configFile)) {
-                return;
-            }
-            self::$_ParsedDashYamlFile = sfYaml::load($configFile);
-      }
-      $config = self::$_ParsedDashYamlFile;
-      $this->dashDescription = $config['dashboards'];
-      $this->dashDescription = $this->dashDescription['incomming-calls'];
-      if (is_null($this->requestedDashBoardName)||$this->requestedDashBoardName==''){
-            return ''; // dashboard name most be passed
-      }
-  }
+  
 
 }

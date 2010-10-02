@@ -12,7 +12,6 @@ $sfModule = 'client';
 $table = _table('.data_table')->head(
   //_tag('input', array('type'=>'checkbox', 'class'=>'check-all')),
   __('Nombre'),
-  __('Dirección'),
   __('Teléfono'),
   __('Tramites'),
   __('Acciones')
@@ -25,7 +24,6 @@ foreach ($clientPager as $client)
   $table->body(
   //_tag('input', array('type'=>'checkbox', 'value'=>$client->getId(), 'name'=>'ids[]')),
   sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $client->getId(),'dm_embed'  => 1))->getHref(), $client->getUsername(), $client->getFirstName().' '.$client->getLastName()),
-  ($client->getLiveIn())?sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/house/edit')->params(array('dm_embed'=>1, 'pk'=>$client->getHouse()->getId()))->getHref(), 'Clic para editar esta dirección', $client->getHouse()):sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/house/new')->params(array('dm_embed'=> 1))->getHref(), 'Clic para agregar la vivienda de este cliente', "No asignado"),
   ($client->getPhone())?sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $client->getId(),'dm_embed'  => 1))->getHref(), 'Clic para modificar el teléfono de este cliente', $client->getPhone()):sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $client->getId(),'dm_embed'  => 1))->getHref(), 'Clic para agregar el teléfono de este cliente', "No asignado"),
   get_partial('client/clientFilesCell', array('client'=>$client)),
   _open('a.bt-flat.fg-button.fg-button-icon-right.ui-widget.ui-state-default.ui-corner-all', array('tabindex'=>0, 'href'=>'#')).
@@ -95,7 +93,6 @@ echo $table;
 		  aoColumns: [
 					      {"bSortable": true},
 					      {"bSortable": true, "sClass": "title-col"},
-					      {"bSortable": false},
 					      {"bSortable": false},
 					      {"bSortable": false},
 					 ]

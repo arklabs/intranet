@@ -8,16 +8,18 @@
 class agentComponents extends myFrontModuleComponents
 {
     public function executeDatesByAgent(){
+      
+      $dstart = $this->getRequest()->getParameter('dateStart');
+      $dend = $this->getRequest()->getParameter('dateEnd');
+      
+      $agents = Doctrine::getTable('Agent')->getWithEvents($dstart, $dend);
       $this->showColumns = array(
           'Agent'=>array('label'=>'Agente', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string', 'link_to_object'=>false),
           'num_events'=>array('label'=>'Cantidad de Citas', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
           'num_fevents'=>array('label'=>'Citas Finalizadas', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
           'efectividad'=>array('label'=>'Efectividad', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
       );
-      $dstart = $this->getRequest()->getParameter('dateStart');
-      $dend = $this->getRequest()->getParameter('dateEnd');
-      
-      $agents = Doctrine::getTable('Agent')->getWithEvents($dstart, $dend);
+
       $this->listArray = array();
       foreach($agents as $agent)
       {

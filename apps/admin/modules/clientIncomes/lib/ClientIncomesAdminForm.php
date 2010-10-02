@@ -12,7 +12,9 @@ class ClientIncomesAdminForm extends BaseClientIncomesForm
   public function configure()
   {
     parent::configure();
-  if ($this->isNew())
+    $context = dmContext::getInstance();
+    $request = $context->getRequest();
+    if ($this->isNew())
         $this->setWidget('client_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'client','url'=>$this->getHelper()->link('app:admin/+/client/getJsonClientList')->getHref())));
      $this->setBackAndNewClientWidgets($request);
      $this->getValidatorSchema()->setOptions('allow_extra_fields', true);

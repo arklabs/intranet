@@ -62,6 +62,19 @@
 .ark-icon-incomming-call-external-agent{
     background-position: 0 -192px;
 }
+.ark-icon-incomming-call-history{
+    background-position: -48px -288px;
+}
+.ark-icon-list-report-incomming-call-permonth{
+    background-position: 0 -288px;
+}
+.ark-icon-list-report-incomming-call-perdays{
+    background-position: -192px -240px;
+}
+.ark-icon-list-report-incomming-call-perreason{
+    background-position: -192px -240px;
+}
+
 .ark-icon-assign-dates{
     background-position: -96px -144px;
 }
@@ -104,11 +117,14 @@
 				color: #57a000; 
                 }
 
+.shortcut-buttons-set{
+    padding-left: 16px;
+}
 ul.shortcut-buttons-set li {
                 float: left;
                 margin: 0 15px 0 0;
                 padding: 0 !important;
                 background: 0;
                 list-style: none !important;
-                }
+}
 

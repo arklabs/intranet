@@ -23,8 +23,15 @@ class clientExpensesActions extends autoClientExpensesActions
 
           try {
             $event = $form->save();
+            $id = $event->getClientId();
             $this->getUser()->setFlash('notice', $notice);
-            $redirection = $this->getRouteArrayForAction('edit', $event);
+            if ($form->getObject()->isNew()){
+                $module = 'clientExpenses';
+                $redirection = $this->getHelper()->link('app:admin/+/'.$module.'/new')->params(array('defaults[client_id]'=>$id))->getHref();
+            }
+            else {
+                $redirection = $this->getRouteArrayForAction('new', array('defaults[client_id]'=>$id));
+            }
             $this->redirect($redirection);
             if ($request->hasParameter('dm_embed') && $request->hasParameter('dm_embed') == 1){
                 echo '<script type="text/javascript"> if (parent.reload) parent.reload(); parent.$.fn.colorbox.close();</script>'; die;

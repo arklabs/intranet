@@ -1,0 +1,66 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: IncommingCallActiveMod
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: incomming_call_active_mod
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: ' ' }
+        caller_id: { label: Caller }
+        first_name: { label: Nombre }
+        last_name: { label: Apellido}
+        cel: { label: Celular }
+        home_phone: { label: Tel Casa  }
+        property_id: { label: Propiedad  }
+        agent_id: { label: Agente  }
+        reason_id: { label: Motivo de llamada  }
+        property_transaction_id: { label: Transacci&oacute;n  }
+        comments: { label: Comentarios }
+        tags_list:
+          label: Tags
+      list:
+        display:
+          - first_name
+          - last_name
+          - cel
+          - home_phone
+          - agent_id
+          - property_id
+          - reason_id
+          - '=comments'
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - first_name
+          - last_name
+          - cel
+          - home_phone
+          - comments
+          - property_id
+          - agent_id
+          - caller_id
+          - reason_id
+          - created_at
+          - updated_at
+          - created_by
+          - updated_by
+      form:
+        display:
+          Generales: [first_name, last_name, cel, home_phone, colorbox_close_enable]
+          Otros Datos: [agent_id, property_id, reason_id, comments]
+          Tags: [tags]
+        class: IncommingCallActiveModAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

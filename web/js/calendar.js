@@ -51,7 +51,7 @@ function fullcalendarinit() {
                      }
                      if ((view.name == 'month' || event.allDay) && event.description!='') {
                          element.attr("original-title", event.description);
-                         element.tipsy({fade: true, gravity: "sw", live: true,  html: true, title: function(){
+                         element.tipsy({fade: true, gravity: $.fn.tipsy.autoNS, live: true,  html: true, title: function(){
                                  tit = $.ajax({
                                        type: "GET",
                                        url: "/index.php/+/event/getEventBasics/",
@@ -69,6 +69,10 @@ function fullcalendarinit() {
                     else
                         $('#loader').hide();
                 }
+          });
+          // after calendar initialization capture colorbox on close
+          $(document).bind('cbox_closed', function(){
+              reload();
           });
           return true;
 }

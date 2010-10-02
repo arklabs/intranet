@@ -10,6 +10,7 @@ generator:
     config:
       actions: ~
       fields:
+        colorbox_close_enable: { label: ' '}
         client_id: { label: Cliente }
         income_id: { label: Ingreso }
         amount: { label: Monto }

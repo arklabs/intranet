@@ -9,7 +9,8 @@ generator:
     with_doctrine_route: false
     config:
       actions: ~
-      fields: 
+      fields:
+        colorbox_close_enable: { label: ' '}
         client_id: { label: Cliente }
         expense_id: { label: Tipo de Gasto }
         amount: { label: Monto }

@@ -12,6 +12,7 @@
  */
 class incommingCallComponents extends myFrontModuleComponents
 {
+  public static $_ParsedDashYamlFile = null;
 
   public function executeClientList()
   {
@@ -46,20 +47,21 @@ class incommingCallComponents extends myFrontModuleComponents
   public function executeList()
   {
     try{
+        
       	$date_end = $this->getRequestParameter('date_end', '');
       	$date_start = $this->getRequestParameter('date_start', '');
       	$table = Doctrine::getTable('IncommingCall');
       	$query = null;;
       	if ($date_start != ''){
-    $date_start = new sfDate($date_start);
-    		$table->starting($date_start->dump(), $query);  		
+            $date_start = new sfDate($date_start);
+            $table->starting($date_start->dump(), $query);
       	}
       	if ($date_end != ''){
-      $date_end = new sfDate($date_end);
-      $table->ending($date_end->addDay(1)->dump(), $query);
+          $date_end = new sfDate($date_end);
+          $table->ending($date_end->addDay(1)->dump(), $query);
       	}
       	if ($query == null) $query = Doctrine::getTable('IncommingCall')->createQuery();
-    $this->incommingCallPager = $this->getPager($query);
+        $this->incommingCallPager = $this->getPager($query);
       	}catch(Exception $e){ echo $e->getMessage(); return false;}
   }
 
@@ -74,14 +76,12 @@ class incommingCallComponents extends myFrontModuleComponents
 
   public function executeCallsPerDayList()
   {
-        
-
         // initializing series first
         $totalCallsPerDay = array();
-        $clientCallsPerDay = array();
-        $agentCallsPerDay = array();
-        $affliateCallsPerDay = array();
-        $externalAgent = array();
+        $prospectCallsPerDay = array();
+        $activeModsCallsPerDay = array();
+        $realestateCallsPerDay = array();
+        $inventaryCallsPerDay = array();
         $selectedDaysList = array();
         
         $startingDate = $this->getRequest()->getParameter('dateStart');
@@ -97,10 +97,10 @@ class incommingCallComponents extends myFrontModuleComponents
         $cursorDate = $endDate->copy();
         while ($cursorDate->get()>= $startDate->get()){
             $totalCallsPerDay[$cursorDate->get()] = 0;
-            $clientCallsPerDay[$cursorDate->get()] = 0;
-            $agentCallsPerDay[$cursorDate->get()] = 0;
-            $affliateCallsPerDay[$cursorDate->get()] = 0;
-            $externalAgentCallsPerDay[$cursorDate->get()] = 0;
+            $prospectCallsPerDay[$cursorDate->get()] = 0;
+            $activeModsCallsPerDay[$cursorDate->get()] = 0;
+            $realestateCallsPerDay[$cursorDate->get()] = 0;
+            $inventaryCallsPerDay[$cursorDate->get()] = 0;
             array_push($selectedDaysList,$cursorDate->get());
 
             $cursorDate->subtractDay(1);
@@ -117,17 +117,17 @@ class incommingCallComponents extends myFrontModuleComponents
 
             $date->clearTime();
             $totalCallsPerDay[$date->get()]++;
-            switch ($c->getDmUser()->getType()){
-                case 'Client':
-                    $clientCallsPerDay[$date->get()]++;
+            switch ($c->getType()){
+                case 'IncommingCallProspect':
+                    $prospectCallsPerDay[$date->get()]++;
                     break;
-                case 'Affiliate':
-                    $affliateCallsPerDay[$date->get()]++;
+                case 'IncommingCallRealState':
+                    $realestateCallsPerDay[$date->get()]++;
                     break;
-                case 'ExternalAgent':
-                    $externalAgentCallsPerDay[$date->get()]++;
-                case 'Agent':
-                    $agentCallsPerDay[$date->get()]++;
+                case 'IncommingCallInventrary':
+                    $inventaryCallsPerDay[$date->get()]++;
+                case 'IncommingCallActiveMod':
+                    $activeModsCallsPerDay[$date->get()]++;
                     break;
             }
         }
@@ -135,21 +135,21 @@ class incommingCallComponents extends myFrontModuleComponents
         // finally filling list array data
          $this->showColumns = array(
           'Fecha'=>array('label'=>'Fecha', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'date'),
+          'Prospectos'=>array('label'=>'Prospectos', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
+          'Active Mods'=>array('label'=>'Active Mods', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
+          'Inventario'=>array('label'=>'Agentes Externos', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
+          'Real Estate'=>array('label'=>'Afiliados', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
           'Total'=>array('label'=>'Total', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Clientes'=>array('label'=>'Clientes', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Agentes'=>array('label'=>'Agentes', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Agentes Externos'=>array('label'=>'Agentes Externos', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Afiliados'=>array('label'=>'Afiliados', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
          );
           $this->listArray = array();
           foreach($selectedDaysList as $day)
           {
               array_push($this->listArray,  array(
               'Fecha'=> date('Y-m-d',$day),
-              'Clientes'=>$clientCallsPerDay[$day],
-              'Agentes'=>$agentCallsPerDay[$day],
-              'Agentes Externos'=>$externalAgentCallsPerDay[$day],
-              'Afiliados'=>$affliateCallsPerDay[$day],
+              'Prospectos'=>$prospectCallsPerDay[$day],
+              'Active Mods'=>$activeModsCallsPerDay[$day],
+              'Inventario'=>$inventaryCallsPerDay[$day],
+              'Real Estate'=>$realestateCallsPerDay[$day],
               'Total'=> $totalCallsPerDay[$day]
             ));
           }
@@ -163,10 +163,10 @@ class incommingCallComponents extends myFrontModuleComponents
         
         // initializing series first
         $totalCallsPerDay = array();
-        $clientCallsPerDay = array();
-        $agentCallsPerDay = array();
-        $affliateCallsPerDay = array();
-        $externalAgent = array();
+        $prospectCallsPerDay = array();
+        $activeModsCallsPerDay = array();
+        $realestateCallsPerDay = array();
+        $inventaryCallsPerDay = array();
         $selectedDaysList = array();
         
         $startDate = new sfDate($startingDate);
@@ -179,10 +179,10 @@ class incommingCallComponents extends myFrontModuleComponents
         $cursorDate = $startDate->copy();
         while ($cursorDate->get()<= $endDate->get()){
             $totalCallsPerDay[$cursorDate->get()] = 0;
-            $clientCallsPerDay[$cursorDate->get()] = 0;
-            $agentCallsPerDay[$cursorDate->get()] = 0;
-            $affliateCallsPerDay[$cursorDate->get()] = 0;
-            $externalAgentCallsPerDay[$cursorDate->get()] = 0;
+            $prospectCallsPerDay[$cursorDate->get()] = 0;
+            $activeModsCallsPerDay[$cursorDate->get()] = 0;
+            $realestateCallsPerDay[$cursorDate->get()] = 0;
+            $inventaryCallsPerDay[$cursorDate->get()] = 0;
             array_push($selectedDaysList,$cursorDate->getDay());
 
             $cursorDate->addDay(1);
@@ -199,26 +199,26 @@ class incommingCallComponents extends myFrontModuleComponents
             
             $date->clearTime();
             $totalCallsPerDay[$date->get()]++;
-            switch ($c->getDmUser()->getType()){
-                case 'Client':
-                    $clientCallsPerDay[$date->get()]++;
+            switch ($c->getType()){
+                case 'IncommingCallProspect':
+                    $prospectCallsPerDay[$date->get()]++;
                     break;
-                case 'Affiliate':
-                    $affliateCallsPerDay[$date->get()]++;
+                case 'IncommingCallRealState':
+                    $realestateCallsPerDay[$date->get()]++;
                     break;
-                case 'ExternalAgent':
-                    $externalAgentCallsPerDay[$date->get()]++;
-                case 'Agent':
-                    $agentCallsPerDay[$date->get()]++;
+                case 'IncommingCallInventrary':
+                    $inventaryCallsPerDay[$date->get()]++;
+                case 'IncommingCallActiveMod':
+                    $activeModsCallsPerDay[$date->get()]++;
                     break;
             }
         }
     	$arkChart = new arkPChart('Llamadas Diarias', 'perDayIncommingCallChart');
         
-    	$arkChart->AddSerie('Clientes', array_values($clientCallsPerDay));
-    	$arkChart->AddSerie('Agentes', array_values($agentCallsPerDay));
-        $arkChart->AddSerie('Agentes Externos', array_values($externalAgentCallsPerDay));
-        $arkChart->AddSerie('Afiliados', array_values($affliateCallsPerDay));
+    	$arkChart->AddSerie('Prospectos', array_values($prospectCallsPerDay));
+    	$arkChart->AddSerie('Active Mods', array_values($activeModsCallsPerDay));
+        $arkChart->AddSerie('Inventario', array_values($inventaryCallsPerDay));
+        $arkChart->AddSerie('Real Estate', array_values($realestateCallsPerDay));
         $arkChart->AddSerie('Dias', $selectedDaysList, true);
         $arkChart->AddSerie('Total de llamadas', array_values($totalCallsPerDay));
 
@@ -252,14 +252,12 @@ class incommingCallComponents extends myFrontModuleComponents
   {
     	$startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-
-
         // initializing series first
         $totalCallsPerDay = array();
-        $clientCallsPerDay = array();
-        $agentCallsPerDay = array();
-        $affliateCallsPerDay = array();
-        $externalAgent = array();
+        $prospectCallsPerMonth = array();
+        $activeModsCallsPerMonth = array();
+        $realestateCallsPerMonth = array();
+        $inventaryCallsPerMonth= array();
         $selectedDaysList = array();
 
         $startDate = new sfDate($startingDate);
@@ -272,10 +270,10 @@ class incommingCallComponents extends myFrontModuleComponents
         $cursorDate = $startDate->copy();
         while ($cursorDate->get()<= $endDate->get()){
             $totalCallsPerDay[$cursorDate->get()] = 0;
-            $clientCallsPerDay[$cursorDate->get()] = 0;
-            $agentCallsPerDay[$cursorDate->get()] = 0;
-            $affliateCallsPerDay[$cursorDate->get()] = 0;
-            $externalAgentCallsPerDay[$cursorDate->get()] = 0;
+            $prospectCallsPerMonth[$cursorDate->get()] = 0;
+            $activeModsCallsPerMonth[$cursorDate->get()] = 0;
+            $realestateCallsPerMonth[$cursorDate->get()] = 0;
+            $inventaryCallsPerMonth[$cursorDate->get()] = 0;
             array_push($selectedDaysList,date('M', $cursorDate->get()));
 
             $cursorDate->addMonth(1);
@@ -292,26 +290,26 @@ class incommingCallComponents extends myFrontModuleComponents
 
             $date->firstDayOfMonth()->clearTime();
             $totalCallsPerDay[$date->get()]++;
-            switch ($c->getDmUser()->getType()){
-                case 'Client':
-                    $clientCallsPerDay[$date->get()]++;
+            switch ($c->getType()){
+                case 'IncommingCallProspect':
+                    $prospectCallsPerMonth[$date->get()]++;
                     break;
-                case 'Affiliate':
-                    $affliateCallsPerDay[$date->get()]++;
+                case 'IncommingCallRealState':
+                    $realestateCallsPerMonth[$date->get()]++;
                     break;
-                case 'ExternalAgent':
-                    $externalAgentCallsPerDay[$date->get()]++;
-                case 'Agent':
-                    $agentCallsPerDay[$date->get()]++;
+                case 'IncommingCallInventrary':
+                    $inventaryCallsPerMonth[$date->get()]++;
+                case 'IncommingCallActiveMod':
+                    $activeModsCallsPerMonth[$date->get()]++;
                     break;
             }
         }
     	$arkChart = new arkPChart('Llamadas Mensuales', 'perMonthIncommingCallChart');
 
-    	$arkChart->AddSerie('Clientes', array_values($clientCallsPerDay));
-    	$arkChart->AddSerie('Agentes', array_values($agentCallsPerDay));
-        $arkChart->AddSerie('Agentes Externos', array_values($externalAgentCallsPerDay));
-        $arkChart->AddSerie('Afiliados', array_values($affliateCallsPerDay));
+    	$arkChart->AddSerie('Prospectos', array_values($prospectCallsPerMonth));
+    	$arkChart->AddSerie('Active Mods', array_values($activeModsCallsPerMonth));
+        $arkChart->AddSerie('Inventario', array_values($inventaryCallsPerMonth));
+        $arkChart->AddSerie('Real Estate', array_values($realestateCallsPerMonth));
         $arkChart->AddSerie('Dias', $selectedDaysList, true);
         $arkChart->AddSerie('Total de llamadas', array_values($totalCallsPerDay));
 
@@ -329,10 +327,10 @@ class incommingCallComponents extends myFrontModuleComponents
   {
     // initializing series first
         $totalCallsPerMonth= array();
-        $clientCallsPerMonth = array();
-        $agentCallsPerMonth = array();
-        $affliateCallsPerMonth = array();
-        $externalAgent = array();
+        $prospectCallsPerMonth = array();
+        $activeModsCallsPerMonth = array();
+        $realestateCallsPerMonth = array();
+        $inventaryCallsPerDay = array();
         $selectedDaysList = array();
 
         $startingDate = $this->getRequest()->getParameter('dateStart');
@@ -349,10 +347,10 @@ class incommingCallComponents extends myFrontModuleComponents
         while ($cursorDate->get()> $startDate->get()){
             $cursorDate->firstDayOfMonth()->subtractMonth(1);
             $totalCallsPerMonth[$cursorDate->get()] = 0;
-            $clientCallsPerMonth[$cursorDate->get()] = 0;
-            $agentCallsPerMonth[$cursorDate->get()] = 0;
-            $affliateCallsPerMonth[$cursorDate->get()] = 0;
-            $externalAgentCallsPerMonth[$cursorDate->get()] = 0;
+            $prospectCallsPerMonth[$cursorDate->get()] = 0;
+            $activeModsCallsPerMonth[$cursorDate->get()] = 0;
+            $realestateCallsPerMonth[$cursorDate->get()] = 0;
+            $inventaryCallsPerMonth[$cursorDate->get()] = 0;
             array_push($selectedDaysList,$cursorDate->get());
 
            
@@ -369,17 +367,17 @@ class incommingCallComponents extends myFrontModuleComponents
 
             $date->firstDayOfMonth()->clearTime();
             $totalCallsPerMonth[$date->get()]++;
-            switch ($c->getDmUser()->getType()){
-                case 'Client':
-                    $clientCallsPerMonth[$date->get()]++;
+            switch ($c->getType()){
+                case 'IncommingCallProspect':
+                    $prospectCallsPerMonth[$date->get()]++;
                     break;
-                case 'Affiliate':
-                    $affliateCallsPerMonth[$date->get()]++;
+                case 'IncommingCallRealState':
+                    $realestateCallsPerMonth[$date->get()]++;
                     break;
-                case 'ExternalAgent':
-                    $externalAgentCallsPerMonth[$date->get()]++;
-                case 'Agent':
-                    $agentCallsPerMonth[$date->get()]++;
+                case 'IncommingCallInventrary':
+                    $inventaryCallsPerMonth[$date->get()]++;
+                case 'IncommingCallActiveMod':
+                    $activeModsCallsPerMonth[$date->get()]++;
                     break;
             }
         }
@@ -387,11 +385,11 @@ class incommingCallComponents extends myFrontModuleComponents
         // finally filling list array data
          $this->showColumns = array(
           'Fecha'=>array('label'=>'Mes', 'href'=>'','extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Clientes'=>array('label'=>'Clientes', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Agentes'=>array('label'=>'Agentes', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Agentes Externos'=>array('label'=>'Agentes Externos', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-          'Afiliados'=>array('label'=>'Afiliados', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-		  'Total'=>array('label'=>'Total', 'href'=>'', 'is_relation'=>0, 'type'=>'string')
+          'Prospectos'=>array('label'=>'Prospectos', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
+          'Active Mods'=>array('label'=>'Active Mods', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
+          'Inventario'=>array('label'=>'Inventario', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
+          'Real Estate'=>array('label'=>'Real Estate', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
+	  'Total'=>array('label'=>'Total', 'href'=>'', 'is_relation'=>0, 'type'=>'string')
          );
           $this->listArray = array();
 
@@ -399,10 +397,10 @@ class incommingCallComponents extends myFrontModuleComponents
           {
               array_push($this->listArray,  array(
               'Fecha'=> date('M',$day),
-              'Clientes'=>$clientCallsPerMonth[$day],
-              'Agentes'=>$agentCallsPerMonth[$day],
-              'Agentes Externos'=>$externalAgentCallsPerMonth[$day],
-              'Afiliados'=>$affliateCallsPerMonth[$day],
+              'Prospectos'=>$prospectCallsPerMonth[$day],
+              'Active Mods'=>$activeModsCallsPerMonth[$day],
+              'Inventario'=>$inventaryCallsPerMonth[$day],
+              'Real Estate'=>$realestateCallsPerMonth[$day],
               'Total'=> $totalCallsPerMonth[$day]
             ));
           }
@@ -410,7 +408,7 @@ class incommingCallComponents extends myFrontModuleComponents
 
   public function executeCallsPerReasonGraph()
   {
-     $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
+        $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
 
 
@@ -423,21 +421,23 @@ class incommingCallComponents extends myFrontModuleComponents
 
         $endingDate = $endDate->copy()->addDay(1)->dump();  // parche para que grafique tambien hasta lo que va de dia cuando es por defecto
 
-        
         // getting data
         $q = null;
-        Doctrine::getTable('IncommingCall')->groupByReason($q)->starting($startingDate, $q)->ending($endingDate, $q);
-
+        Doctrine::getTable('IncommingCall')->starting($startingDate, $q)->ending($endingDate, $q);
         $calls = $q->execute();
-        
         foreach ($calls as $c){
-            array_push($totalCallsPerReason, $c->getRcallCount());
-            array_push($foundReasons, $c->getIncommingCallReason()->getId());
+            if ($c->getReasonId()){
+                if (!array_key_exists($c->getReasonId(), $foundReasons)){
+                    $foundReasons[$c->getReasonId()] = 0;
+                }
+                $foundReasons[$c->getReasonId()]++;
+            }
         }
+        
     	$arkChart = new arkPChart('Llamadas por razon', 'perReasonIncommingCallChart');
 
-    	$arkChart->AddSerie('Llamadas', $totalCallsPerReason);
-    	$arkChart->AddSerie('Razones', $foundReasons, true);
+    	$arkChart->AddSerie('Razones', array_keys($foundReasons), true);
+    	$arkChart->AddSerie('Llamadas', array_values($foundReasons));
 
 	$arkChart->draw();
     	
@@ -461,16 +461,17 @@ class incommingCallComponents extends myFrontModuleComponents
 
         $endingDate = $endDate->copy()->addDay(1)->dump();  // parche para que grafique tambien hasta lo que va de dia cuando es por defecto
 
-
         // getting data
         $q = null;
-        Doctrine::getTable('IncommingCall')->groupByReason($q)->starting($startingDate, $q)->ending($endingDate, $q);
-
+        Doctrine::getTable('IncommingCall')->starting($startingDate, $q)->ending($endingDate, $q);
         $calls = $q->execute();
-
         foreach ($calls as $c){
-            array_push($totalCallsPerReason, $c->getRcallCount());
-            array_push($foundReasons, $c->getIncommingCallReason()->getId());
+            if ($c->getReasonId()){
+                if (!array_key_exists($c->getReasonId(), $foundReasons)){
+                    $foundReasons[$c->getReasonId()] = 0;
+                }
+                $foundReasons[$c->getReasonId()]++;
+            }
         }
 
         // finally filling list array data
@@ -481,16 +482,38 @@ class incommingCallComponents extends myFrontModuleComponents
          );
           $this->listArray = array();
 
-          foreach($calls as $c)
+          foreach(array_keys($foundReasons) as $rk)
           {
-              array_push($this->listArray,  array(
-              'code'=> $c->getIncommingCallReason()->getId(),
-              'reason'=>$c->getIncommingCallReason()->getName(),
-              'total'=> $c->getRcallCount(),
-            ));
+              $reason = Doctrine::getTable('IncommingCallReason')->findById($rk);
+              if (count($reason) > 0){
+                  array_push($this->listArray,  array(
+                  'code'=> $rk,
+                  'reason'=>$reason[0]->getName(),
+                  'total'=> $foundReasons[$rk]
+                ));
+              }
           }
 	
   }
+
+  public function executeIncommingCallDashboard()
+  {
+    if (is_null(self::$_ParsedDashYamlFile)){
+          // parse sidebar configuration yml file.
+          $configFile = sfConfig::get('sf_app_dir') . '/config/qdashboard.yml';
+            if (!file_exists($configFile)) {
+                return;
+            }
+            self::$_ParsedDashYamlFile = sfYaml::load($configFile);
+      }
+      $config = self::$_ParsedDashYamlFile;
+      $this->dashDescription = $config['dashboards'];
+      $this->dashDescription = $this->dashDescription['incomming-calls'];
+      if (is_null($this->requestedDashBoardName)||$this->requestedDashBoardName==''){
+            return ''; // dashboard name most be passed
+      }
+  }
+  
 
 
 }

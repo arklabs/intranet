@@ -12,6 +12,9 @@ class EmploymentAdminForm extends BaseEmploymentForm
   public function configure()
   {
     parent::configure();
+    $context = dmContext::getInstance();
+    $request = $context->getRequest();
+    
     $years = range(0, 70);$years[0]= '';$years = array_combine($years, $years);
     $this->setWidget('years', new sfWidgetFormChoice(array('choices'=>$years)));
     $this->setValidator('years', new sfValidatorChoice(array('choices'=>range(1, 90), 'required'=>false)));

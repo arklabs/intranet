@@ -1,65 +1,92 @@
 dashboards:
   incomming-calls: 
-    clientes: 
-      title: Clientes
+    prospecto:
+      title: Prospecto <br/><br/>
       extra-classes:
+        color-box-trigger:
       holder-classes:
         ark-icons-48:
         ark-icon-incomming-call-client:
-      url: incommingCall/clienteLlamando
+      url: app:admin/+/incommingCallProspect/new
       params:
+        dm_embed: 1
       credentials:
-        listIncommingCalls_front:
-    afiliados: 
-      title: Afiliados 
+        incommingCallProspect_adicionar_entradas:
+        incommingCallProspect_modificar_entradas:
+    inventario:
+      title: Inventario <br/><br/>
       extra-classes:
+        color-box-trigger:
       holder-classes:
         ark-icons-48:
         ark-icon-incomming-call-affiliate:
-      url: incommingCall/afiliadoLlamando
+      url: app:admin/+/incommingCallInventrary/new
       params:
+        dm_embed: 1
       credentials:
-        listIncommingCalls_front:
-    agent:
-      title: Agentes
+        incommingCallInventrary_adicionar_entradas:
+    activemods:
+      title: Active Mods  <br/><br/>
       extra-classes:
+        color-box-trigger:
       holder-classes:
         ark-icons-48:
         ark-icon-incomming-call-agent:
-      url: incommingCall/agenteLlamando
+      url: app:admin/+/incommingCallActiveMod/new
       params:
+        dm_embed: 1
       credentials:
-        listIncommingCalls_front:
-    external-agent: 
-      title: Agentes externos
+        incommingCallActiveMod_adicionar_entradas:
+    realestate:
+      title: Real Estate <br/><br/>
       extra-classes:
+        color-box-trigger:
       holder-classes:
         ark-icons-48:
         ark-icon-incomming-call-external-agent:
-      url: incommingCall/agenteExternoLlamando
+      url: app:admin/+/incommingCallRealState/new
       params:
+        dm_embed: 1
       credentials:
-        listIncommingCalls_front:
-    assessor: 
-      title: Asesor
-      extra-classes:
-      holder-classes:
-        ark-icons-48:
-        ark-icon-list-report-by-agent:
-      url: main/citasPorAgente
-      params:
-      credentials:
-        listIncommingCalls_front:
+        incommingCallRealState_adicionar_entradas:
     historial: 
-      title: Historial
+      title: Historial <br/><br/>
       extra-classes:
       holder-classes:
         ark-icons-48:
-        ark-icon-list-report-by-agent:
+        ark-icon-incomming-call-history:
       url: incommingCall/historialDeLlamadas
       params:
       credentials:
         viewIncommingCallsHistory_front:
+    tribaldosrealestate:
+      title: Real Estate <br/>Active Listing
+      extra-classes:
+        color-box-trigger:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-incomming-call-external-agent:
+      url: app:admin/+/propertyOnSell/index
+      params:
+        dm_embed: 1
+      credentials:
+        propertyOnSell_listar_contenido:
+        propertyOnSell_adicionar_entradas:
+        propertyOnSell_modificar_entradas:
+    razonesdellamada:
+      title: Administrar <br/>Motivos de llamada
+      extra-classes:
+        color-box-trigger:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-incomming-call-external-agent:
+      url: app:admin/+/incommingCallReason/index
+      params:
+        dm_embed: 1
+      credentials:
+        incommingCallReason_listar_contenido:
+        incommingCallReason_adicionar_entradas:
+        incommingCallReason_modificar_entradas:
   reports:
     per-agent-dates:
       title: Citas por <br/>Agente
@@ -67,7 +94,7 @@ dashboards:
       holder-classes:
         ark-icons-48:
         ark-icon-list-report-by-agent:
-      url: main/citasPorAgente
+      url: event/citasPorAgente
       params:
       credentials:
         viewReportDatesByAgents_front:
@@ -77,50 +104,70 @@ dashboards:
       holder-classes:
         ark-icons-48:
         ark-icon-list-report-by-telemarker:
-      url: main/citasPorTelemarcador
+      url: event/citasPorTelemarcador
       params:
       credentials:
         viewReportDatesByTelemarketer_front:
-    per-city-dates:
-      title: Citas por <br/>Ciudad
+    per-day-dates:
+      title: Citas <br/>Diarias
       extra-classes:
       holder-classes:
         ark-icons-48:
-        ark-icon-list-report-by-city:
-      url: main/citasPorCiudad
+        ark-icon-list-report-by-telemarker:
+      url: 'event/citasDiarias'
       params:
       credentials:
-        viewReportDatesByCity_front:
+        viewReportDatesPerDay_front:
+    per-month-dates:
+      title: Citas <br/>Mensuales 
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-list-report-by-telemarker:
+      url: event/citasMensuales
+      params:
+      credentials:
+        viewReportDatesPerMonth_front:
+    #per-city-dates:
+    #  title: Citas por <br/>Ciudad
+    #  extra-classes:
+    #  holder-classes:
+    #    ark-icons-48:
+    #    ark-icon-list-report-by-city:
+    #  url: main/citasPorCiudad
+    #  params:
+    #  credentials:
+    #    viewReportDatesByCity_front:
     per-day-incomming-calls:
       title: Llamadas por <br/>d&iacute;a
       extra-classes:
       holder-classes:
         ark-icons-48:
-        ark-icon-list-report-by-city:
+        ark-icon-list-report-incomming-call-perdays:
       url: incommingCall/llamadasPorDia
       params:
       credentials:
-        viewReportDatesByCity_front:
+        viewReportIncommingCallsPerDay_front:
     per-month-incomming-calls:
       title: Llamadas por <br/>mes
       extra-classes:
       holder-classes:
         ark-icons-48:
-        ark-icon-list-report-by-city:
+        ark-icon-list-report-incomming-call-permonth:
       url: incommingCall/llamadasPorMes
       params:
       credentials:
-        viewReportDatesByCity_front:
+        viewReportIncommingCallsPerMonth_front:
     per-reason-incomming-calls:
       title: Llamadas por <br/>raz&oacute;n
       extra-classes:
       holder-classes:
         ark-icons-48:
-        ark-icon-list-report-by-city:
+        ark-icon-list-report-incomming-call-perreason:
       url: incommingCall/llamadasPorRazon
       params:
       credentials:
-        viewReportDatesByCity_front:
+        viewReportIncommingCallsPerReason_front:
   main: ## quick dashboard for calendar
     calendario-ev:
       title: Calendario de <br/>Eventos
@@ -133,7 +180,7 @@ dashboards:
       credentials:
         viewEventCalendar_front:
     listado-eventos:
-      title: Listado de <br/>Eventos
+      title: Listado de <br/>Citas
       extra-classes:
       holder-classes: 
         ark-icons-48:
@@ -151,7 +198,7 @@ dashboards:
       url: event/asignarCitas
       params:
       credentials:
-        listEvents_front:
+        assignDates_front:
     geo-events:
       title: Geolocalizar <br/>Citas
       extra-classes:
@@ -171,7 +218,7 @@ dashboards:
       params:
       url: event/fraseologias
       credentials:
-        viewReports_front:
+        viewPhraseologies_front:
     calendario-tr:
       title: Calendario de <br/>Trámites
       extra-classes:
@@ -212,14 +259,14 @@ dashboards:
       url: client/geolocalizar
       credentials:
         geoListClients_front:
-    incommingsCalls:
-      title: Incomming <br/>Calls
+    recepcion:
+      title: Recepci&oacute;n <br/><br/>
       extra-classes:
       holder-classes: 
         ark-icons-48:
         ark-icon-list-incomming-calls:
       params:
-      url: main/registroDeLlamadas
+      url: main/recepcion
       credentials:
         listIncommingCalls_front:
     insertCompanies:
@@ -256,3 +303,17 @@ dashboards:
       url: main/reportes
       credentials:
         viewReports_front:
+    prospecto:
+      title: Adicionar <br/>Prospecto
+      extra-classes:
+        color-box-trigger:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-incomming-call-client:
+      url: app:admin/+/incommingCallProspect/new
+      params:
+        dm_embed: 1
+      credentials:
+        viewIncommingCallProspectIcon:
+        incommingCallProspect_adicionar_entradas:
+        incommingCallProspect_modificar_entradas:

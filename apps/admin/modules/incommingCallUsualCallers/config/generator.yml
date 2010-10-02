@@ -1,0 +1,35 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: IncommingCallUsualCallers
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: incomming_call_usual_callers
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=name'
+          - incomming_call_inventrary_list
+          - incomming_call_active_mod_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+          Inventario: [incomming_call_inventrary_list]
+          'Active Mods': [incomming_call_active_mod_list]
+        class: IncommingCallUsualCallersAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

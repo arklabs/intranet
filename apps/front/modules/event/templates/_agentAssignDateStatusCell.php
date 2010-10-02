@@ -2,12 +2,12 @@
 /* Variables:
  **  Event, agentList 
  */
-if (!is_null($event->getDmUser()) && $event->getDmUser() != '' && $event->getEventStatus() != 'Pendiente'){
+if (count($event->getDmUser()) && $event->getEventStatus() != 'Pendiente'){
 	$user = $event->getDmUser();
   	echo _tag('label.assigned', 'Asignado a '.$user[0].(($event->getEventStatus()!='Asignado' && $event->getEventStatus()!='Reasignar' && $event->getEventStatus()!='Reagendar')?' ('.$event->getEventStatus().')':''));
   	echo _tag('br');
 } 
-if (is_null($event->getDmUser()) || $event->getDmUser() == '' || $event->getEventStatus() == 'Pendiente' || $event->getEventStatus() == 'Reasignar'){
+if (!count($event->getDmUser()) ||  $event->getEventStatus() == 'Pendiente' || $event->getEventStatus() == 'Reasignar'){
 	$response = _tag('label.pending', $event->getEventStatus());
 	$response.= _open('select.ev-asign-agent-list', array('id'=>$event->getId()));
 	$response.= _open('option',array('value'=>-1)).'Seleccione un agente'._close('option');

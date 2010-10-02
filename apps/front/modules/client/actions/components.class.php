@@ -200,7 +200,6 @@ class clientComponents extends myFrontModuleComponents
 						     	array('label'=>'Nombre', 'value'=>$client, 'type'=>'string'),
 						     	array('label'=>'Email', 'value'=>$client->getEmail(), 'type'=>'string'),
 						     	array('label'=>'Tel&eacute;fono', 'value'=>$client->getPhone(), 'type'=>'string'),
-						     	array('label'=>'Direcci&oacute;n', 'value'=>$client->getHouse(), 'type'=>'string'),
 						     	array('label'=>'Creado por', 'value'=>$client->getCreatedBy(), 'type'=>'string'),
 						     	array('label'=>'El d&iacute;a', 'value'=>$client->getCreatedAt(), 'type'=>'Date'),
 						     	array('label'=>'Actualizado por', 'value'=>$client->getUpdatedBy(), 'type'=>'string'),

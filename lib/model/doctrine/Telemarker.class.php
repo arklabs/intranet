@@ -26,4 +26,7 @@ class Telemarker extends BaseTelemarker
             $this->addGroupByName('telemarcador');
         }
     }
+    public function  __toString() {
+        return 'tm. '.$this->getFirstName().' '.$this->getLastName();
+    }
 }

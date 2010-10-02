@@ -10,6 +10,7 @@ generator:
     config:
       actions: ~
       fields:
+        colorbox_close_enable: { label: ' ' }
         client_id: { label: Cliente }
         address:  { label: Direcci&oacute;n }
         parcel:   { label: Parcela }
@@ -37,7 +38,7 @@ generator:
         display:
           - '=client_id'
           - bank_id
-          - address
+          - '=address'
           - zipcode
           - city_id
           - parcel
@@ -79,8 +80,8 @@ generator:
       form:
         display:
           Cliente: [ cliente, client_id]
-          Informaci&oacute;n de la propiedad: [address, parcel, rooms_number, bath_rooms_number, zipcode, sqft, lote, year_built, years_on_property, people_on_property, rent_amount_received,  brought_year, modified_year, estimated_current_value, property_use_id, property_type_id, colorbox_close_enable]
-          Informaci&oacute;n de pago: [ city_id, bank_id, property_loan_rate_type_id, current_debt, property_payment, taxes_included_in_payment,  tasa ]
+          Informaci&oacute;n de la propiedad: [address, zipcode, parcel, rooms_number, bath_rooms_number,  sqft, lote, year_built, years_on_property, people_on_property, rent_amount_received,  brought_year, modified_year, estimated_current_value, property_use_id, property_type_id, colorbox_close_enable]
+          Informaci&oacute;n de pago: [ city_id, bank_id, property_loan_rate_type_id, current_debt, property_payment, taxes_included_in_payment,  tasa, balance ]
         class: PropertyAdminForm
         fields: {  }
       edit: ~

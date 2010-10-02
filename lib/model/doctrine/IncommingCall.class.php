@@ -12,7 +12,4 @@
  */
 class IncommingCall extends BaseIncommingCall
 {
-	public function __toString(){
-		return sprintf('%s - %s',$this->getDmUser(), $this->getIncommingCallReason());
-	}
 }

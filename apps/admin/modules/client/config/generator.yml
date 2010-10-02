@@ -46,11 +46,11 @@ generator:
           - source_id
       form:
         display:
-          'Datos personales': [first_name, last_name, email, phone, home_phone, dob, ssn, source_id, colorbox_close_enable]
+          'Datos personales': [first_name, last_name, email, phone, home_phone, dob, ssn,licence, source_id, colorbox_close_enable]
           Propiedades:  [property_list]
           Trabajos:    [employment_list ]
           Citas: [event_list]
-          Contabilidad: [client_expenses_list, client_incomes_list]
+          Presupuesto: [client_expenses_list, client_incomes_list]
           #Trámites: [client_file_list]
         class: ClientAdminForm
         fields: {  }

@@ -3,7 +3,6 @@ use_stylesheet('another-ui/jquery-ui-1.8.2.custom');
 use_stylesheet('dataTable');
 use_helper('Date');
 
-
 // Plugin : List
 // Vars : $pluginPager
 $sfModule = 'event';

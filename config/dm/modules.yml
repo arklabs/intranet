@@ -1,5 +1,4 @@
 Content:
-
   Global:
     main:                   # the main module is required, and must not be removed.
       components:
@@ -17,36 +16,14 @@ Content:
         tramitlegend:
         geolocalizador:
         dateRangeSelector:
-        incommingCallDashboard: 
         reportGraphViewer:
         reportListViewer:
         reportDashBoard:
-        reportDatesByCityConfig:
-        reportDatesByAgentConfig:
-        reportDatesByTelemarkerConfig:
         reportCore:
         reportDashBoardAutoToogle:
         assignDatesRangeSelector:
   Usuarios:
     dm_user:
-    affiliate: 
-      page: false
-      name: Afiliado|Afiliados 
-      front: true
-      components:
-        list: 
-    externalAgent: 
-      page: false
-      name: Agente Externo | Agentes Externos 
-      front: true
-      components:
-        list: 
-    assessor: 
-      page: false
-      name: Asesor|Asesores
-      front: true
-      components:
-        list: 
     client:
       page: false
       name: Cliente|Clientes
@@ -67,6 +44,10 @@ Content:
     source:
       name: Fuente|Fuentes
   Propiedades:
+    #property_list:
+    #  name: T-RE+Prop| T-RE+Props
+    property_on_sell:
+      name: Tribaldos REAL ESTATE | Tribaldos REAL ESTATE
     property: 
       name: Propiedad|Propiedades
     loan_rate_type:
@@ -75,6 +56,10 @@ Content:
       name: Usos | Uso
     property_type:
       name: Tipo de propiedad | Tipos de Propiedad
+    property_condition:
+      name: Condici&oacute;n|Condiciones
+    property_transaction:
+      name: Transacci&oacute;n|Transacciones
     state:
       name: Estado|Estados
     city:
@@ -82,20 +67,104 @@ Content:
       components:
         datesByCity:
         datesByCityChart:
-
-  Bancos:
-    bank:
-      name: Banco|Bancos
-
   Compañias:
-    company:
-      name: Compañia|Compañias
     employment:
-      name: Empleado|Empleados
+      name: Empleo|Empleos
       components:
         list:
+    company:
+      name: Compañia|Compañias
+  Recepcion:
+    incomming_call_inventrary:
+      name: Inventario|Inventario
+    incomming_call_active_mod:
+      name: Active Mod | Active Mods
+    incomming_call_real_state:
+      name: Real Estate | Real Estate
+    incomming_call_prospect:
+      name: Prospecto | Prospectos
+    incomming_call_reason:
+      name: Razon de la llamada | Razones de llamadas
+    incomming_call_usual_callers:
+      name: Caller|Callers
+    incomming_call:
+      page: false
+      front: false
+      admin: false
+      name: 'Llamadas entrantes'
+      components:
+        incommingCallDashboard:
+        reportCallsPerMonthConfig:
+        callsPerMonthGraph:
+        callsPerMonthList:
+        reportCallsPerDayConfig:
+        callsPerDayGraph:
+        callsPerDayList:
+        reportCallsPerReasonConfig:
+        callsPerReasonGraph:
+        callsPerReasonList:
+        historyDatesRangeSelector:
+        clientList:
+        externalAgentList:
+        agentList:
+        assessorList:
+        internalAgentList:
+        affiliateList:
+        list:
+  #Departamentos:
+  #  department:
+  #    name: Departamento|Departamentos
+  Citas:
+    client_file:
+      page: false
+      front: false
+      admin: false
+      components:
+        list:
+        fullcalendar:
+    file_type:
+      page: false
+      front: false
+      name: Servicio | Servicios
+    document:
+      front: false
+      name: Documento|Documentos
+    phraseology:
+      name: Fraseolog&iacute;a | Freaseolog&iacute;as
+      components:
+        list:
+    event:
+      name: Cita|Citas
+      components:
+        geoEventsList:
+        fullcalendar:
+        form:
+        list:
+        reportDatesByCityConfig:
+        reportDatesByAgentConfig:
+        reportDatesByTelemarkerConfig:
+        reportDatesByDayConfig:
+        reportDatesByMonthConfig:
+        perDayDateChart:
+        perDayDateList:
+        perAgentDateChart:
+        perAgentDateList:
+        perTelemarketerDateChart:
+        perTelemarketerDateList:
+        perMonthDateChart:
+        perMonthDateList:
+        agentAssignDates:
+        agentAssignDatesWithRangeSelector:
+    event_category:
+      name: Categor&iacute;a|Categor&iacute;as
+    event_status:
+      name: Situaci&oacute;n|Situaciones
+    event_feed_back:
+      name: Feed Back|Feed Back
 
   Contabilidad:
+    bank:
+      name: Banco|Bancos
     expense:
       name: Gasto|Gastos
     income:
@@ -108,107 +177,43 @@ Content:
       name: Ingresos del cliente
       components:
         list:
-    asset:
-      name: Activo|Activos
-    client_assets:
-      name: Activos del cliente
-      components:
-        list:
-    liabilities:
-      name: Liabilities
-    client_liabilities:
-      name: Client Liabilities
-      components:
-        list:
+    #asset:
+    #  name: Activo|Activos
+    #client_assets:
+    #  name: Activos del cliente
+    #  components:
+    #    list:
+    #liabilities:
+    #  name: Liabilities
+    #client_liabilities:
+    #  name: Client Liabilities
+    #  components:
+    #    list:
+    #wallet:
+    #  name: Cartera|Carteras
 
-    wallet:
-      name: Cartera|Carteras
+    #account:
+    #  name: Cuenta|Cuentas
 
-    account:
-      name: Cuenta|Cuentas
+    #account_type:
+    #  name: Tipo de cuenta|Tipos de cuenta
 
-    account_type:
-      name: Tipo de cuenta|Tipos de cuenta
+    #transaction:
+    #  name: Transacción|Transacciones
 
-    transaction:
-      name: Transacción|Transacciones
+    #automated_transaction:
+    #  name: Transacción recurrente|Transacciones recurrentes
 
-    automated_transaction:
-      name: Transacción recurrente|Transacciones recurrentes
+    #payee:
+    #  name: Beneficiario|Beneficiarios
 
-    payee:
-      name: Beneficiario|Beneficiarios
+    #payment:
+    #  name: Tipo de pago|Tipos de pago
 
-    payment:
-      name: Tipo de pago|Tipos de pago
-
-    category:
-      name: Categoría|Categorías
+    #category:
+    #  name: Categoría|Categorías
       
 
-    advise:
-      name: Asesoramiento
+    #advise:
+    #  name: Asesoramiento
 
-  Llamadas Entrantes:
-    incomming_call_reason: 
-      name: Razon de la llamada | Razones de llamadas    
-    incomming_call:
-      name: 'Llamadas entrantes'
-      components: 
-        reportCallsPerMonthConfig:
-        callsPerMonthGraph:
-        callsPerMonthList:
-        reportCallsPerDayConfig:
-        callsPerDayGraph:
-        callsPerDayList:
-        reportCallsPerReasonConfig: 
-        callsPerReasonGraph:
-        callsPerReasonList:
-        historyDatesRangeSelector: 
-        clientList:
-        externalAgentList:
-        agentList:
-        assessorList: 
-        internalAgentList:
-        affiliateList:  
-        list: 
-  Departamentos: 
-    department: 
-      name: Departamento|Departamentos
-  Procesamiento:
-    client_file:
-      page: false
-      components:
-        list:
-        fullcalendar:
-    file_type:
-    comment:
-      front: false
-      name:  Comentario|Comentarios
-    document:
-      front: false
-      name: Documento|Documentos
-  Calendario:
-    phraseology: 
-      name: Fraseolog&iacute;a | Freaseolog&iacute;as
-      components: 
-        list: 
-    event:
-      name: Evento|Eventos
-      components:
-        geoEventsList:
-        fullcalendar:
-        form:
-        list:
-        perDayDateChart:
-        perMonthDateReport:
-        agentAssignDates:
-        agentAssignDatesWithRangeSelector: 
-    event_category:
-      name: Categor&iacute;a|Categor&iacute;as
-    event_status:
-      name: Situaci&oacute;n|Situaciones
-    event_feed_back:
-      name: Feed Back|Feed Back
-    event_service:
-      name: Servicio|Servicios

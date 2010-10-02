@@ -17,7 +17,7 @@ class Event extends BaseEvent
          return $user[0]->__toString();
     }
     public function  __toString() {
-        return sprintf('%s - %s', $this->getEventCategory(), $this->getAddress());
+        return sprintf('%s - %s', $this->getEventCategory(), ($this->getAddress())?$this->getAddress():$this->getProperty()->getAddress());
     }
     public function buildEventInformationBasics(){
       $info = '';
@@ -54,6 +54,7 @@ class Event extends BaseEvent
       $peopOnProp = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pers en Prop: ').$this->getProperty()->getPeopleOnProperty());
       $cliente =  $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Cliente: ').$this->getClient());
       $estimatedValue = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Valor Estimado: ').$this->getProperty()->getEstimatedCurrentValue());
+      $balance  = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Balance: ').$this->getProperty()->getBalance());
       $detalles= $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Detalles: ')).$context->getHelper()->tag('p',$this->getDescription());
 
       $table = $context->getHelper()->table('v-align=top')->head('','');
@@ -68,7 +69,7 @@ class Event extends BaseEvent
       $table->body($compro, $modifico);
       $table->body($estimatedValue, $debe);
       $table->body($pays, $tasa);
-      $table->body($detalles,'');
+      $table->body($balance,$detalles);
       return $info.$table;
   }
 }

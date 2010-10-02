@@ -116,7 +116,18 @@ class EventTable extends myDoctrineTable
 
         return $this;
     }
+    public function reportStarting($start, Doctrine_Query &$q = null){
+        if (is_null($q))
+        {
+            $q = Doctrine_Query::create()
+            ->from('Event e');
+        }
+        $alias = $q->getRootAlias();
 
+        $q->andWhere(sprintf('%s.created_at >= ?', $alias), $start);
+
+        return $this;
+    }
     public function filterByStatus($status, Doctrine_Query &$q = null){
         
         if (is_null($q))
@@ -183,7 +194,7 @@ class EventTable extends myDoctrineTable
 
         return $this;
     }
-    public function forUser($user_id, Doctrine_Query &$q = null){
+    public function reportEnding($end, Doctrine_Query &$q = null){
         if (is_null($q))
         {
             $q = Doctrine_Query::create()
@@ -191,9 +202,34 @@ class EventTable extends myDoctrineTable
         }
         $alias = $q->getRootAlias();
 
-        $q->andWhere(sprintf('%s.dm_user_id = ?', $alias), $user_id);
-        $q->orWhere(sprintf('%s.created_by = ?', $alias), $user_id);
-        
+        $q->andWhere(sprintf('%s.created_at <= ?', $alias), $end);
+
+        return $this;
+    }
+    public function forUser($dmUserInstance, Doctrine_Query &$q = null){
+        if (is_null($q))
+        {
+            $q = Doctrine_Query::create()
+            ->from('Event e');
+        }
+        $alias = $q->getRootAlias();
+        $user_id = $dmUserInstance->getId();
+        if ($dmUserInstance->hasPermission('modelViewAllEvents'))
+            return $this;
+        if ($dmUserInstance->hasPermission('modelViewOwnEvents') && $dmUserInstance->hasPermission('modelViewAssignedEvents')){
+            $q->addWhere(sprintf('%s.created_by = ?', $alias), $user_id);
+            $q->orWhere(sprintf('%s.dm_user_id = ?', $alias), $user_id);
+        }
+        else if ($dmUserInstance->hasPermission('modelViewAssignedEvents')){
+            $q->addWhere(sprintf('%s.dm_user_id = ?', $alias), $user_id);
+        }
+        else if ($dmUserInstance->hasPermission('modelViewOwnEvents')){
+            $q->addWhere(sprintf('%s.created_by = ?', $alias), $user_id);
+        }
+        if (!$dmUserInstance->hasPermission('modelViewPendingEvents')){
+            $defStatus = Doctrine::getTable('EventStatus')->getDefaultValue();
+            $q->andWhere(sprintf('%s.status_id <> ?', $alias), $defStatus);
+        }
         return $this;
     }
 

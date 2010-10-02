@@ -7,10 +7,7 @@ use_stylesheet('fg-menu');
 use_stylesheet('fb-buttons-menu');
 use_stylesheet('another-ui/jquery-ui-1.8.2.custom');
 
-echo _open('div',array('style'=>'width: 584px'));
-echo _open('a.fg-button.fg-button-icon-right.ui-widget.ui-state-default.ui-corner-all', array('id'=>"print-report-trigger", 'tabindex'=>0, 'href'=>'#','style'=>'float:right;'));
-echo    "&nbsp&nbsp;Exportar";
-echo _close('a');
+echo _open('div',array('style'=>'width: 460px'));
 echo _open('a.fg-button.fg-button-icon-right.ui-widget.ui-state-default.ui-corner-all', array('id'=>"load-report-trigger", 'tabindex'=>0, 'href'=>'#','style'=>'float:right;'));
 echo    "&nbsp&nbsp;Generar Reporte";
 echo _close('a');

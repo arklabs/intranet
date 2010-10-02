@@ -51,6 +51,7 @@ echo _tag('div.min-border-top.list-container', '');
                 $('#widgetField span').get(0).innerHTML = formatDates($('#calendar-container').DatePickerGetDate(false));
              }
          });
+         
          $('#calendar-container').toggle();
          $('#widgetField a').click(function(){
              $('#calendar-container').toggle("fast");
@@ -65,7 +66,7 @@ echo _tag('div.min-border-top.list-container', '');
             	     	$('#loader').hide();
                      },
                      error: function(){
-                         alert('Ha ocurrido un error mientras se obtenía la lista.');
+                         alert('Ha ocurrido un error mientras se obtenï¿½a la lista.');
                      }
                  });
          });

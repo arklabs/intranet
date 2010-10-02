@@ -1,0 +1,64 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: IncommingCallProspect
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: incomming_call_prospect
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: ' ' }
+        caller_id: { label: Caller }
+        first_name: { label: Nombre }
+        last_name: { label: Apellido}
+        cel: { label: Celular }
+        home_phone: { label: Tel Casa  }
+        property_id: { label: Propiedad  }
+        agent_id: { label: Agente  }
+        reason_id: { label: Motivo de llamada  }
+        property_transaction_id: { label: Transacci&oacute;n  }
+        comments: { label: Comentarios }
+        tags_list:
+          label: Tags
+        file_type_list:
+          label: 'Intereses'
+      list:
+        display:
+          - first_name
+          - last_name
+          - cel
+          - home_phone
+          - source_id
+          - '=comments'
+          - created_at
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - first_name
+          - last_name
+          - cel
+          - home_phone
+          - comments
+          - source_id
+          - reason_id
+          - created_at
+          - updated_at
+          - created_by
+          - updated_by
+      form:
+        display:
+          Generales: [first_name, last_name, cel, home_phone, colorbox_close_enable]
+          Otros Datos: [reason_id, source_id, comments, file_type_list]
+        class: IncommingCallProspectAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

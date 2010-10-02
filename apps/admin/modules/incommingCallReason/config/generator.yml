@@ -9,11 +9,11 @@ generator:
     with_doctrine_route: false
     config:
       actions: ~
-      fields: {  }
+      fields:
+        colorbox_close_enable: {label: ' '}
       list:
         display:
           - '=name'
-          - incomming_call_list
         sort:
           - name
           - asc
@@ -25,8 +25,7 @@ generator:
           - name
       form:
         display:
-          NONE: [name]
-          'Llamadas entrantes': [incomming_call_list]
+          NONE: [name, colorbox_close_enable]
         class: IncommingCallReasonAdminForm
         fields: {  }
       edit: ~

@@ -1,0 +1,79 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: PropertyOnSell
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: property_on_sell
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: ' ' }
+        address:  { label: Direcci&oacute;n }
+        parcel:   { label: Parcela }
+        rooms_number: { label: Nro de Cuartos }
+        bath_rooms_number: { label: Nro de ba&ntilde;os }
+        agent_id: { label: Agente }
+        city_id: {label: Ciudad }
+        zipcode: {label: C&oacute;digo Postal}
+        property_type_id: { label: Tipo }
+        year_built: { label: 'A&ntilde;o de const.'}
+        colorbox_close_enable: { label: ' '}
+        price: {label: Precio}
+        ref_agent_id: {label: Refs}
+        comments: { label: Showing Inst }
+      list:
+        display:
+          - price
+          - '=address'
+          - city_id
+          - parcel
+          - rooms_number
+          - bath_rooms_number
+          - sqft
+          - lote
+          - year_built
+          - property_type_id
+          - mls
+          - agent_id
+          - ref_agent_id
+          - hoa
+          - status
+          - ss
+          - apr
+          - comments
+        sort:
+          - status
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - agent_id
+          - ref_agent_id
+          - mls
+          - '=address'
+          - zipcode
+          - city_id
+          - rooms_number
+          - bath_rooms_number
+          - parcel
+          - sqft
+          - lote
+          - property_type_id
+          - year_built
+          - price
+          - hoa
+          - in_scrow
+      form:
+        display:
+          Informaci&oacute;n de la propiedad: [address, zipcode, city_id, parcel, rooms_number, bath_rooms_number, sqft, lote, year_built, mls, property_type_id, colorbox_close_enable]
+          Otros datos: [agent_id, ref_agent_id,  price, hoa, status, ss, apr, comments]
+          Condiciones: [ property_condition_list ]
+        class: PropertyOnSellAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

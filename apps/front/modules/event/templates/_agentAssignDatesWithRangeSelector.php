@@ -11,7 +11,7 @@ use_javascript('lib.dataTable');
 use_stylesheet('dates-row-colors');
 use_stylesheet('dataTable');
 
-
+use_stylesheet('tipsy-addons');
 use_stylesheet('fg-menu');
 use_stylesheet('fb-buttons-menu');
 use_stylesheet('another-ui/jquery-ui-1.8.2.custom');
@@ -75,7 +75,7 @@ echo _tag('div.min-border-top.list-container', '');
                      complete: function(){
                      },
                      error: function(){
-                         alert('Ha ocurrido un error mientras se obtenía la lista de citas.');
+                         alert('Ha ocurrido un error mientras se obtenï¿½a la lista de citas.');
                      }
                  });
          });

@@ -48,6 +48,17 @@ class PropertyAdminForm extends BasePropertyForm
     $this->setWidget('brought_year', new sfWidgetFormChoice(array('choices'=>$pastYears)));
     $this->setValidator('brought_year', new sfValidatorChoice(array('choices'=>range($y-100, $y), 'required'=>false)));
 
+    $this->setWidget('property_use_id', new sfWidgetFormDoctrineChoice(array('model'=>'PropertyUse', 'add_empty'=>true)));
+    $this->setValidator('property_use_id', new sfValidatorDoctrineChoice(array('model'=>'PropertyUse')));
+
+    $this->setWidget('property_loan_rate_type_id', new sfWidgetFormDoctrineChoice(array('model'=>'LoanRateType', 'add_empty'=>true)));
+    $this->setValidator('property_loan_rate_type_id', new sfValidatorDoctrineChoice(array('model'=>'LoanRateType')));
+
+    $this->setWidget('bank_id', new sfWidgetFormDoctrineChoice(array('model'=>'Bank')));
+    $this->setValidator('bank_id', new sfValidatorDoctrineChoice(array('model'=>'Bank')));
+
+
+    $this->getValidator('client_id')->setOption('required', true);
     $this->setBackAndNewClientWidgets($request);
     $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
   }

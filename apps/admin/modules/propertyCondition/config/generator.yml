@@ -1,0 +1,34 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: PropertyCondition
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: property_condition
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        property_list_list:
+          label: 'Property list'
+      list:
+        display:
+          - '=name'
+          - property_list_list
+        sort:
+          - name
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - name
+      form:
+        display:
+          NONE: [name]
+        class: PropertyConditionAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

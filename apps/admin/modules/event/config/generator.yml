@@ -39,9 +39,9 @@ generator:
         document_list:
           label: Documentos recogidos
         new_client:
-          label: ' '
+          label: 'Nuevo '
         new_property:
-          label: ' '
+          label: 'Nueva '
         property_id:
           label: Propiedad
         address:
@@ -49,11 +49,13 @@ generator:
           help: Dejar en blanco en caso de coincidir con la de la Propiedad
       list:
         display:
-          - category_id
+          - title
           - status_id
           - date_start
-          - date_end
           - asigned
+          - created_at
+          - created_by
+          - description
         sort:
           - dm_user_id
           - desc
@@ -71,7 +73,7 @@ generator:
           - updated_at
       form:
         display:
-          Cliente: [cliente, client_id, new_client, property_id, new_property]
+          Cliente: [cliente, client_id, new_client, propiedad,property_id, new_property]
           Seleccion de Fecha y Hora: [fancy_date_time, _loader]
           Informaci&oacute;n del evento: [ title, address, description, category_id, status_id,  city_id, date_start, date_end, phraseology_id, tags,  dm_user_id, service_id, colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
           Feed Back: [ event_feed_back_list,document_list]

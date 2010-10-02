@@ -3,9 +3,9 @@ use_javascript('lib.dataTable');
 use_stylesheet('dates-row-colors');
 use_stylesheet('another-ui/jquery-ui-1.8.2.custom');
 use_stylesheet('dataTable');
+use_stylesheet('tipsy-addons');
 
 use_helper('Date');
-
 // Plugin : List
 // Vars : $pluginPager
 $sfModule = 'event';
@@ -13,7 +13,8 @@ $sfModule = 'event';
 $table = _table('.data_table')->head(
   __('Titulo'),
   __('Cliente'),
-  __('Fecha Inicio'),
+  __('Propiedad'),
+  __('Fecha'),
   __('Creado Por'),
   __('Estado')
 );
@@ -23,17 +24,20 @@ foreach ($eventPager as $event)
   $assignedTo = $event->getDmUser(); 
   $date_start = new sfDate($event->getDateStart());
   $date_end = new sfDate($event->getDateEnd());
+  $address = ($event->getAddress())?$event->getAddress():$event->getProperty()->getAddress();
   $table->body(
-  sprintf('<a href="%s" rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $event->getId(),'dm_embed'  => 1))->getHref(), $event->getDescription(), $event->getTitle()),
-  sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/client/edit')->params(array('pk'=> $event->getClient()->getId(),'dm_embed'  => 1))->getHref(), $event->getClient()->getHouse().' - Clic para ver los detalles del cliente', $event->getClient()->__toString()),
+  sprintf('<a  href="%s" class="color-box-trigger"  rel="ajax-tipsy" id="'.$event->getId().'" title="Clic para ver los detalles de la cita"> %s </a>', _link('app:admin/+/event/edit')->params(array('pk'=>$event->getId(), 'dm_embed'=>1))->getHref(), $event->getTitle()),
+  sprintf('<a  href="%s" class="color-box-trigger" rel="tipsy" title="Clic para ver los detalles de este cliente"> %s </a>', _link('app:admin/+/client/edit')->params(array('pk'=>$event->getClient()->getId(), 'dm_embed'=>1))->getHref(), $event->getClient()->__toString()),
+  sprintf('<a  href="%s" class="color-box-trigger" rel="tipsy" title="Clic para ver los detalles de la propiedad"> %s </a>', _link('app:admin/+/property/edit')->params(array('pk'=>$event->getProperty()->getId(), 'dm_embed'=>1))->getHref(), $address),
   format_date($date_start->dump(), ($date_start->getHour()!= 0)?'MMM d, y h:m a':'MMM d, y','en'),
-  $event->CreatedBy,
+  $event->getCreatedBy()->__toString(),
   get_partial('event/agentAssignDateStatusCell', array('event'=>$event, 'agentList'=>$agentList))
   );
+
 }
-echo _open('form', array('method'=>'POST', 'action'=>_link('app:front/+/event/batchChangeStatus')->getHref(), 'name'=>'eventListForm'));
+//echo _open('form', array('method'=>'POST', 'action'=>_link('app:front/+/event/batchChangeStatus')->getHref(), 'name'=>'eventListForm'));
 echo $table;
-echo _close('form');
+//echo _close('form');
 ?>
 <script type="text/javascript">
    var prepend = '';
@@ -47,6 +51,15 @@ echo _close('form');
             parent.$.fn.colorbox({href: $(this).attr('href'), width:"70%", height:"80%", iframe:true, "css": ["/dmCorePlugin/lib/colorbox/theme3/colorbox.css"],"js":["/dmCorePlugin/lib/colorbox/jquery.colorbox.min.js"]});
             return false;
           });
+        $('a[rel=ajax-tipsy]').tipsy({fade: true, gravity: 'n', live: true, html: true,  title: function(){
+                tit = $.ajax({
+                           type: "GET",
+                           url: "/index.php/+/event/getEventBasics/",
+                           data: "event-id="+$(this).attr('id'),
+                           async: false
+                     }).responseText;
+                     return tit;
+          }});
         $('select.ev-asign-agent-list').each(function(){
             $(this).change(function(){
          	   agentChangeTriggerHandler($(this).attr('id'), this);    
@@ -153,6 +166,7 @@ echo _close('form');
 		      null,
 		      {"bSortable": true, "sType": "date"},
 		      {"bSortable": true},
+                      {"bSortable": true}
 		   ]
       });
        $('th.ui-state-default:first').css('min-width', '1.5em');

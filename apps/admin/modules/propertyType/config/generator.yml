@@ -13,7 +13,6 @@ generator:
       list:
         display:
           - '=name'
-          - property_list
         sort:
           - name
           - asc
@@ -26,7 +25,6 @@ generator:
       form:
         display:
           NONE: [name]
-          Propiedades: [property_list]
         class: PropertyTypeAdminForm
         fields: {  }
       edit: ~

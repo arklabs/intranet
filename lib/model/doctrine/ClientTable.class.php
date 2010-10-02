@@ -14,7 +14,6 @@ class ClientTable extends myDoctrineTable
             ->createQuery('c')
             ->leftJoin('c.ClientFile cf')
             ->leftJoin('c.Agent agent')
-            ->leftJoin('c.House house')
             ->leftJoin('c.CreatedBy createdBy')
             ->leftJoin('c.Employment employment')
             ->leftJoin('c.ClientExpenses expense')
@@ -32,7 +31,6 @@ class ClientTable extends myDoctrineTable
             ->leftJoin('c.ClientFile cf')
             ->leftJoin('c.Event e')
             ->leftJoin('c.Agent assignedTo')
-            ->leftJoin('c.House liveIn')
             ->where('e.dm_user_id = ?', $userId)
             ->orWhere('cf.assigned_to = ?', $userId)
             ->orWhere('c.created_by = ?', $userId);
@@ -46,7 +44,6 @@ class ClientTable extends myDoctrineTable
             return Doctrine::getTable('Client')
             ->createQuery('c')
             ->leftJoin('c.Agent assignedTo')
-            ->leftJoin('c.House liveIn')
             ->where('c.created_by = ?', $sfUser->getId());
         }
     }

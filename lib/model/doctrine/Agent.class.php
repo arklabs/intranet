@@ -27,7 +27,9 @@ class Agent extends BaseAgent
     public function countClients() {
         return $this->getClientsQuery()->count();
     }
-
+    public function  __toString() {
+        return 'ag. '.$this->getFirstName().' '.$this->getLastName();
+    }
     public function  save(Doctrine_Connection $conn = null) {
         parent::save($conn);
         // adding user to telemarketer default group by default
