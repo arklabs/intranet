@@ -27,8 +27,9 @@ class eventComponents extends myFrontModuleComponents
   }
 
   public function executeList()
-  {	
-	  $this->availableStatus = Doctrine::getTable('EventStatus')->getAll();
+  {
+      $eventStatus = Doctrine::getTable('EventCategory')->findByName('cita');
+      $this->availableStatus = $eventStatus[0]->getPossibleStatuses();
       $userId = ($this->getUser()->getGuardUser())?$this->getUser()->getGuardUser()->getId():-1;
       $q = null;
       Doctrine::getTable('Event')->forUser($this->getUser()->getGuardUser(), $q);
@@ -49,7 +50,8 @@ class eventComponents extends myFrontModuleComponents
 
   public function executeGeoEventsList()
   {
-    $this->availableStatus = Doctrine::getTable('EventStatus')->getAll();
+      $this->availableStatus = Doctrine::getTable('EventStatus')->getAll();
+
       $userId = ($this->getUser()->getGuardUser())?$this->getUser()->getGuardUser()->getId():-1;
       $q = null;
       Doctrine::getTable('Event')->forUser($this->getUser()->getGuardUser(), $q)->filterByCategoryName('cita', $q);
@@ -131,7 +133,8 @@ class eventComponents extends myFrontModuleComponents
             }
         }
         
-        $eventStatus = Doctrine::getTable('EventStatus')->createQuery()->execute();
+        $eventStatus = Doctrine::getTable('EventCategory')->findByName('cita');
+        $eventStatus = $eventStatus[0]->getPossibleStatuses();
         $statusSeries = array();
         $totalSerie = array();
         $porCienSerie = array();
@@ -206,7 +209,8 @@ class eventComponents extends myFrontModuleComponents
         $this->showColumns = array(
           'Nombre'=>array('label'=>'Nombre', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string')
          );
-        $eventStatus = Doctrine::getTable('EventStatus')->createQuery()->execute();
+        $eventStatus = Doctrine::getTable('EventCategory')->findByName('cita');
+        $eventStatus = $eventStatus[0]->getPossibleStatuses();
         
         foreach ($eventStatus as $s){
             $this->showColumns[$s->getName()] = array('label'=>$s->getName(), 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string');
@@ -228,9 +232,9 @@ class eventComponents extends myFrontModuleComponents
 
   public function executePerTelemarketerDateChart()
   {
-    $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
+        $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
+	$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
     	$arkChart = new arkPChart('Reporte General de Citas por Telemarcador', 'perTMDateChart');
         $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
@@ -248,7 +252,8 @@ class eventComponents extends myFrontModuleComponents
             }
         }
         
-        $eventStatus = Doctrine::getTable('EventStatus')->createQuery()->execute();
+        $eventStatus = Doctrine::getTable('EventCategory')->findByName('cita');
+        $eventStatus = $eventStatus[0]->getPossibleStatuses();
         $statusSeries = array();
         $totalSerie = array();
         $porCienSerie = array();
@@ -266,7 +271,7 @@ class eventComponents extends myFrontModuleComponents
         }
         $agentNames = array();
         foreach (array_keys($agents) as $agk){
-            array_push($totalSerie, $ag[$agk]['Total']);
+            array_push($totalSerie, $agents[$agk]['Total']);
             $name = Doctrine::getTable('Telemarker')->findById($agk);
             if (count($name)>0)
                 $name = $name[0]->getFirstName().' '.$name[0]->getLastName().' ';
@@ -289,7 +294,7 @@ class eventComponents extends myFrontModuleComponents
 
   public function executePerTelemarketerDateList()
   {
-    // Your code here
+        // Your code here
         $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
 		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
@@ -321,7 +326,8 @@ class eventComponents extends myFrontModuleComponents
         $this->showColumns = array(
           'Nombre'=>array('label'=>'Nombre', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string')
          );
-        $eventStatus = Doctrine::getTable('EventStatus')->createQuery()->execute();
+        $eventStatus = Doctrine::getTable('EventCategory')->findByName('cita');
+        $eventStatus = $eventStatus[0]->getPossibleStatuses();
         foreach ($eventStatus as $s){
             $this->showColumns[$s->getName()] = array('label'=>$s->getName(), 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'string');
         }

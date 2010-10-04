@@ -40,7 +40,7 @@ class Event extends BaseEvent
       $home = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Casa: ').$this->getClient()->getHomePhone());
       $pays = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pagos: ').$this->getProperty()->getPropertyPayment().($this->getProperty()->getTaxesIncludedInPayment()?' + Taxes y Aseg.':''));
       $tasa = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Inter&eacute;s: ').round($this->getProperty()->getTasa(),1).'%');
-      $debe = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Debe: ').$this->getProperty()->getCurrentDebt().' '.$this->getProperty()->getPropertyLoanRateTypeId());
+      $debe = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Debe: ').$this->getProperty()->getCurrentDebt().' - '.$this->getProperty()->getLoanRateType());
       $bank = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Banco: ').$this->getProperty()->getBank());
       $compro = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Compr&oacute;: ').$this->getProperty()->getBroughtYear());
       $modifico = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Modific&oacute;: ').$this->getProperty()->getModifiedYear());
