@@ -44,18 +44,17 @@ generator:
           label: 'Nueva '
         property_id:
           label: Propiedad
-        address:
-          label: Direcci&oacute;n
+        Address:
+          label: ' '
           help: Dejar en blanco en caso de coincidir con la de la Propiedad
       list:
         display:
-          - '=title'
+          - '=description'
           - status_id
           - created_at
           - date_start
           - created_by
           - asigned
-          - '=description'
         sort:
           - dm_user_id
           - desc
@@ -74,9 +73,9 @@ generator:
       form:
         display:
           Cliente: [cliente, client_id, new_client, propiedad,property_id, new_property]
-          Seleccion de Fecha y Hora: [fancy_date_time, _loader]
-          Informaci&oacute;n del evento: [ title, address, description, category_id, status_id,  city_id, date_start, date_end, phraseology_id, tags,  dm_user_id, service_id, colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
-          Feed Back: [ event_feed_back_list,document_list]
+          Seleccion de Fecha y Hora: [fancy_date_time]
+          Informaci&oacute;n del evento: [ description, category_id, status_id,  date_start, date_end, phraseology_id,   dm_user_id, service_id, Address,colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips, tags]
+          Feed Back: [ event_feed_back_list, document_list ]
         class: EventAdminForm
         fields: {  }
       edit: 

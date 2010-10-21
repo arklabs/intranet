@@ -47,30 +47,45 @@ Telemarker:
     type: column_aggregation
     keyField: type
     keyValue: Telemarker
+
+ZipCode:
+  columns:
+    zip_code:     { type: integer, notnull: true }
+    place_name:   { type: string(255) }
+    country_code: { type: string(2)   }
+    state_code:   { type: string(2)   }
+    state_name:   { type: string(255) }
+    localty_name:  { type: string(255) }
+Address:
+  columns:
+    address:      { type: string(255), notnull: true  }
+    zip_code:     { type: integer, notnull: true      }
+    place_name:   { type: string(255)                 }
+    country_code: { type: string(2)                   }
+    state_code:   { type: string(2)                   }
+    state_name:   { type: string(255)                 }
 PropertyList:
   actAs: [Timestampable, DmVersionable, DmBlameable]
   columns: 
-    address:                        { type: string(255), notnull: true  }
+    address_id:                     { type: integer, notnull: true  }
     parcel:                         { type: integer     }
     rooms_number:                   { type: integer     }
     bath_rooms_number:              { type: integer     }
-    zipcode:                        { type: integer(5)  }
     sqft:                           { type: integer     }
     lote:                           { type: integer     }
     year_built:                     { type: integer(4)  }
     property_type_id:               { type: integer     }
-    city_id:                        { type: integer, notnull: true }
   relations:
+    Address:
+      local: address_id
+      foreign: id
+      type: one
     PropertyCondition:
       class:  PropertyCondition
       refClass:  ConditionSent
     PropertyType:
       local:      property_type_id
       foreign:    id
-      type: one
-    City:
-      local:        city_id
-      foreign:      id
       type: one
 PropertyOnSell:
   inheritance:
@@ -98,6 +113,37 @@ PropertyOnSell:
       foreign: id
       local: ref_agent_id
       type: one
+PropertyLoanTime:
+  columns:
+    name: { type: string(255), notnull: true }
+PropertyPayment:
+  columns:
+    property_id:                    { type: integer, notnull: true }
+    bank_id:                        { type: integer     }
+    payment:                        { type: float       }
+    taxes_included_in_payment:      { type: boolean     }
+    property_loan_rate_type_id:     { type: integer     }
+    loan_time_id:                   { type: integer     }
+    loan_nr:                        { type: integer     }
+    current_debt:                   { type: float       }
+    tasa:                           { type: float       }
+  relations:
+    PropertyLoanTime:
+      local: loan_time_id
+      foreign: id
+      type: one
+    Property:
+      class: PropertyList
+      local: property_id
+      foreign: id
+    LoanRateType:
+      local:      property_loan_rate_type_id
+      foreign:    id
+      type: one
+    Bank:
+      local:  bank_id
+      foreign:  id
+      onDelete: RESTRICT
 Property:
   inheritance:
     extends: PropertyList
@@ -105,34 +151,19 @@ Property:
     keyField: type
     keyValue: Property
   columns:
-    client_id:                      { type: integer }
-    bank_id:                        { type: integer     }
+    client_id:                      { type: integer     }
     years_on_property:              { type: integer(3)  }
     people_on_property:             { type: integer(2)  }
     rent_amount_received:           { type: float       }
-    tasa:                           { type: float       }
-    modified_year:                  { type: string(4)   }
+    refinantied_year:               { type: string(4)   }
     brought_year:                   { type: string(4)   }
-    balance:                        { type: string(32)  }
-    current_debt:                   { type: float       }
     estimated_current_value:        { type: float       }
-    property_payment:               { type: float       }
-    taxes_included_in_payment:      { type: boolean     }
     property_use_id:                { type: integer     }
-    property_loan_rate_type_id:     { type: integer     }
   relations:
-    LoanRateType:
-      local:      property_loan_rate_type_id
-      foreign:    id
-      type: one
     PropertyUse:
       local:      property_use_id
       foreign:    id
       type: one
-    Bank:
-      local:  bank_id
-      foreign:  id
-      onDelete: RESTRICT
     Client:
       local:      client_id
       foreign:    id
@@ -211,12 +242,10 @@ ClientFile:
       local:      department_id
       foreign:    id
       onDelete:   RESTRICT
-
 FileType:
   columns:
     name:           { type: string(64), notnull: true }
     css_class_list:  { type: string(255), notnull: false }
-
 Comment:
   actAs:              [ Timestampable ]
   columns:
@@ -232,31 +261,39 @@ Comment:
       local:          dm_user_id
       foreign:        id
       onDelete:       CASCADE
-
 Bank:
   columns:
     name:     { type: string(64), notnull: true }
-
-Company:
+CompanySector:
   columns:
     name:     { type: string(64), notnull: true }
-    address:  { type: string(128) }
-    phone:    { type: string(32) }
+Company:
+  columns:
+    name:         { type: string(64), notnull: true }
+    address_id:   { type: integer }
+    phone:        { type: string(32) }
+    fax:          { type: string(32) }
+    sector_id:    { type: integer    }
+    web_site:     { type: string(255)}
+  relations:
+    CompanySector:
+      local: sector_id
+      foreign: id
+      type: one 
+    Address:
+      local: address_id
+      foreign: id
+      type: one
 
 Employment:
   columns:
-    address:            { type: string(255)               }
-    zipcode:            { type: integer(5)                }
-    phone:              { type: string(32)                }
-    fax:                { type: string(32)                }
-    website:            { type: string(255)               }
-    ocupation:          { type: string(255)               }
-    years:              { type: string(255)               }
+    ocupation:          { type: string(255), notnull: true}
     income_value:       { type: float                     }
     income_recurrence:  { type: enum, values: [HORA, SEMANA, MES, ANNO ] }
     client_id:          { type: integer, notnull: true    }
     company_id:         { type: integer, notnull: true    }
-    city_id:            { type: integer                   }
+    date_start:         { type: timestamp }
+    date_end:           { type: timestamp }
   relations:
     Client:
       local:    client_id
@@ -266,10 +303,6 @@ Employment:
       local:    company_id
       foreign:  id
       onDelete: CASCADE
-    City:
-      local: city_id
-      foreign: id
-      type: one
 
 Expense:
   columns:
@@ -470,23 +503,25 @@ Source:
 Event:
   actAs:   [Timestampable, DmTaggable, DmBlameable, DmVersionable]
   columns:
-    title:            { type: string(128), notnull: true  }
     date_start:       { type: timestamp, notnull: true    }
     date_end:         { type: timestamp, notnull: true 	  }
     description:      { type: clob, notnull: true         }
     is_active:        { type: boolean, notnull: true, default: true }
     is_new:           { type: boolean, default: true, notnull: true }
-    address:          { type: string(255), notnull: false }
+    address_id:       { type: integer, notnull: false }
     bolsa:            { type: integer}
     dm_user_id:       { type: integer, notnull: false     }
     category_id:      { type: integer, notnull: true      }
     status_id:        { type: integer, notnull: true      }
-    city_id:          { type: integer, notnull: true	}
     client_id:        { type: integer 					  }
     property_id:      { type: integer, notnull: true }
     phraseology_id:   { type: integer 					  }
     service_id:       { type: integer, notnull: true }
   relations:
+    Address:
+      local: address_id
+      foreign: id
+      type: one 
     FileType:
       local: service_id
       foreign: id
@@ -496,10 +531,6 @@ Event:
       foreign: id
     Phraseology: 
       local: phraseology_id
-      foreign: id
-      onDelete: RESTRICT
-    City:
-      local: city_id
       foreign: id
       onDelete: RESTRICT
     DmUser:

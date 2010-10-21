@@ -51,16 +51,32 @@ class PropertyAdminForm extends BasePropertyForm
     $this->setWidget('property_use_id', new sfWidgetFormDoctrineChoice(array('model'=>'PropertyUse', 'add_empty'=>true)));
     $this->setValidator('property_use_id', new sfValidatorDoctrineChoice(array('model'=>'PropertyUse')));
 
-    $this->setWidget('property_loan_rate_type_id', new sfWidgetFormDoctrineChoice(array('model'=>'LoanRateType', 'add_empty'=>true)));
-    $this->setValidator('property_loan_rate_type_id', new sfValidatorDoctrineChoice(array('model'=>'LoanRateType')));
-
-    $this->setWidget('bank_id', new sfWidgetFormDoctrineChoice(array('model'=>'Bank')));
-    $this->setValidator('bank_id', new sfValidatorDoctrineChoice(array('model'=>'Bank')));
-
-
+    $this->embedAddressRelation();
     $this->getValidator('client_id')->setOption('required', true);
     $this->setBackAndNewClientWidgets($request);
     $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
+  }
+
+  protected function embedAddressRelation(){
+      $prefix  = dmString::modulize($this->getModelName()).'_admin_form_Address_';
+      $this->embedRelation('Address');
+      $this->getValidator('address_id')->setOption('required', false);
+      $this->widgetSchema['Address']->setLabels(array(
+          'address'=>'Dirección',
+          'place_name'=>'Ciudad',
+          'country_code'=>'País (abrv)',
+          'state_code'=>'Estado (abrv)',
+          'state_name'=>'Estado (nombre)',
+      ));
+      $this->widgetSchema['Address']['auto_fill_helper'] = new arkAddressAutoFillHelper(array(
+                                                                        'zip_code_auto_complete_id'=>$prefix.'zip_code',
+                                                                        'city_input_id'=>$prefix.'place_name',
+                                                                        'pais_abr_input_id'=>$prefix.'country_code',
+                                                                        'estate_abr_input_id'=>$prefix.'state_code',
+                                                                        'estate_name_input_id'=>$prefix.'state_name'
+                                                            ));
+      $this->widgetSchema['Address']['auto_fill_helper']->setLabel(' ');
+      //$this->widgetSchema['Address']['zip_code'] = new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'ZipCode','url'=>$this->getHelper()->link('app:admin/+/address/getZipCodeJsonList')->getHref()));
   }
   protected function setBackAndNewClientWidgets($request){
       $defaults = $request->getParameter('defaults', null);

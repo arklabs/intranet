@@ -12,43 +12,32 @@ generator:
       fields:
         colorbox_close_enable: { label: ' ' }
         client_id: { label: Cliente }
-        address:  { label: Direcci&oacute;n }
+        Address:  { label: Direcci&oacute;n }
         parcel:   { label: Parcela }
-        rooms_number: { label: Nro de Cuartos }
-        bath_rooms_number: { label: Nro de ba&ntilde;os }
-        bank_id:  { label: Banco }
-        city_id: {label: Ciudad }
-        property_loan_rate_type_id: { label: Tipo de pago }
+        rooms_number: { label: Cuartos }
+        bath_rooms_number: { label: 'Ba&ntilde;os' }
         property_use_id: { label: Uso }
         property_type_id: { label: Tipo }
-        zipcode: {label: C&oacute;digo Postal}
-        year_built: { label: 'A&ntilde;o de const.'}
+        year_built: { label: 'A&ntilde;o de const.', help: 'A&ntilde;o en que se construy&oacute; la vivienda.'}
         years_on_property: { label: 'A&ntilde;os en la prop.' }
         people_on_property: { label: Personas en la prop.}
-        property_payment: { label: Pago , help: 'Ej: 1400'}
-        modified_year: { label: '&Uacute;ltima modificaci&oacute;n?', help: 'A&ntilde;o de la &uacute;ltima modificaci&oacute;n. Dejar en blanco si no se ha modificado.' }
+        refinantied_year: { label: '&Uacute;ltimo Refinanciamiento', help: 'A&ntilde;o del &uacute;ltimo refinanciamiento. Dejar en blanco si no se ha refinanciado.' }
         brought_year: { label: Fecha de Compra }
         rent_amount_received: { label: 'Recibe por renta?', help: Cu&aacute;nto recibe por la renta de la casa. Dejar en blanco si no se renta. }
-        current_debt: {label: Deuda actual, help: 'Ej: 50000'}
         estimated_current_value: {label: Precio Estimado, help: 'Ej: 140000'}
-        tasa: {help: 'Escribir solamente el valor. Ej: para el 6% escribir solo el 6' }
         colorbox_close_enable: { label: ' '}
-        taxes_included_in_payment: {label: Taxes + Aseguranza}
+        sqft: { help: '&Aacute;rea construida en pies cuadrados. Ej: 1200' }
+        
       list:
         display:
           - '=client_id'
-          - bank_id
-          - '=address'
-          - zipcode
-          - city_id
+          - '=Address'
           - parcel
           - rooms_number
           - bath_rooms_number
           - sqft
           - lote
           - year_built
-          - tasa
-          - modified_year
         sort:
           - client_id
           - asc
@@ -58,30 +47,24 @@ generator:
       filter:
         display:
           - client_id
-          - address
-          - bank_id
+          - Address
           - parcel
-          - city_id
           - rooms_number
           - bath_rooms_number
-          - zipcode
           - sqft
           - lote
           - year_built
           - years_on_property
           - people_on_property
           - rent_amount_received
-          - property_payment
           - property_type_id
           - property_use_id
-          - property_loan_rate_type_id
           - tasa
-          - modified_year
       form:
         display:
           Cliente: [ cliente, client_id]
-          Informaci&oacute;n de la propiedad: [address, zipcode, parcel, rooms_number, bath_rooms_number,  sqft, lote, year_built, years_on_property, people_on_property, rent_amount_received,  brought_year, modified_year, estimated_current_value, property_use_id, property_type_id, colorbox_close_enable]
-          Informaci&oacute;n de pago: [ city_id, bank_id, property_loan_rate_type_id, current_debt, property_payment, taxes_included_in_payment,  tasa, balance ]
+          Informaci&oacute;n de la propiedad: [Address,  parcel, rooms_number, bath_rooms_number,  sqft, lote, year_built, years_on_property, people_on_property,  brought_year, modified_year, estimated_current_value, property_use_id, property_type_id, rent_amount_received, colorbox_close_enable]
+          Hipotecas: [ property_payment_list ]
         class: PropertyAdminForm
         fields: {  }
       edit: ~

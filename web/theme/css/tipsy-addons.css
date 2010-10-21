@@ -1,5 +1,7 @@
-.tipsy-inner{ text-align: left; max-width: 600px;}
+.tipsy-inner b, .tipsy-inner h1, .tipsy-inner h2, .tipsy-inner h3, .tipsy-inner h4{ color: white !important;}
+.tipsy-inner *{ color: #57A000; font-weight: bold; }
+.tipsy-inner{ text-align: left; max-width: 400px; }
 .tipsy-inner table tr td{ vertical-align: top; padding-right: 3px;}
 .tipsy-inner table tr td p {max-width: 200px; text-align: justify; line-height: 12px;}
-.tipsy-inner table tr td label { white-space: nowrap;}
-.tipsy-inner h3 { color: white !important; font-size: 125%;}
+.tipsy-inner h3 { font-size: 125%;}
+.tipsy-inner h4 { font-size: 115%; }

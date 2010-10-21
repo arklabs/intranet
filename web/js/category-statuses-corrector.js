@@ -13,6 +13,7 @@ $(document).ready(function(){
 			complete: function(){
 				$('#loader').hide();
 				$('#event_admin_form_status_id').removeAttr("disabled");
+                               
 			},
 			error: function(){
 				$('#loader').hide();

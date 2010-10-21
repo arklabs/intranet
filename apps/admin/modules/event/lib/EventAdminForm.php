@@ -59,7 +59,7 @@ class EventAdminForm extends BaseEventForm
 	 
      $this->setWidget('phraseology_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'phraseology','url'=>$this->getHelper()->link('app:admin/+/phraseology/getPhraseologyJsonList')->getHref())));
      if ($this->isNew()){
-	    $this->setWidget('propiedad', new sfWidgetFormInputHidden());
+	$this->setWidget('propiedad', new sfWidgetFormInputHidden());
         $this->setWidget('client_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'client','url'=>$this->getHelper()->link('app:admin/+/client/getJsonClientList')->getHref())));
         $this->setWidget('property_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'property','url'=>$this->getHelper()->link('app:admin/+/property/getJsonPropertyList')->getHref())));
         $this->setWidget('new_property', new sfWidgetLinkTextWithToolTipForDiemBackend(array(
@@ -93,9 +93,32 @@ class EventAdminForm extends BaseEventForm
      $this->setBackAndNewClientWidgets($request);
      $this->validateDocumentList();
      $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
-        
+     $this->embedAddressRelation();
+     $this->getValidator('Address')->setOption('required', false);
+     $this->validatorSchema['Address']['address']->setOption('required', false);
+     $this->validatorSchema['Address']['zip_code']->setOption('required', false);
   }
-
+  protected function embedAddressRelation(){
+      $prefix  = dmString::modulize($this->getModelName()).'_admin_form_Address_';
+      $this->getValidator('address_id')->setOption('required', false);
+      $this->embedRelation('Address');
+      $this->widgetSchema['Address']->setLabels(array(
+          'address'=>'Dirección',
+          'place_name'=>'Ciudad',
+          'country_code'=>'País (abrv)',
+          'state_code'=>'Estado (abrv)',
+          'state_name'=>'Estado (nombre)',
+      ));
+      $this->widgetSchema['Address']['auto_fill_helper'] = new arkAddressAutoFillHelper(array(
+                                                                        'zip_code_auto_complete_id'=>$prefix.'zip_code',
+                                                                        'city_input_id'=>$prefix.'place_name',
+                                                                        'pais_abr_input_id'=>$prefix.'country_code',
+                                                                        'estate_abr_input_id'=>$prefix.'state_code',
+                                                                        'estate_name_input_id'=>$prefix.'state_name'
+                                                            ));
+      $this->widgetSchema['Address']['auto_fill_helper']->setLabel(' ');
+      //$this->widgetSchema['Address']['zip_code'] = new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'ZipCode','url'=>$this->getHelper()->link('app:admin/+/address/getZipCodeJsonList')->getHref()));
+  }
   public function correctPropertyList($clientId){
       $propertyList = Doctrine::getTable('Property')->getPropertiesOfClient($clientId);
       $choices = array();
@@ -180,11 +203,11 @@ class EventAdminForm extends BaseEventForm
   }
   
   protected function setFancyDateTimeSelector($lock_dates = false){
-  	$this->setWidget('date_start', new sfWidgetFormInputHidden());
+    $this->setWidget('date_start', new sfWidgetFormInputHidden());
     $this->setWidget('date_end', new sfWidgetFormInputHidden());
     $this->setValidator('date_start', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
     $this->setValidator('date_end', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
-    $this->setWidget('fancy_date_time', new arkCompleteJQueryDateTimePickerWidget(array('DateStartInputId'=>'#event_admin_form_date_start', 'DateEndInputId'=>'#event_admin_form_date_end', 'lock-dates'=>$lock_dates)));
+    $this->setWidget('fancy_date_time', new arkCompleteJQueryDateTimePickerWidget(array('DateStartInputId'=>'#event_admin_form_date_start', 'DateEndInputId'=>'#event_admin_form_date_end', 'lock-dates'=>$lock_dates, 'HelpDateRange'=>'Haga clic en el calendario para seleccionar un d&iacute;a o rango de d&iacute;as.', 'HelpTimeStart'=>'Hora inicio', 'HelpTimeEnd'=>'Hora fin','HelpGeneral'=>'Deje ambas horas en blanco en caso de ser un evento de todo el día.')));
     if ($this->isNew()){
     	$context = dmContext::getInstance();
     	$request = $context->getRequest();
@@ -222,6 +245,11 @@ class EventAdminForm extends BaseEventForm
   }
 
   public function  save($con = null) {
+         if (!$this->values['Address']['address']){
+                 unset($this->embeddedForms['Address']);
+                 unset($this->values['Address']);
+         }
+
 	  if (!$this->isNew() && dmContext::getInstance()->getRequest()->hasParameter('dm_embed') && dmContext::getInstance()->getUser()->getDmUser()->getId() != $this->getObject()->getCreatedBy()->getId() ){ // vienes del frontend y quieres modificar un evento que no es tuyo
         $this->values = array(
             'id'=>$this->values['id'],

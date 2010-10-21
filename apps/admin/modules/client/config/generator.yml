@@ -23,6 +23,8 @@ generator:
         created_at:       { label: Contacto }
         licence:          { label: Licencia }
         source_id:        { label: Fuente }
+        email:            { label: Email  }
+        ssn:              { label: Seguro }
       list:
         display:
           - '=first_name'

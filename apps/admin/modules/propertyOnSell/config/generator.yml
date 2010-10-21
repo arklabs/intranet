@@ -11,13 +11,11 @@ generator:
       actions: ~
       fields:
         colorbox_close_enable: { label: ' ' }
-        address:  { label: Direcci&oacute;n }
+        Address:  { label: Direcci&oacute;n }
         parcel:   { label: Parcela }
         rooms_number: { label: Nro de Cuartos }
         bath_rooms_number: { label: Nro de ba&ntilde;os }
         agent_id: { label: Agente }
-        city_id: {label: Ciudad }
-        zipcode: {label: C&oacute;digo Postal}
         property_type_id: { label: Tipo }
         year_built: { label: 'A&ntilde;o de const.'}
         colorbox_close_enable: { label: ' '}
@@ -27,8 +25,7 @@ generator:
       list:
         display:
           - price
-          - '=address'
-          - city_id
+          - '=Address'
           - parcel
           - rooms_number
           - bath_rooms_number
@@ -55,9 +52,7 @@ generator:
           - agent_id
           - ref_agent_id
           - mls
-          - '=address'
-          - zipcode
-          - city_id
+          - '=Address'
           - rooms_number
           - bath_rooms_number
           - parcel
@@ -70,7 +65,7 @@ generator:
           - in_scrow
       form:
         display:
-          Informaci&oacute;n de la propiedad: [address, zipcode, city_id, parcel, rooms_number, bath_rooms_number, sqft, lote, year_built, mls, property_type_id, colorbox_close_enable]
+          Informaci&oacute;n de la propiedad: [Address,  parcel, rooms_number, bath_rooms_number, sqft, lote, year_built, mls, property_type_id, colorbox_close_enable]
           Otros datos: [agent_id, ref_agent_id,  price, hoa, status, ss, apr, comments]
           Condiciones: [ property_condition_list ]
         class: PropertyOnSellAdminForm

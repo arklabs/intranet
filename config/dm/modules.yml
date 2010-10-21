@@ -46,6 +46,10 @@ Content:
   Propiedades:
     #property_list:
     #  name: T-RE+Prop| T-RE+Props
+    zip_codes:
+      name: Zip Code | Zip Codes
+    address:
+      name: Direcci&oacute;n | Direcciones 
     property_on_sell:
       name: Tribaldos REAL ESTATE | Tribaldos REAL ESTATE
     property: 
@@ -60,13 +64,19 @@ Content:
       name: Condici&oacute;n|Condiciones
     property_transaction:
       name: Transacci&oacute;n|Transacciones
-    state:
-      name: Estado|Estados
-    city:
-      name: Ciudad|Ciudades
-      components:
-        datesByCity:
-        datesByCityChart:
+    property_loan_time:
+      name: Tipo de Pr&eacute;stamo|Tipos de Pr&eacute;stamos
+    property_payment: 
+      name: Hipoteca|Hipotecas 
+      page: false
+      front: false 
+    #state:
+    #  name: Estado|Estados
+    #city:
+    #  name: Ciudad|Ciudades
+    #  components:
+    #    datesByCity:
+    #    datesByCityChart:
   Compañias:
     employment:
       name: Empleo|Empleos

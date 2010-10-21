@@ -25,6 +25,4 @@ $(document).ready(function(){
 			return "Escriba el nombre o el apellido del cliente para listar clientes coincidentes";
 		}
 	});
-		
-	
 });

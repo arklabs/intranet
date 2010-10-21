@@ -16,7 +16,8 @@ class PropertyTable extends myDoctrineTable
         $q = Doctrine_Query::create()
         ->from('Property e')
          ->leftJoin('e.Client c')
-          ->addWhere(sprintf('c.first_name LIKE "%s" OR c.last_name LIKE "%s" OR e.address LIKE "%s"', "%".$pattern."%", "%".$pattern."%", "%".$pattern."%"));
+         ->leftJoin('e.Address a')
+          ->addWhere(sprintf('c.first_name LIKE "%s" OR c.last_name LIKE "%s" OR a.address LIKE "%s"', "%".$pattern."%", "%".$pattern."%", "%".$pattern."%"));
         return $q;
     }
     

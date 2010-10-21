@@ -10,6 +10,8 @@ generator:
 
     config:
       fields:
+        email:
+          label: Email
         groups_list:
           label: Groups
         permissions_list:
@@ -23,7 +25,6 @@ generator:
           label: Nombre
         last_name:
           label: Apellido
-
       list:
         display:
           - =username
