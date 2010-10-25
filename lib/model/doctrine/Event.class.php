@@ -17,7 +17,7 @@ class Event extends BaseEvent
          return $user[0]->__toString();
     }
     public function  __toString() {
-        return sprintf('%s - %s', $this->getEventCategory(), ($this->getAddressId())?$this->getAddress():$this->getProperty()->getAddress());
+        return sprintf('%s #%s - %s', $this->getEventCategory(), $this->getId(), ($this->getAddressId())?$this->getAddress():$this->getProperty()->getAddress());
     }
     public function getTitle(){
         return sprintf('%s', $this->getClient());
@@ -69,9 +69,8 @@ class Event extends BaseEvent
       $table->body($address, $parcela);
       $table->body($sqft, $lote);
       $table->body($rooms, $bath);
-      $table->body($yearBuilt, $bank);
-      $table->body($compro, $refinancio);
-      $table->body($estimatedValue, $debe);
+      $table->body($yearBuilt, $compro );
+      $table->body($refinancio, $estimatedValue);
       
       $table->body($detalles,'');
 

@@ -74,7 +74,7 @@ dashboards:
         propertyOnSell_adicionar_entradas:
         propertyOnSell_modificar_entradas:
     razonesdellamada:
-      title: Administrar <br/>Motivos de llamada
+      title: Nuevo <br/>Motivo de llamada
       extra-classes:
         color-box-trigger:
       holder-classes:

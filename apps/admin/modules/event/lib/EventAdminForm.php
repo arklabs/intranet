@@ -207,7 +207,7 @@ class EventAdminForm extends BaseEventForm
     $this->setWidget('date_end', new sfWidgetFormInputHidden());
     $this->setValidator('date_start', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
     $this->setValidator('date_end', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
-    $this->setWidget('fancy_date_time', new arkCompleteJQueryDateTimePickerWidget(array('DateStartInputId'=>'#event_admin_form_date_start', 'DateEndInputId'=>'#event_admin_form_date_end', 'lock-dates'=>$lock_dates, 'HelpDateRange'=>'Haga clic en el calendario para seleccionar un d&iacute;a o rango de d&iacute;as.', 'HelpTimeStart'=>'Hora inicio', 'HelpTimeEnd'=>'Hora fin','HelpGeneral'=>'Deje ambas horas en blanco en caso de ser un evento de todo el día.')));
+    $this->setWidget('fancy_date_time', new arkCompleteJQueryDateTimePickerWidget(array('DateStartInputId'=>'#event_admin_form_date_start', 'DateEndInputId'=>'#event_admin_form_date_end', 'lock-dates'=>$lock_dates, 'HelpDateRange'=>'Haga clic en el calendario para seleccionar un d&iacute;a o rango de d&iacute;as.', 'HelpTimeStart'=>'Hora inicio', 'HelpTimeEnd'=>'Hora fin','HelpGeneral'=>'Deje ambas horas en blanco en caso de ser un evento de todo el día.', 'SelectTimeEnd'=>false)));
     if ($this->isNew()){
     	$context = dmContext::getInstance();
     	$request = $context->getRequest();

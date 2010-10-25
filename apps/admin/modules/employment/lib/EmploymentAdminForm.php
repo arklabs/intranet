@@ -21,7 +21,9 @@ class EmploymentAdminForm extends BaseEmploymentForm
     if ($this->isNew())
         $this->setWidget('client_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'client','url'=>$this->getHelper()->link('app:admin/+/client/getJsonClientList')->getHref())));
     $this->setBackAndNewClientWidgets($request);
-     $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
+    $this->setFancyDateTimeSelector();
+    $this->setWidget('month_income', new arkMonthlyMoneyCalculator(array('choices'=>array('Hora'=>24*30,'Día'=>30,'Semana'=>4,'Mes'=>1,'Trimestre'=>1/3, 'Semestre'=>1/6, 'Año'=>1/12, ), 'default-key-choice'=>'Mes')));
+    $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
   }
   protected function setBackAndNewClientWidgets($request){
       $defaults = $request->getParameter('defaults', null);
@@ -58,8 +60,7 @@ class EmploymentAdminForm extends BaseEmploymentForm
       $this->setWidget('cliente', $myClientWidget);
       $this->setWidget('new_client', $myNewClientWidget);
 
-      $this->setFancyDateTimeSelector();
-      $this->setWidget('money_calculator', new arkMonthlyMoneyCalculator());
+      
   }
   protected function setFancyDateTimeSelector($lock_dates = false){
     $this->setWidget('date_start', new sfWidgetFormInputHidden());

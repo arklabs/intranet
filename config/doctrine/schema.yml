@@ -98,7 +98,7 @@ PropertyOnSell:
     mls:          { type: string(10) }
     agent_id:     { type: integer }
     ref_agent_id: { type: integer }
-    hoa:          { type: string(255)}
+    hoa:          { type: enum, values: [NO, YES]}
     ss:           { type: enum, values: [NO, YES]}
     apr:          { type: enum, values: [NO, YES]}
     comments:     { type: clob}
@@ -288,8 +288,7 @@ Company:
 Employment:
   columns:
     ocupation:          { type: string(255), notnull: true}
-    income_value:       { type: float                     }
-    income_recurrence:  { type: enum, values: [HORA, SEMANA, MES, ANNO ] }
+    month_income:       { type: float                     }
     client_id:          { type: integer, notnull: true    }
     company_id:         { type: integer, notnull: true    }
     date_start:         { type: timestamp }
@@ -312,15 +311,19 @@ Income:
   columns:
     name:               { type: string(64), notnull: true }
 
-ClientExpenses:
+ClientExpense:
   columns:
     client_id:          { type: integer, notnull: true }
     expense_id:         { type: integer, notnull: true }
     amount:             { type: float, notnull: true }
     payment:            { type: float, notnull: true }
-    payment_recurrence:  { type: enum, values: [ SEMANAL, MENSUAL, ANUAL] }
     comments:           { type: clob }
+    loan_time_id:       { type: integer }
   relations:
+    PropertyLoanTime:
+      local: loan_time_id
+      foreign: id
+      type: one 
     Client:
       local:      client_id
       foreign:    id
@@ -330,12 +333,11 @@ ClientExpenses:
       foreign:    id
       onDelete:   CASCADE
 
-ClientIncomes:
+ClientIncome:
   columns:
     client_id:      { type: integer, notnull: true }
     income_id:      { type: integer, notnull: true }
-    amount:         { type: float, notnull: true }
-    recurrence:  { type: enum, values: [ SEMANAL, MENSUAL, ANUAL] }
+    month_income:   { type: float, notnull: true }
     comments:       { type: clob }
   relations:
     Client:
@@ -351,7 +353,7 @@ Asset:
   columns:
     name:               { type: string(64), notnull: true }
 
-ClientAssets:
+ClientAsset:
   columns:
     client_id:          { type: integer, notnull: true }
     asset_id:           { type: integer, notnull: true }
@@ -421,7 +423,7 @@ IncommingCallRealState:
   columns:
     agent_id:    { type: integer }
     caller_id:   { type: integer }
-    file_type_id: { type: integer }
+    transaction_id: { type: integer }
   relations:
     Agent:
       local: agent_id
@@ -431,8 +433,8 @@ IncommingCallRealState:
       local: caller_id
       foreign: id
       type: one
-    FileType:
-      local: file_type_id
+    PropertyTransaction:
+      local: transaction_id
       foreign: id
       type: one
 IncommingCallActiveMod:
@@ -551,10 +553,24 @@ Event:
       local: client_id
       foreign: id
       onDelete: SET NULL
-    Document:
+    SignedDocument:
       class:     Document
-      refClass:  EventDocument
-EventDocument:
+      refClass:  EventSignedDocument
+    GettedDocument:
+      class:     Document
+      refClass:  EventGettedDocument
+EventGettedDocument:
+  columns:
+    event_id:         { type: integer, notnull: true       }
+    document_id:      { type: integer, notnull: true       }
+  relations:
+    Document:
+      local: document_id
+      foreign: id
+    Event:
+      local: event_id
+      foreign: id
+EventSignedDocument:
   columns:
     event_id:         { type: integer, notnull: true       }
     document_id:      { type: integer, notnull: true       }

@@ -145,11 +145,13 @@ Content:
         list:
     event:
       name: Cita|Citas
+      page: true
       components:
         geoEventsList:
         fullcalendar:
         form:
         list:
+        show: 
         reportDatesByCityConfig:
         reportDatesByAgentConfig:
         reportDatesByTelemarkerConfig:
@@ -179,20 +181,21 @@ Content:
       name: Gasto|Gastos
     income:
       name: Ingreso|Ingresos
-    client_expenses:
-      name: Gastos del cliente
+    client_expense:
+      name: Gasto del cliente|Gastos del cliente
+      page: false
       components:
         list:
-    client_incomes:
+    client_income:
       name: Ingresos del cliente
       components:
         list:
-    #asset:
-    #  name: Activo|Activos
-    #client_assets:
-    #  name: Activos del cliente
-    #  components:
-    #    list:
+    asset:
+      name: Activo|Activos
+    client_asset:
+      name: Activo del cliente|Activos del cliente
+      components:
+        list:
     #liabilities:
     #  name: Liabilities
     #client_liabilities:

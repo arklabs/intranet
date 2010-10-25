@@ -30,12 +30,18 @@ class ClientAdminForm extends BaseClientForm
           $this->widgetSchema['assigned_to'] = new sfWidgetFormDoctrineChoice(array('model'=>$this->getRelatedModelName('Agent'), 'add_empty' => false));
 
       $this->getValidator('email')->setOption('required', false);
+      if (!$this->isNew() && $this->getObject()->getSsn()){
+          $ssn = substr($this->getObject()->getSsn(), strlen($this->getObject()->getSsn()) - 4);
+          $this->getWidget('ssn')->setAttribute('value', '************'. $ssn);
+      }
+      $this->setFancyDateTimeSelector();
   }
   
   public function save($con = null)
   {
       if (!$this->isNew()){
           $this->values['created_by'] = $this->getObject()->getCreatedBy()->getId();
+          unset($this->values['ssn']);
       }
       else
       {
@@ -47,5 +53,22 @@ class ClientAdminForm extends BaseClientForm
       }
 
       return parent::save($con);
+  }
+  protected function setFancyDateTimeSelector($lock_dates = false){
+    $this->setWidget('dob', new sfWidgetFormInputHidden());
+    $this->setValidator('dob', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
+    $this->setWidget('fancy_date_time', new arkCompleteJQueryDateTimePickerWidget(array('DateStartInputId'=>'#client_admin_form_dob', 'DateEndInputId'=>'#client_admin_form_dob', 'lock-dates'=>0, 'HelpDateRange'=>'Haga clic en el calendario para seleccionar el d&iacute;a de nacimiento.', 'HelpTimeStart'=>'Hora inicio', 'HelpTimeEnd'=>'Hora fin','HelpGeneral'=>'Deje ambas horas en blanco en caso de ser un evento de todo el día.', 'SelectTimeStart'=>false, 'SelectTimeEnd'=>false, 'CalendarsNumber'=>1, 'CalendarMode'=>'single')));
+    /*if ($this->isNew()){
+    	$context = dmContext::getInstance();
+    	$request = $context->getRequest();
+        $date = new sfDate($request->getParameter('date',time()));
+        if ($request->hasParameter('date'))
+            $date->addMonth(1);
+        if ($request->getParameter('allDay', 'true') == 'true'){
+            $date->clearTime();
+        }
+        $this->getWidget('date_start')->setAttribute('value', $date->dump());
+        $this->getWidget('date_end')->setAttribute('value', $date->dump());
+    }*/
   }
 }

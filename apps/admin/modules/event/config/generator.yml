@@ -33,7 +33,7 @@ generator:
         date_end:
           label: Fecha fin
         description:
-          label: Descripci&oacute;n
+          label: Comentarios
         service_id:
           label: Servicio
         document_list:
@@ -45,8 +45,12 @@ generator:
         property_id:
           label: Propiedad
         Address:
-          label: ' '
+          label: 'Direcci&oacute;n de la cita'
           help: Dejar en blanco en caso de coincidir con la de la Propiedad
+        signed_document_list:
+          label: Documentos Firmados
+        getted_document_list:
+          label: Documentos Recogidos
       list:
         display:
           - '=description'
@@ -74,8 +78,8 @@ generator:
         display:
           Cliente: [cliente, client_id, new_client, propiedad,property_id, new_property]
           Seleccion de Fecha y Hora: [fancy_date_time]
-          Informaci&oacute;n del evento: [ description, category_id, status_id,  date_start, date_end, phraseology_id,   dm_user_id, service_id, Address,colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips, tags]
-          Feed Back: [ event_feed_back_list, document_list ]
+          Informaci&oacute;n del evento: [  category_id, status_id,  date_start, date_end, phraseology_id,   dm_user_id, service_id, Address, description,colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
+          Feed Back: [ getted_document_list, signed_document_list, event_feed_back_list ]
         class: EventAdminForm
         fields: {  }
       edit: 

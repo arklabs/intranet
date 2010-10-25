@@ -16,5 +16,6 @@ class IncommingCallProspectAdminForm extends BaseIncommingCallProspectForm
     $this->setValidator('reason_id', new sfValidatorDoctrineChoice(array('model'=>'IncommingCallReason')));
     $this->setWidget('source_id', new sfWidgetFormDoctrineChoice(array('model'=>'Source')));
     $this->setValidator('source_id', new sfValidatorDoctrineChoice(array('model'=>'Source')));
+    $this->setWidget('file_type_list', new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'FileType', 'expanded' => true)));
   }
 }

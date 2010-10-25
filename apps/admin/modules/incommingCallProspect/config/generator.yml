@@ -57,7 +57,7 @@ generator:
       form:
         display:
           Generales: [first_name, last_name, cel, home_phone, colorbox_close_enable]
-          Otros Datos: [reason_id, source_id, comments, file_type_list]
+          Otros Datos: [reason_id, source_id, file_type_list, comments ]
         class: IncommingCallProspectAdminForm
         fields: {  }
       edit: ~

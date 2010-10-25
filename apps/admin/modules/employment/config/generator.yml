@@ -13,8 +13,7 @@ generator:
         company_id: {label: Compa&ntilde;&iacute;a }
         ocupation: {label: Ocupaci&oacute;n  }
         years: {label: A&ntilde;os, help: A&ntilde;os que lleva en ese trabajo.}
-        income_value: {label: Ingreso  }
-        income_recurrence: { label: Recurrencia, help: 'Cada cu&aacute;nto tiempo obtiene el ingreso anterior.'}
+        month_income: {label: Ingreso Mensual }
         fancy_date_time: {label: ' '}
         colorbox_close_enable: {label: ' '}
       list:
@@ -34,15 +33,14 @@ generator:
           - id
           - address
           - ocupation
-          - income_value
-          - income_recurrence
+          - month_income
           - client_id
           - company_id
       form:
         display:
           Cliente: [cliente, client_id]
           Tiempo que dura el Empleo: [ date_start, date_end, fancy_date_time]
-          Informaci&oacute;n del Empleo: [company_id, ocupation, money_calculator,income_value, income_recurrence, colorbox_close_enable]
+          Informaci&oacute;n del Empleo: [company_id, ocupation, month_income, colorbox_close_enable]
         class: EmploymentAdminForm
         fields: {  }
       edit: ~

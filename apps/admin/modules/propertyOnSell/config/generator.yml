@@ -20,7 +20,8 @@ generator:
         year_built: { label: 'A&ntilde;o de const.'}
         colorbox_close_enable: { label: ' '}
         price: {label: Precio}
-        ref_agent_id: {label: Refs}
+        ref_agent_id: {label: Originator}
+        apr: {label: 'Aproved?'}
         comments: { label: Showing Inst }
       list:
         display:
@@ -67,7 +68,6 @@ generator:
         display:
           Informaci&oacute;n de la propiedad: [Address,  parcel, rooms_number, bath_rooms_number, sqft, lote, year_built, mls, property_type_id, colorbox_close_enable]
           Otros datos: [agent_id, ref_agent_id,  price, hoa, status, ss, apr, comments]
-          Condiciones: [ property_condition_list ]
         class: PropertyOnSellAdminForm
         fields: {  }
       edit: ~
