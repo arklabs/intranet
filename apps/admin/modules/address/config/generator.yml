@@ -12,12 +12,10 @@ generator:
       fields: {  }
       list:
         display:
-          - '=id'
-          - zip_code_id
+          - '=address'
+          - zip_code
           - company_list
-          - employment_list
           - event_list
-          - address
         sort:
           - id
           - asc
@@ -27,15 +25,13 @@ generator:
       filter:
         display:
           - id
-          - zip_code_id
+          - zip_code
           - address
       form:
         display:
-          NONE: [zip_code_id]
+          NONE: [zip_code, address]
           Compañias: [company_list]
-          Empleos: [employment_list]
           Citas: [event_list]
-          Others: [address]
         class: AddressAdminForm
         fields: {  }
       edit: ~
