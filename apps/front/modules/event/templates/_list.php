@@ -1,11 +1,12 @@
 <?php
-use_javascript('lib.dataTable');
-use_javascript('geolocation-handler');
 use_stylesheet('another-ui/jquery-ui-1.8.2.custom');
 use_stylesheet('dataTable');
 use_stylesheet('fg-menu');
 use_stylesheet('fb-buttons-menu');
 use_stylesheet('tipsy-addons');
+use_javascript('lib.dataTable');
+use_javascript('fg-menu');
+use_javascript('fg-menu-handling');
 use_helper('Date');
 
 // Plugin : List
@@ -13,26 +14,32 @@ use_helper('Date');
 $sfModule = 'event';
 
 $table = _table('.data_table')->head(
-  __('Titulo'),
+  
   __('Cliente'),
   __('Propiedad'),
+  __('Descripci&oacute;n'),
   __('Estado'),
   __('Fecha'),
-  __('Creado Por')
+  __('Creado Por'),
+  __('Acciones')
 );
 
 foreach ($eventPager as $event)
 {
-  $address = ($event->getAddress())?$event->getAddress():$event->getProperty()->getAddress();
+  $address = (!is_null($event->getAddress()) && trim(str_replace(',', '', $event->getAddress()))!='')?$event->getAddress():$event->getProperty()->getAddress();
   $date_start = new sfDate($event->getDateStart());
   $date_end = new sfDate($event->getDateEnd());
   $table->body(
-  sprintf('<a  href="%s" class="color-box-trigger" rel="ajax-tipsy" id="'.$event->getId().'" title="Clic para ver los detalles de la cita" > %s </a>', _link('app:admin/+/event/edit')->params(array('pk'=>$event->getId(), 'dm_embed'=>1))->getHref(), $event->getTitle()),
+  
   sprintf('<a  href="%s" class="color-box-trigger" rel="tipsy" title="Clic para ver los detalles de este cliente"> %s </a>', _link('app:admin/+/client/edit')->params(array('pk'=>$event->getClient()->getId(), 'dm_embed'=>1))->getHref(), $event->getClient()),
   sprintf('<a  href="%s" class="color-box-trigger" rel="tipsy" title="Clic para ver los detalles de la propiedad"> %s </a>', _link('app:admin/+/property/edit')->params(array('pk'=>$event->getProperty()->getId(), 'dm_embed'=>1))->getHref(), $address),
+  sprintf('<a  href="%s" class="color-box-trigger" rel="ajax-tipsy" id="'.$event->getId().'" title="Clic para ver los detalles de la cita" > %s </a>', _link('app:admin/+/event/edit')->params(array('pk'=>$event->getId(), 'dm_embed'=>1))->getHref(), $event->getDescription()),
   $event->getEventStatus(),
   format_date($date_start->dump(), ($date_start->getHour()!= 0)?'MMM d, y h:m a':'MMM d, y','en'),
-  $event->CreatedBy
+  $event->CreatedBy,
+  _open('a.bt-flat.fg-button.fg-button-icon-right.ui-widget.ui-state-default.ui-corner-all', array('tabindex'=>0, 'href'=>'#')).
+   _tag('span.ui-icon.ui-icon-carat-1-s',"")."Acciones"._close('a').
+  _open('div.hidden').get_partial('event/eventActionsPanel', array('event'=>$event))._close('div')
   );
 }
 echo $table;
@@ -100,6 +107,7 @@ echo $table;
 		      null,
 		      {"bSortable": true, "sType": "date"},
 		      null,
+                      {"bSortable": false},
 		   ]
       });
        $('th.ui-state-default:first').css('min-width', '1.5em');

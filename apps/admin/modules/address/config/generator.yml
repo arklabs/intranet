@@ -1,0 +1,38 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: Address
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: address
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields: {  }
+      list:
+        display:
+          - '=address'
+          - zip_code
+          - company_list
+          - event_list
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - zip_code
+          - address
+      form:
+        display:
+          NONE: [zip_code, address]
+          Compañias: [company_list]
+          Citas: [event_list]
+        class: AddressAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

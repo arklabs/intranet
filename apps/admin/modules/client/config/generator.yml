@@ -23,6 +23,12 @@ generator:
         created_at:       { label: Contacto }
         licence:          { label: Licencia }
         source_id:        { label: Fuente }
+        email:            { label: Email  }
+        ssn:              { label: Seguro }
+        client_expense_list: { label: Gastos }
+        client_income_list: { label: Ingresos }
+        client_asset_list: { label: Activos }
+        fancy_date_time: { label: ' '}
       list:
         display:
           - '=first_name'
@@ -45,11 +51,11 @@ generator:
           - source_id
       form:
         display:
-          'Datos personales': [first_name, last_name, email, phone, home_phone, dob, ssn,licence, source_id, colorbox_close_enable]
+          'Datos personales': [first_name, last_name, email, phone, home_phone, dob,  ssn,licence,fancy_date_time, source_id, colorbox_close_enable]
           Propiedades:  [property_list]
           Trabajos:    [employment_list ]
           Citas: [event_list]
-          Presupuesto: [client_expenses_list, client_incomes_list]
+          Presupuesto: [client_expense_list, client_income_list, client_asset_list]
           #Trámites: [client_file_list]
         class: ClientAdminForm
         fields: {  }

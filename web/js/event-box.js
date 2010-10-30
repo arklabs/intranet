@@ -69,7 +69,7 @@ function initEventBox(){
      }
      $('#calendar-container').DatePicker({
          flat: true,
-         format: 'Y-m-d',
+         format: 'Y-m-d H:M',
          date: dates,
          current: $('#event_form_date_start').val().split(' ')[0],
          calendars: 2,

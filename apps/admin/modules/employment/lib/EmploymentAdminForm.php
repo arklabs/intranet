@@ -21,7 +21,9 @@ class EmploymentAdminForm extends BaseEmploymentForm
     if ($this->isNew())
         $this->setWidget('client_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'client','url'=>$this->getHelper()->link('app:admin/+/client/getJsonClientList')->getHref())));
     $this->setBackAndNewClientWidgets($request);
-     $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
+    $this->setFancyDateTimeSelector();
+    $this->setWidget('month_income', new arkMonthlyMoneyCalculator(array('choices'=>array('Hora'=>24*30,'Día'=>30,'Semana'=>4,'Mes'=>1,'Trimestre'=>1/3, 'Semestre'=>1/6, 'Año'=>1/12, ), 'default-key-choice'=>'Mes')));
+    $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
   }
   protected function setBackAndNewClientWidgets($request){
       $defaults = $request->getParameter('defaults', null);
@@ -57,6 +59,27 @@ class EmploymentAdminForm extends BaseEmploymentForm
 
       $this->setWidget('cliente', $myClientWidget);
       $this->setWidget('new_client', $myNewClientWidget);
+
+      
+  }
+  protected function setFancyDateTimeSelector($lock_dates = false){
+    $this->setWidget('date_start', new sfWidgetFormInputHidden());
+    $this->setWidget('date_end', new sfWidgetFormInputHidden());
+    $this->setValidator('date_start', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
+    $this->setValidator('date_end', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
+    $this->setWidget('fancy_date_time', new arkCompleteJQueryDateTimePickerWidget(array('DateStartInputId'=>'#employment_admin_form_date_start', 'DateEndInputId'=>'#employment_admin_form_date_end', 'lock-dates'=>$lock_dates, 'SelectTimeStart'=>false, 'SelectTimeEnd'=>false,'HelpDateRange'=>'Haga clic en el calendario para seleccionar un d&iacute;a o rango de d&iacute;as. <br/>Seleccione un solo d&iacute;a en caso de que todav&iacute;a permanezca en el empleo.')));
+    if ($this->isNew()){
+    	$context = dmContext::getInstance();
+    	$request = $context->getRequest();
+        $date = new sfDate($request->getParameter('date',time()));
+        if ($request->hasParameter('date'))
+            $date->addMonth(1);
+        if ($request->getParameter('allDay', 'true') == 'true'){
+            $date->clearTime();
+        }
+        $this->getWidget('date_start')->setAttribute('value', $date->dump());
+        $this->getWidget('date_end')->setAttribute('value', $date->dump());
+    }
   }
   
 }

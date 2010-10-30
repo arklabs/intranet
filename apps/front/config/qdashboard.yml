@@ -6,7 +6,7 @@ dashboards:
         color-box-trigger:
       holder-classes:
         ark-icons-48:
-        ark-icon-incomming-call-client:
+        ark-icon-incomming-call-prospect:
       url: app:admin/+/incommingCallProspect/new
       params:
         dm_embed: 1
@@ -19,7 +19,7 @@ dashboards:
         color-box-trigger:
       holder-classes:
         ark-icons-48:
-        ark-icon-incomming-call-affiliate:
+        ark-icon-incomming-call-inventrary:
       url: app:admin/+/incommingCallInventrary/new
       params:
         dm_embed: 1
@@ -43,7 +43,7 @@ dashboards:
         color-box-trigger:
       holder-classes:
         ark-icons-48:
-        ark-icon-incomming-call-external-agent:
+        ark-icon-incomming-call-realestate:
       url: app:admin/+/incommingCallRealState/new
       params:
         dm_embed: 1
@@ -65,7 +65,7 @@ dashboards:
         color-box-trigger:
       holder-classes:
         ark-icons-48:
-        ark-icon-incomming-call-external-agent:
+        ark-icon-incomming-call-active-listing:
       url: app:admin/+/propertyOnSell/index
       params:
         dm_embed: 1
@@ -74,12 +74,12 @@ dashboards:
         propertyOnSell_adicionar_entradas:
         propertyOnSell_modificar_entradas:
     razonesdellamada:
-      title: Administrar <br/>Motivos de llamada
+      title: Nuevo <br/>Motivo de llamada
       extra-classes:
         color-box-trigger:
       holder-classes:
         ark-icons-48:
-        ark-icon-incomming-call-external-agent:
+        ark-icon-incomming-call-admin-reasons:
       url: app:admin/+/incommingCallReason/index
       params:
         dm_embed: 1
@@ -113,7 +113,7 @@ dashboards:
       extra-classes:
       holder-classes:
         ark-icons-48:
-        ark-icon-list-report-by-telemarker:
+        ark-icon-list-report-daily-dates:
       url: 'event/citasDiarias'
       params:
       credentials:
@@ -123,7 +123,7 @@ dashboards:
       extra-classes:
       holder-classes:
         ark-icons-48:
-        ark-icon-list-report-by-telemarker:
+        ark-icon-list-report-monthly-dates:
       url: event/citasMensuales
       params:
       credentials:
@@ -170,7 +170,7 @@ dashboards:
         viewReportIncommingCallsPerReason_front:
   main: ## quick dashboard for calendar
     calendario-ev:
-      title: Calendario de <br/>Eventos
+      title: Calendario de <br/>Citas
       extra-classes:
       holder-classes: 
         ark-icons-48:
@@ -309,7 +309,7 @@ dashboards:
         color-box-trigger:
       holder-classes:
         ark-icons-48:
-        ark-icon-incomming-call-client:
+        ark-icon-insert-prospect:
       url: app:admin/+/incommingCallProspect/new
       params:
         dm_embed: 1

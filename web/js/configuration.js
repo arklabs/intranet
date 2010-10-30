@@ -89,11 +89,13 @@ $(document).ready(function(){
         );
        //initializeContentJavaScriptEvents();
         //prepareSearchForm();
+        $('a[rel=tipsy-l]').tipsy({fade: true, gravity: 'e'});
+        $('a[rel=tipsy-r]').tipsy({fade: true, gravity: 'w'});
         $('a[rel=tipsy]').tipsy({fade: true, gravity: 'n'});
-		$('.color-box-trigger').click(function(){
-			parent.$.fn.colorbox({href: $(this).attr('href'), width:"70%", height:"80%", iframe:true, "css": ["/dmCorePlugin/lib/colorbox/theme3/colorbox.css"],"js":["/dmCorePlugin/lib/colorbox/jquery.colorbox.min.js"]});
-			return false;
-		}); 
+        $('.color-box-trigger').click(function(){
+                parent.$.fn.colorbox({href: $(this).attr('href'), width:"70%", height:"80%", iframe:true, "css": ["/dmCorePlugin/lib/colorbox/theme3/colorbox.css"],"js":["/dmCorePlugin/lib/colorbox/jquery.colorbox.min.js"]});
+                return false;
+        }); 
 });
   
  

@@ -46,6 +46,10 @@ Content:
   Propiedades:
     #property_list:
     #  name: T-RE+Prop| T-RE+Props
+    zip_codes:
+      name: Zip Code | Zip Codes
+    address:
+      name: Direcci&oacute;n | Direcciones 
     property_on_sell:
       name: Tribaldos REAL ESTATE | Tribaldos REAL ESTATE
     property: 
@@ -60,13 +64,19 @@ Content:
       name: Condici&oacute;n|Condiciones
     property_transaction:
       name: Transacci&oacute;n|Transacciones
-    state:
-      name: Estado|Estados
-    city:
-      name: Ciudad|Ciudades
-      components:
-        datesByCity:
-        datesByCityChart:
+    property_loan_time:
+      name: Tipo de Pr&eacute;stamo|Tipos de Pr&eacute;stamos
+    property_payment: 
+      name: Hipoteca|Hipotecas 
+      page: false
+      front: false 
+    #state:
+    #  name: Estado|Estados
+    #city:
+    #  name: Ciudad|Ciudades
+    #  components:
+    #    datesByCity:
+    #    datesByCityChart:
   Compañias:
     employment:
       name: Empleo|Empleos
@@ -135,11 +145,13 @@ Content:
         list:
     event:
       name: Cita|Citas
+      page: true
       components:
         geoEventsList:
         fullcalendar:
         form:
         list:
+        show: 
         reportDatesByCityConfig:
         reportDatesByAgentConfig:
         reportDatesByTelemarkerConfig:
@@ -169,20 +181,21 @@ Content:
       name: Gasto|Gastos
     income:
       name: Ingreso|Ingresos
-    client_expenses:
-      name: Gastos del cliente
+    client_expense:
+      name: Gasto del cliente|Gastos del cliente
+      page: false
       components:
         list:
-    client_incomes:
+    client_income:
       name: Ingresos del cliente
       components:
         list:
-    #asset:
-    #  name: Activo|Activos
-    #client_assets:
-    #  name: Activos del cliente
-    #  components:
-    #    list:
+    asset:
+      name: Activo|Activos
+    client_asset:
+      name: Activo del cliente|Activos del cliente
+      components:
+        list:
     #liabilities:
     #  name: Liabilities
     #client_liabilities:

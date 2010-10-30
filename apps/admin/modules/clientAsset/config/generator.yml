@@ -1,0 +1,43 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: ClientAsset
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: client_asset
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        colorbox_close_enable: { label: ' '}
+        asset_id: {label: Activo }
+        estimated_value: {label: Valor Estimado}
+        client_id: { label: Cliente }
+        new_client: {label: Nuevo }
+      list:
+        display:
+          - '=id'
+          - client_id
+          - asset_id
+          - estimated_value
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - client_id
+          - asset_id
+          - estimated_value
+      form:
+        display:
+          Cliente: [client_id, cliente, new_client ]
+          Informaci&oacute;n del activo: [asset_id, estimated_value, colorbox_close_enable]
+        class: ClientAssetAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

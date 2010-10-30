@@ -17,9 +17,13 @@ class Event extends BaseEvent
          return $user[0]->__toString();
     }
     public function  __toString() {
-        return sprintf('%s - %s', $this->getEventCategory(), ($this->getAddress())?$this->getAddress():$this->getProperty()->getAddress());
+        return sprintf('%s #%s - %s', $this->getEventCategory(), $this->getId(), ($this->getAddressId())?$this->getAddress():$this->getProperty()->getAddress());
+    }
+    public function getTitle(){
+        return sprintf('%s', $this->getClient());
     }
     public function buildEventInformationBasics(){
+      //  style label.green also available in tipsy-addons.css
       $info = '';
       $context = sfContext::getInstance();
       
@@ -35,15 +39,13 @@ class Event extends BaseEvent
       $hour = (($startHour != $endHour)?$startHour.' - '.$endHour: $startHour);
       $fecha = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Fecha: ').$date);
       $hora = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Hora: ').$hour);
-      $address= $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Direcci&oacute;n: ').(($this->getAddress())?$this->getAddress():$this->getProperty()->getAddress()));
-      $cell = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Cell: ').$this->getClient()->getPhone());
-      $home = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Casa: ').$this->getClient()->getHomePhone());
-      $pays = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pagos: ').$this->getProperty()->getPropertyPayment().($this->getProperty()->getTaxesIncludedInPayment()?' + Taxes y Aseg.':''));
-      $tasa = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Inter&eacute;s: ').round($this->getProperty()->getTasa(),1).'%');
-      $debe = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Debe: ').$this->getProperty()->getCurrentDebt().' - '.$this->getProperty()->getLoanRateType());
-      $bank = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Banco: ').$this->getProperty()->getBank());
+
+      $address = (!is_null($this->getAddress()) && trim(str_replace(',', '', $this->getAddress()))!='')?$this->getAddress():$this->getProperty()->getAddress();
+      $address = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Direcci&oacute;n: ').$address);
+      $cell = $context->getHelper()->tag('label.red', $context->getHelper()->tag('b', 'Cell: ').$this->getClient()->getPhone());
+      $home = $context->getHelper()->tag('label.red', $context->getHelper()->tag('b', 'Casa: ').$this->getClient()->getHomePhone());
       $compro = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Compr&oacute;: ').$this->getProperty()->getBroughtYear());
-      $modifico = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Modific&oacute;: ').$this->getProperty()->getModifiedYear());
+      $refinancio = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Modific&oacute;: ').$this->getProperty()->getRefinantiedYear());
       $parcela = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Parcela: ').$this->getProperty()->getParcel());
       $sqft = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pies Cuad: ').$this->getProperty()->getSqft());
       $lote = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Lote: ').$this->getProperty()->getLote());
@@ -52,11 +54,13 @@ class Event extends BaseEvent
       $bath = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Ba&ntilde;os: ').$this->getProperty()->getBathRoomsNumber());
       $yearsOnProp = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'A&ntilde;os en Prop: ').$this->getProperty()->getYearsOnProperty());
       $peopOnProp = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Pers en Prop: ').$this->getProperty()->getPeopleOnProperty());
-      $cliente =  $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Cliente: ').$this->getClient());
+      $cliente =  $context->getHelper()->tag('label.red', $context->getHelper()->tag('b', 'Cliente: ').$this->getClient());
       $estimatedValue = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Valor Estimado: ').$this->getProperty()->getEstimatedCurrentValue());
-      $balance  = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Balance: ').$this->getProperty()->getBalance());
       $detalles= $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Detalles: ')).$context->getHelper()->tag('p',$this->getDescription());
 
+      // Info de Hipotecas
+
+      
       $table = $context->getHelper()->table('v-align=top')->head('','');
       $table->body($marketer, $contact);
       $table->body($fecha, $hora);
@@ -65,11 +69,33 @@ class Event extends BaseEvent
       $table->body($address, $parcela);
       $table->body($sqft, $lote);
       $table->body($rooms, $bath);
-      $table->body($yearBuilt, $bank);
-      $table->body($compro, $modifico);
-      $table->body($estimatedValue, $debe);
-      $table->body($pays, $tasa);
-      $table->body($balance,$detalles);
-      return $info.$table;
+      $table->body($yearBuilt, $compro );
+      $table->body($refinancio, $estimatedValue);
+      
+      $table->body($detalles,'');
+
+      $hipotecas = (count($this->getProperty()->PropertyPayment))?'':'<h4 style="color: red">No tiene hipotecas</h4>';
+      $i = 1;
+      foreach ($this->getProperty()->PropertyPayment as $hipoteca){
+        $hipotecas.= sprintf('<h4>Hipoteca #%s</h4>', $i);
+
+        $loanNr = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Nro Pr&eacute;stamo: ').$hipoteca->getLoanNr());
+        $bank = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Banco: ').$hipoteca->getBank());
+        $debe = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Debe: ').$hipoteca->getCurrentDebt().' - '.$hipoteca->getLoanRateType());
+        $tipoPago = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Tipo Pago: ').$hipoteca->getLoanRateType());
+        $tipoPrestamo = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Tipo Pr&eacute;stamo: ').$hipoteca->getPropertyLoanTime().' a&ntilde;os');
+        $pays = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Paga: ').$hipoteca->getPayment().($hipoteca->getTaxesIncludedInPayment()?' + Taxes y Aseg.':''));
+        $tasa = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Inter&eacute;s: ').round($hipoteca->getTasa(), 1).'%');
+
+        $hTable = $context->getHelper()->table('v-align=top')->head('','');
+        $hTable->body($bank, $loanNr);
+        $hTable->body($debe, $tipoPago);
+        $hTable->body($tipoPrestamo, $pays);
+        $hTable->body($tasa, '');
+        $hipotecas.= $hTable;
+        $hipotecas.= '<br/>';
+        $i++;
+      }
+      return $info.$table.$hipotecas;
   }
 }

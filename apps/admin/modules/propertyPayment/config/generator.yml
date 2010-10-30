@@ -1,0 +1,60 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: PropertyPayment
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: property_payment
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        current_debt: {label: Deuda actual, help: 'Ej: 50000'}
+        bank_id:  { label: Banco }
+        property_loan_rate_type_id: { label: Tipo de pago }
+        tasa: {help: 'Escribir solamente el valor. Ej: para el 6% escribir solo el 6' }
+        taxes_included_in_payment: {label: Taxes + Aseguranza}
+        loan_time_id: { label: Tipo de pr&eacute;stamo, help: 'Tiempo en a&ntilde;os del pago'}
+        loan_nr: { label: 'Nro de pr&eacute;stamo'}
+        payment: { label: Pago , help: 'Ej: 1400'}
+        new_property: { label: Nueva }
+        propiedad:  { label: Propiedad}
+        property_id: {label: Propiedad }
+      list:
+        display:
+          - loan_time_id
+          - '=property_id'
+          - property_loan_rate_type_id
+          - bank_id
+          - payment
+          - taxes_included_in_payment
+          - loan_nr
+          - current_debt
+          - tasa
+        sort:
+          - id
+          - asc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - taxes_included_in_payment
+          - property_id
+          - bank_id
+          - payment
+          - property_loan_rate_type_id
+          - loan_time_id
+          - loan_nr
+          - current_debt
+          - tasa
+      form:
+        display:
+          Propiedad: [property_id, propiedad, new_property]
+          Informaci&oacute;n de pago: [  bank_id, loan_nr, property_loan_rate_type_id, loan_time_id, payment, tasa, current_debt, taxes_included_in_payment]
+        class: PropertyPaymentAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

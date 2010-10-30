@@ -16,6 +16,14 @@ class arkCompleteJQueryDateTimePickerWidget extends sfWidgetForm{
       $this->addRequiredOption('DateStartInputId', false);
       $this->addRequiredOption('DateEndInputId', false);
       $this->addOption('embedded-mode', false);
+      $this->addOption('SelectTimeStart', true);
+      $this->addOption('SelectTimeEnd', true);
+      $this->addOption('HelpGeneral', '');
+      $this->addOption('HelpDateRange', 'Haga clic en el calendario para seleccionar un d&iacute;a o rango de d&iacute;as.');
+      $this->addOption('HelpTimeStart', '');
+      $this->addOption('HelpTimeEnd', '');
+      $this->addOption('CalendarsNumber', '2');
+      $this->addOption('CalendarMode', 'range');
 
   }
   
@@ -53,6 +61,12 @@ class arkCompleteJQueryDateTimePickerWidget extends sfWidgetForm{
         return
         sprintf(<<<EOF
 <script type="text/javascript" >
+    function getCalendarsNumber(){
+      return calendarsNumber = %s;
+    }
+    function getCalendarMode(){
+      return calendarMode = '%s';
+    }
     function getLockDates(){
         return lockDates = %s;
     }
@@ -66,7 +80,7 @@ class arkCompleteJQueryDateTimePickerWidget extends sfWidgetForm{
 <script type="text/javascript" src="/js/admin-event-box.js">
 </script>
 EOF
-,($this->getOption('lock-dates')?1:0),  $this->getOption('DateEndInputId'), $this->getOption('DateStartInputId')).
+,$this->getOption('CalendarsNumber'), $this->getOption('CalendarMode'),($this->getOption('lock-dates')?1:0),  $this->getOption('DateEndInputId'), $this->getOption('DateStartInputId')).
 sprintf(<<<EOF
 <div class="even sf_admin_text sf_admin_form_field_fancy_date sf_widget_form_input_text required" data-field-name="fancy_date">
       <div class="sf_admin_form_row_inner clearfix">
@@ -76,32 +90,33 @@ sprintf(<<<EOF
             <a href="#">Select date range</a>
             </div>
             <div id="calendar-container" ></div>
+            <div class="help" style="margin-left:0px">%s</div>
           </div>
-          <div class="help" style="margin-left:0px">Haga clic en el calendario para seleccionar un d&iacute;a o rango de d&iacute;as para el evento.</div>    
+          
       </div>
 </div>
 <div class="clearfix" style="margin-top:15px"> </div>
 <div class="even sf_admin_text sf_admin_form_field_fancy_date sf_widget_form_input_text required" data-field-name="fancy_date">
       <div class="sf_admin_form_row_inner clearfix">
           <div class="content">
-            <div style="width: %s; float: left;">
-                <div class="label_wrap" style="min-width: 75px;><label for="event_admin_form_time_start">Hora inicio</label></div>
+            <div style="width: %s; float: left; display: %s;">
+                <div class="label_wrap" style="min-width: 75px;><label for="event_admin_form_time_start">Hora Inicio</label></div>
                 <input type="text" class="hour-trigger" size="30" readonly="true" id="date_start_time" value="">
-                <div class="help" style="margin-left: 75px">Hora de inicio del evento</div>
+                <div class="help" style="margin-left: 75px">%s</div>
             </div>
-            <div style="width: %s; float: left;">
+            <div style="width: %s; float: left; display: %s;">
                 <div class="label_wrap"><label for="event_admin_form_time_end">Hora fin</label></div>
                 <input type="text" class="hour-trigger text-input small-input" size="30" readonly="true" id="date_end_time" value="">
-                <div class="help">Hora de culminaci&oacute;n del evento</div>
+                <div class="help">%s</div>
             </div>
             <div class="clearfix" > </div>
-          <div class="help" style="margin-left:0px;margin-top: 10px;line-height:2;">Deje ambas horas en blanco en caso de ser un evento de todo el día.</div>    </div>
+          <div class="help" style="margin-left:0px;margin-top: 10px;line-height:2; display: %s;">%s</div>
          </div>
      </div>
 </div>
 
 EOF
-, '45%', '50%');
+,$this->getOption('HelpDateRange'), '45%',($this->getOption('SelectTimeStart'))?'block':'none', $this->getOption('HelpTimeStart'),'50%',($this->getOption('SelectTimeEnd'))?'block':'none', $this->getOption('HelpTimeEnd'), ($this->getOption('SelectTimeStart'))?'block':'none', $this->getOption('HelpGeneral'));
     }
 }
 ?>

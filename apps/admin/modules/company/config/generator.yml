@@ -11,13 +11,18 @@ generator:
       actions: ~
       fields:
         colorbox_close_enable: { label: " " }
+        sector_id: { label: Sector }
+        web_site:  { label: Sitio Web}
+        Address: { label: ' '}
       list:
         actions: ~
         loremize: false
         display:
           - '=name'
-          - address
+          - Address
           - phone
+          - fax
+          - sector_id
         sort:
           - name
           - asc
@@ -27,11 +32,11 @@ generator:
       filter:
         display:
           - name
-          - address
+          - Address
           - phone
       form:
         display:
-          NONE: [name, address, phone, colorbox_close_enable]
+          Informaci&oacute;n de la Compa&ntilde;&iacute;a: [name, phone, fax, sector_id, web_site, Address, colorbox_close_enable]
         class: CompanyAdminForm
         fields: {  }
       edit: ~

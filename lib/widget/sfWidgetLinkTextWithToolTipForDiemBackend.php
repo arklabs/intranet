@@ -28,11 +28,19 @@ class sfWidgetLinkTextWithToolTipForDiemBackend extends sfWidgetForm
     		$attrList = '';
     	    foreach (array_keys($attributes) as $attr)
     	    	$attrList.= sprintf('%s="%s"', $attr, $attributes[$attr]);
-            return sprintf('<a "%s" %s %s> %s</a>',
+            return sprintf('<a class="s16" href="%s" title="%s" style="background-position: -1000px -1000px; margin-left: -16px;" %s> %s</a>',
+                                $this->getOption('url'),
+                                $this->getOption('title'),
+                                $attrList,
+                                $this->getOption('value')
+                            );
+
+            /* old way, more flexible but error in opera and chrome
+            sprintf('<a "%s" %s %s> %s</a>',
                             (($this->getOption('url')!='')?'href="'.$this->getOption('url').'"':''),
-                            (($this->getOption('title')!='')?'class="s16" style="background-position: 1000px 1000px; margin-left: -16px;" title="'.$this->getOption('title').'"':''),
+                            (($this->getOption('title')!='')?'class="s16" style="background-position: -1000px -1000px; margin-left: -16px;" title="'.$this->getOption('title').'"':''),
                             $attrList,
                             $this->getOption('value')
-                          );
+                          ); */
     }
 }

@@ -1,5 +1,15 @@
 function formatDates(dates){
-    return dates[0].getDayName()+', '+dates[0].getMonthName() +' '+dates[0].getDate()+' '+dates[0].getFullYear()+' &divide; '+dates[1].getDayName()+', '+dates[1].getMonthName() +' '+dates[1].getDate()+' '+dates[1].getFullYear();
+   dates0 = dates1 = dates;
+    result = "";
+    if (dates[0]){
+        dates0 = dates[0];
+    }
+    result = result + dates0.getDayName()+', '+dates0.getMonthName() +' '+dates0.getDate()+' '+dates0.getFullYear();
+    if (dates[1]){
+        dates1 = dates[1];
+        result = result + ' &divide; '+dates1.getDayName()+', '+dates1.getMonthName() +' '+dates1.getDate()+' '+dates1.getFullYear();
+    }
+    return result;
 }
 function fixHourTo24(completeHour){
     tmp = completeHour.split(' ');
@@ -38,9 +48,11 @@ function SyncDateAndTime(firstTime){
 
         if (eHour.split(':')[0] != '00')
             $('#date_end_time').val(fixHourTo12(eHour));
-
-        $(getRangeDateStartID()).val($(getRangeDateStartID()).val().split(' ')[0]);
-        $(getRangeDateEndID()).val($(getRangeDateEndID()).val().split(' ')[0]);
+        if ($(getRangeDateStartID()).val()!=''){
+            $(getRangeDateStartID()).val($(getRangeDateStartID()).val().split(' ')[0]);
+            if (getRangeDateStartID()!=getRangeDateEndID())
+                $(getRangeDateEndID()).val($(getRangeDateEndID()).val().split(' ')[0]);
+        }
     }
     else
     {
@@ -50,9 +62,11 @@ function SyncDateAndTime(firstTime){
         eHour = $('#date_end_time').val();
         if (eHour =='' || !eHour)
             eHour = '00:00 AM'
-         
-        $(getRangeDateStartID()).val($(getRangeDateStartID()).val() + ' '+ fixHourTo24(sHour));
-        $(getRangeDateEndID()).val($(getRangeDateEndID()).val() + ' '+ fixHourTo24(eHour));
+        if ($(getRangeDateStartID()).val()!=''){
+            $(getRangeDateStartID()).val($(getRangeDateStartID()).val() + ' '+ fixHourTo24(sHour));
+            if (getRangeDateStartID()!=getRangeDateEndID())
+                $(getRangeDateEndID()).val($(getRangeDateEndID()).val() + ' '+ fixHourTo24(eHour));
+        }
     }
 }
 function initEventBox(){
@@ -61,10 +75,10 @@ function initEventBox(){
     lockDates = getLockDates();
     dates = [new Date(), new Date()];
     if ($(getRangeDateStartID()).val()!= ""){
-         dates = [$(getRangeDateStartID()).val()];
-         if ($(getRangeDateEndID()).val()!= "")
+         dates = $(getRangeDateStartID()).val();
+         if ($(getRangeDateEndID()).val()!= "" && getCalendarMode()=='range')
              dates = [$(getRangeDateStartID()).val(), $(getRangeDateEndID()).val()];
-         else
+         else if (getCalendarMode() == 'range')
              dates = [$(getRangeDateStartID()).val(), $(getRangeDateStartID()).val()];
      }
      $('#calendar-container').DatePicker({
@@ -72,13 +86,18 @@ function initEventBox(){
          format: 'Y-m-d',
          date: dates,
          current: $(getRangeDateStartID()).val().split(' ')[0],
-         calendars: 2,
-         mode: 'range',
+         calendars: getCalendarsNumber(),
+         mode: getCalendarMode(),
          starts: 1,
          onChange: function(formated) {
             $('#widgetField span').get(0).innerHTML = formatDates($('#calendar-container').DatePickerGetDate(false));
-            $(getRangeDateStartID()).val(formated[0]);
-            $(getRangeDateEndID()).val(formated[1]);
+            formated0 = formated1 = formated;
+            if (typeof(formated) != 'string')
+                formated0 = formated[0];
+            if (typeof(formated) != 'string')
+                formated1 = formated[1];
+            $(getRangeDateStartID()).val(formated0);
+            $(getRangeDateEndID()).val(formated1);
          },
          onRender: function (date){
              if (lockDates == 0)
@@ -105,8 +124,9 @@ function initEventBox(){
     }
 
     $('#calendar-container').css('display', 'none');
-
-     $('#widgetField span').get(0).innerHTML = formatDates($('#calendar-container').DatePickerGetDate(false));
+    if ($(getRangeDateStartID()).val() != ''){
+        $('#widgetField span').get(0).innerHTML = formatDates($('#calendar-container').DatePickerGetDate(false));
+    }
     /* timepickers */
     $('.hour-trigger').ptTimeSelect({
         zindex: 999,
