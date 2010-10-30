@@ -41,7 +41,6 @@ generator:
           - id
           - first_name
           - last_name
-          - live_in
           - assigned_to
           - source_id
       form:
