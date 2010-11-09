@@ -15,7 +15,6 @@ generator:
           - '=address'
           - zip_code
           - company_list
-          - event_list
         sort:
           - id
           - asc
@@ -29,9 +28,7 @@ generator:
           - address
       form:
         display:
-          NONE: [zip_code, address]
-          Compañias: [company_list]
-          Citas: [event_list]
+          Generales: [zip_code, address]
         class: AddressAdminForm
         fields: {  }
       edit: ~
