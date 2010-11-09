@@ -25,7 +25,7 @@ class PropertyAdminForm extends BasePropertyForm
     
     $y = date('Y', time()); $pastYears =  range($y+1-100, $y); $pastYears[100] = '';$pastYears = array_reverse($pastYears);  $pastYears = array_combine($pastYears, $pastYears);
 
-    $roomsValidator = range(1, 15); $rooms = array_combine($roomsValidator, $roomsValidator);
+    $roomsValidator = range(1, 7); $rooms = array_combine($roomsValidator, $roomsValidator);
 
     $this->setWidget('rooms_number', new sfWidgetFormChoice(array('choices'=>$rooms)));
     $this->setValidator('rooms_number', new sfValidatorChoice(array('choices'=>$roomsValidator, 'required'=>false)));

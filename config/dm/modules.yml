@@ -25,12 +25,13 @@ Content:
   Usuarios:
     dm_user:
     client:
-      page: false
+      page: true
       name: Cliente|Clientes
       components:
         list: 
         geoClientsList:
-        summary:
+        ##summary:
+        show: 
     agent:
       name: Agente|Agentes
       components:
@@ -124,6 +125,19 @@ Content:
   #Departamentos:
   #  department:
   #    name: Departamento|Departamentos
+  #Eventos:
+  #  event_public:
+  #    name: Evento P&uacute;blico|Eventos P&uacute;blicos
+  #    page: false
+  #    components:
+  #      publicCalendar:
+  #        name: Calendario Publico
+  #  event_root:
+  #    name: Reuni&oacute;n &oacute; Recordatorio|Reuniones o Recordatorios
+  #    page: false
+  #    components:
+  #      privateCalendar:
+  #        name: Calendario Privado
   Citas:
     client_file:
       page: false
@@ -173,7 +187,10 @@ Content:
       name: Situaci&oacute;n|Situaciones
     event_feed_back:
       name: Feed Back|Feed Back
-
+      page: false
+      components:
+        fbHistoryDatesRangeSelector:
+        list:
   Contabilidad:
     bank:
       name: Banco|Bancos

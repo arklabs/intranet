@@ -56,7 +56,8 @@ class EventAdminForm extends BaseEventForm
   	 }
 	 else
 	  	$this->setFancyDateTimeSelector(1);
-	 
+
+     $this->setWidget('service_id', new sfWidgetFormDoctrineChoice(array('model'=>'FileType')));
      $this->setWidget('phraseology_id', new sfWidgetFormDoctrineJQueryAutocompleter(array('model'=>'phraseology','url'=>$this->getHelper()->link('app:admin/+/phraseology/getPhraseologyJsonList')->getHref())));
      if ($this->isNew()){
 	$this->setWidget('propiedad', new sfWidgetFormInputHidden());

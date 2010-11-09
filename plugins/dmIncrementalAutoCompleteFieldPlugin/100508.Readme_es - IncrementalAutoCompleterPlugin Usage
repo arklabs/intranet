@@ -1,0 +1,93 @@
+dmIncrementalAutoCompleterPlugin 
+
+
+Por defecto las relaciones uno a mucho en symfony/diem se visualizan como una lista desplegable. Esta forma es bien comoda y util salvo en los casos en que el elemento buscado no aparece en la lista desplegable, con lo cual es necesario agregar la llave foranea necesitada y recargar la lista desplegable para que muestre el nuevo valor. 
+Con este plugin se propone una solucion alternativa a este problema. _IncrementalAutoCompleterPlugin_ contiene un widget _dmIncrementalAutoCompleteFormField_ que visualiza la lista de valores foraneos en forma de autocompletamiento, la gran diferencia est'a en que si no existe el valor buscado se puede simplemente continuar escribiendo el nuevo valor, al salvar el formulario este nuevo valor se agregar'a a la tabla que corresponda, la proxima vez que se consulte el autocompletamiento en el mismo contexto aparecer'a tambien el valor agregado. 
+
+Para concretar el problema y solucion descritos muy a grandes rasgos, supongase que se tiene una entidad cliente con relaciones a las tablas City(_city_id_) y State(_state_id_), por defecto al visualizar el formulario de creacion/edicion del cliente se podra seleccionar en la lista desplegable todas las ciudades previamente almacenadas en la tabla City y todos los estados registrados en la tabla State, pero... que pasa si el valor que buscamos no est'a? Es necesario entonces agregar a la tabla City el nuevo valor y refrescar el formulario del cliente para que el valor aparezca en la lista.
+
+Como se usa este plugin?
+1. Cargar JQuery en el header de la pagina.
+* Si se esta usando symfony basta con agregar la libreria manualmente en el header del layout _apps/app_name/templates/layout.php_.
+* si se esta usando Diem se debera modificar el archivo: _config/dm/config.yml_ bajo _all/js_
+Antes:
+<pre>
+head_inclusion:       [ ]
+</pre>
+Despues
+<pre>
+head_inclusion:       [ lib.jquery ]
+</pre>
+2. Instalacion. La instalacion es exactamente igual que la de cualquier plugin, se descompacta el plugin en la carpeta _plugin_ del proyecto y se ejecuta _php symfony plugin:publish-assets_
+
+3. Modificar el comportamiento y visualizacion por defecto de los campos deseados. El formulario del cliente el metodo _configure()_ quedaria:
+
+<pre>
+public function configure()
+{
+      	parent::configure();
+	$routing = sfContext::getInstance()->getRouting();
+      	$this->setWidget('city_id',
+                 new dmIncrementalAutoCompleteFormField(array(
+                     'owner_form'=>$this,
+                     'field_name'=>'city_id',
+                     'url'=>$routing->generate('client',array('action'=>'cityAjaxChoices'))
+                     )
+                 )
+        );
+	$this->setWidget('city_id',
+                 new dmIncrementalAutoCompleteFormField(array(
+                     'owner_form'=>$this,
+                     'field_name'=>'city_id',
+                     'url'=>$routing->generate('client',array('action'=>'cityAjaxChoices'))
+                     )
+                 )
+        );
+        $this->setValidator('city_id', new sfValidatorString(array('required'=>$this->getValidator('city_id')->getOption('required'))));
+        $this->setValidator('state_id', new sfValidatorString(array('required'=>$this->getValidator('state_id')->getOption('required'))));
+}
+</pre>
+
+Note que no se ha pasado como parametro el nombre del campo que se usara para el autocompletamiento en las tablas city y state, esto es porque el widget es capaz de adivinar este campo en caso de que sea uno de los valores ['name', 'nombre', 'title', 'titulo', 'category', 'categoria']. Si el nombre del campo que se usara para autocompletar no esta en esta lista es posible pasarlo con la linea  _'foreignColumnName'=>'titulo_imagen',_  en el arreglo de opciones del widget.
+
+Las opciones obligatorias son:
+* 'owner_form'=>$this (formulario en el que se esta agregando el widget, esta linea no debe cambiar nunca)
+* 'field_name'=>'city_id' (nombre del campo que visualizara el widget)
+* 'url'=>$routing->generate('client',array('action'=>'cityAjaxChoices')) (url que recibira las peticiones ajax del widget, mas adelante se explican).
+
+4. Preparar de forma independiente, antes de ser salvados,los valores de los campos autocompletados. Ej: El metodo save() en el formulario del cliente quedaria: 
+<pre>
+public function save($conn = null){
+      
+      $this->values = $this->getWidget('state_id')->save('state_id');
+      $this->values = $this->getWidget('city_id')->save('city_id');
+      return parent::save();
+} 
+</pre>
+
+5. Crear los metodos que responderan las peticiones Ajax del widget. Se han agregado en el propio widget facilidades para crear el metodo que recibira las peticiones ajax.
+
+Es recomendable ubicar en este metodo en la clase _actions_ pero de forma general pueden ser ubicados en cualquier lugar. En el action del cliente estos metodos quedarian:
+<pre>
+public function executeStateAjaxChoices($request)
+{
+	$this->getResponse()->setContentType('application/json');
+        return $this->renderText(json_encode(dmIncrementalAutoCompleteFormField::getChoices('State', $request->getParameter('q'), 10)));
+}
+
+public function executeCityAjaxChoices($request)
+{
+	$this->getResponse()->setContentType('application/json');
+        return $this->renderText(json_encode(dmIncrementalAutoCompleteFormField::getChoices('City', $request->getParameter('q'), 10)));
+}
+</pre>
+
+Cada metodo recibe embebido en la peticion el parametro q, el cual contiene el texto que va tecleando el usuario y que constituye el patron de busqueda de los campos que se visualizaran como sugerencias. 
+Vea que el metodo se resume en dos lineas, la segunda devuelve en formato json las 10 primeras entradas del resultado de buscar el patron q en el la tabla de estados (State) y ciudades (City) respectivamente.
+
+6. Modificar el estilo de la lista de autocompletamiento. Por defecto esta lista se ha disennado para que vaya bien con el disenno del backend de diem, pero puede ser modificado para ajustarse a cualquier necesidad. Puede hacer modificando la hoja de estilo del widget ubicada en plugin/dmIncrementalAutoCompleterPlugin/web/css/jquery.autocompleter.css
+  
+ 
+
+
+

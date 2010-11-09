@@ -199,6 +199,16 @@ dashboards:
       params:
       credentials:
         assignDates_front:
+    feedback-history:
+      title: Historial de <br/> FeedBacks
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-incomming-call-history:
+      url: main/historialDeFeedbacks
+      params:
+      credentials:
+        viewFeedBackHistory_front:
     geo-events:
       title: Geolocalizar <br/>Citas
       extra-classes:

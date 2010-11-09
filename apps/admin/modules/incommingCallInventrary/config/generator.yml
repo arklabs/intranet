@@ -57,7 +57,6 @@ generator:
         display:
           Generales: [first_name, last_name, cel, home_phone, colorbox_close_enable]
           Otros Datos: [ property_id, caller_id, reason_id, comments]
-          Tags: [tags]
         class: IncommingCallInventraryAdminForm
         fields: {  }
       edit: ~

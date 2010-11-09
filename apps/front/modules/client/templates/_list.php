@@ -13,19 +13,21 @@ $table = _table('.data_table')->head(
   //_tag('input', array('type'=>'checkbox', 'class'=>'check-all')),
   __('Nombre'),
   __('Teléfono'),
-  __('Tramites'),
+  __('Citas'),
+  //__('Tramites'),
   __('Acciones')
 );
 
 foreach ($clientPager as $client)
 {
-   //print_r($client->getLiveIn());die;
+  //print_r($client->getLiveIn());die;
   
   $table->body(
   //_tag('input', array('type'=>'checkbox', 'value'=>$client->getId(), 'name'=>'ids[]')),
-  sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $client->getId(),'dm_embed'  => 1))->getHref(), $client->getUsername(), $client->getFirstName().' '.$client->getLastName()),
+  sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $client->getId(),'dm_embed'  => 1))->getHref(), 'Clic para ver los detalles de este cliente.', $client->getFirstName().' '.$client->getLastName()),
   ($client->getPhone())?sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $client->getId(),'dm_embed'  => 1))->getHref(), 'Clic para modificar el teléfono de este cliente', $client->getPhone()):sprintf('<a href="%s"  rel="tipsy" original-title="%s" class="color-box-trigger"> %s</a>',_link('app:admin/+/'.$sfModule.'/edit')->params(array('pk'=> $client->getId(),'dm_embed'  => 1))->getHref(), 'Clic para agregar el teléfono de este cliente', "No asignado"),
-  get_partial('client/clientFilesCell', array('client'=>$client)),
+  get_partial('client/clientDatesCell', array('client'=>$client)),
+ // get_partial('client/clientFilesCell', array('client'=>$client)),
   _open('a.bt-flat.fg-button.fg-button-icon-right.ui-widget.ui-state-default.ui-corner-all', array('tabindex'=>0, 'href'=>'#')).
   _tag('span.ui-icon.ui-icon-carat-1-s',"")."Acciones"._close('a').
   _open('div.hidden').get_partial('client/clientActionsPanel', array('client'=>$client))._close('div')
@@ -94,6 +96,7 @@ echo $table;
 					      {"bSortable": true},
 					      {"bSortable": true, "sClass": "title-col"},
 					      {"bSortable": false},
+					      //{"bSortable": false},
 					      {"bSortable": false},
 					 ]
 	      });

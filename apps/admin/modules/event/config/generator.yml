@@ -78,7 +78,7 @@ generator:
         display:
           Cliente: [cliente, client_id, new_client, propiedad,property_id, new_property]
           Seleccion de Fecha y Hora: [fancy_date_time]
-          Informaci&oacute;n del evento: [  category_id, status_id,  date_start, date_end, phraseology_id,   dm_user_id, service_id, Address, description,colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
+          Informaci&oacute;n del evento: [  category_id, status_id,  date_start, date_end, phraseology_id,   dm_user_id, service_id, description, Address, colorbox_close_enable, _timeFocusAvoider, _adminEventAutocompleterTooltips]
           Feed Back: [ getted_document_list, signed_document_list, event_feed_back_list ]
         class: EventAdminForm
         fields: {  }

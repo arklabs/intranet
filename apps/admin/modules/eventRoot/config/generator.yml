@@ -1,0 +1,79 @@
+generator:
+  class: dmAdminDoctrineGenerator
+  param:
+    model_class: EventRoot
+    theme: dmAdmin
+    non_verbose_templates: true
+    with_show: false
+    route_prefix: event_root
+    with_doctrine_route: false
+    config:
+      actions: ~
+      fields:
+        tags_list:
+          label: Tags
+        is_active:
+          label: Active
+        is_new:
+          label: New
+      list:
+        display:
+          - '=id'
+          - address_id
+          - category_id
+          - status_id
+          - created_by
+          - updated_by
+          - dm_user_list
+          - tags_list
+          - date_start
+          - date_end
+          - description
+          - is_active
+          - is_new
+          - dm_user_id
+          - type
+          - client_id
+          - property_id
+          - phraseology_id
+          - service_id
+          - created_at
+          - updated_at
+        sort:
+          - created_at
+          - desc
+        table_method: getAdminListQuery
+        table_count_method: ~
+        sortable: false
+      filter:
+        display:
+          - id
+          - is_active
+          - is_new
+          - date_start
+          - date_end
+          - description
+          - address_id
+          - dm_user_id
+          - category_id
+          - status_id
+          - type
+          - client_id
+          - property_id
+          - phraseology_id
+          - service_id
+          - created_at
+          - updated_at
+          - created_by
+          - updated_by
+      form:
+        display:
+          NONE: [is_active, is_new, address_id, category_id, status_id, created_by, updated_by]
+          Description: [description]
+          Tags: [tags]
+          Users: [dm_user_list]
+          Others: [date_start, date_end, dm_user_id, type, client_id, property_id, phraseology_id, service_id]
+        class: EventRootAdminForm
+        fields: {  }
+      edit: ~
+      new: ~

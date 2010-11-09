@@ -14,6 +14,7 @@ class EmploymentAdminForm extends BaseEmploymentForm
     parent::configure();
     $context = dmContext::getInstance();
     $request = $context->getRequest();
+    $routing = $context->getRouting();
     
     $years = range(0, 70);$years[0]= '';$years = array_combine($years, $years);
     $this->setWidget('years', new sfWidgetFormChoice(array('choices'=>$years)));
@@ -23,7 +24,21 @@ class EmploymentAdminForm extends BaseEmploymentForm
     $this->setBackAndNewClientWidgets($request);
     $this->setFancyDateTimeSelector();
     $this->setWidget('month_income', new arkMonthlyMoneyCalculator(array('choices'=>array('Hora'=>24*30,'Día'=>30,'Semana'=>4,'Mes'=>1,'Trimestre'=>1/3, 'Semestre'=>1/6, 'Año'=>1/12, ), 'default-key-choice'=>'Mes')));
+    $this->setWidget('company_id',
+                 new dmIncrementalAutoCompleteFormField(array(
+                     'owner_form'=>$this,
+                     'field_name'=>'company_id',
+                     'url'=>$routing->generate('company',array('action'=>'companyAjaxChoices'))
+                     )
+                 )
+     );
+    $this->setValidator('company_id', new sfValidatorString(array('required'=>$this->getValidator('company_id')->getOption('required'))));
+
     $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
+  }
+  public function  save($con = null) {
+        $this->values = $this->getWidget('company_id')->save('company_id');
+        return parent::save($con);
   }
   protected function setBackAndNewClientWidgets($request){
       $defaults = $request->getParameter('defaults', null);

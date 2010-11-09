@@ -1,4 +1,5 @@
 /*#graph{ width: 650px;}*/
+* { height: auto !important;}
 #graph{ width: 2000px;}
 #widgetField span{margin-left: -27px;}
 body {

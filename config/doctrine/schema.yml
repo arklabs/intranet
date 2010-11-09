@@ -500,9 +500,7 @@ IncommingCallReason:
 Source:
   columns:
     name:       { type: string(64), notnull: true }
-
-
-Event:
+EventRoot:
   actAs:   [Timestampable, DmTaggable, DmBlameable, DmVersionable]
   columns:
     date_start:       { type: timestamp, notnull: true    }
@@ -511,30 +509,14 @@ Event:
     is_active:        { type: boolean, notnull: true, default: true }
     is_new:           { type: boolean, default: true, notnull: true }
     address_id:       { type: integer, notnull: false }
-    bolsa:            { type: integer}
     dm_user_id:       { type: integer, notnull: false     }
     category_id:      { type: integer, notnull: true      }
     status_id:        { type: integer, notnull: true      }
-    client_id:        { type: integer 					  }
-    property_id:      { type: integer, notnull: true }
-    phraseology_id:   { type: integer 					  }
-    service_id:       { type: integer, notnull: true }
   relations:
     Address:
       local: address_id
       foreign: id
-      type: one 
-    FileType:
-      local: service_id
-      foreign: id
       type: one
-    Property:
-      local: property_id
-      foreign: id
-    Phraseology: 
-      local: phraseology_id
-      foreign: id
-      onDelete: RESTRICT
     DmUser:
       local: dm_user_id
       foreign: id
@@ -548,6 +530,35 @@ Event:
     EventStatus:
       local:    status_id
       foreign:  id
+      onDelete: RESTRICT
+EventPublic:
+  inheritance:
+    extends: EventRoot
+    type: column_aggregation
+    keyField: type
+    keyValue: Public Event
+Event:
+  inheritance:
+    extends: EventRoot
+    type: column_aggregation
+    keyField: type
+    keyValue: Cita
+  columns:
+    client_id:        { type: integer 					     }
+    property_id:      { type: integer, notnull: true }
+    phraseology_id:   { type: integer 					     }
+    service_id:       { type: integer, notnull: true }
+  relations:
+    FileType:
+      local: service_id
+      foreign: id
+      type: one
+    Property:
+      local: property_id
+      foreign: id
+    Phraseology:
+      local: phraseology_id
+      foreign: id
       onDelete: RESTRICT
     Client:
       local: client_id

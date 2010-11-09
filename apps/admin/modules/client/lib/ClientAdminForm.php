@@ -48,7 +48,7 @@ class ClientAdminForm extends BaseClientForm
           $this->values['username'] = $username = DmUser::buildUsername($this->values['first_name'], $this->values['last_name']);
           $this->values['password'] = DmUser::buildPassword($username);
           if (!$this->values['email']){
-              $this->values['email'] = $this->values['email'].'@no.given';
+              $this->values['email'] = $this->values['username'].'@no.given';
           }
       }
 
@@ -56,7 +56,7 @@ class ClientAdminForm extends BaseClientForm
   }
   protected function setFancyDateTimeSelector($lock_dates = false){
     $this->setWidget('dob', new sfWidgetFormInputHidden());
-    $this->setValidator('dob', new sfValidatorRichDateTime(array('sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
+    $this->setValidator('dob', new sfValidatorRichDateTime(array('required'=>false,'sf_date_format'=> "yyyy-MM-FF h:mm a", 'with_time'=>true)));
     $this->setWidget('fancy_date_time', new arkCompleteJQueryDateTimePickerWidget(array('DateStartInputId'=>'#client_admin_form_dob', 'DateEndInputId'=>'#client_admin_form_dob', 'lock-dates'=>0, 'HelpDateRange'=>'Haga clic en el calendario para seleccionar el d&iacute;a de nacimiento.', 'HelpTimeStart'=>'Hora inicio', 'HelpTimeEnd'=>'Hora fin','HelpGeneral'=>'Deje ambas horas en blanco en caso de ser un evento de todo el día.', 'SelectTimeStart'=>false, 'SelectTimeEnd'=>false, 'CalendarsNumber'=>1, 'CalendarMode'=>'single')));
     /*if ($this->isNew()){
     	$context = dmContext::getInstance();
