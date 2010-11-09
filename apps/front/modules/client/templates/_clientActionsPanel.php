@@ -12,5 +12,7 @@
   <li><a role="menuitem" class="color-box-trigger ark-clear-left" href="<?php echo _link('app:admin/+/clientIncome/new')->params(array('dm_embed'=>1, 'defaults[client_id]'=>$client->getId()))->getHref()?>"><span class="ark-icon-1-16 ark-icon-insert-income icon-fl"></span>Insertar Ingreso</a></li>
   <?php endif; if ($sf_user->hasPermission('insertActive_front') || ($sf_user->isSuperAdmin())):?>
   <li><a role="menuitem" class="color-box-trigger ark-clear-left" href="<?php echo _link('app:admin/+/clientAsset/new')->params(array('dm_embed'=>1, 'defaults[client_id]'=>$client->getId()))->getHref()?>"><span class="ark-icon-1-16 ark-icon-insert-active icon-fl"></span>Insertar Activo</a></li>
+  <?php endif;?> <?php if ($sf_user->hasPermission('insertEvent_front') || ($sf_user->isSuperAdmin())):?>
+  <li><a role="menuitem" class="color-box-trigger ark-clear-left" href="<?php echo _link('app:admin/+/event/new')->params(array('dm_embed'=>1, 'defaults[client_id]'=>$client->getId()))->getHref()?>"><span class="ark-icon-2-16 ark-icon-bussiness-meeting icon-fl"></span>Insertar Cita</a></li>
   <?php endif;?>
 </ul>
