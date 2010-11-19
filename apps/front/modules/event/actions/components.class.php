@@ -6,17 +6,6 @@
  * 
  * 
  * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
  */
 class eventComponents extends myFrontModuleComponents
 {
@@ -28,7 +17,7 @@ class eventComponents extends myFrontModuleComponents
 
   public function executeList()
   {
-      $eventStatus = Doctrine::getTable('EventCategory')->findByName('cita');
+    $eventStatus = Doctrine::getTable('EventCategory')->findByName('cita');
       $this->availableStatus = $eventStatus[0]->getPossibleStatuses();
       $userId = ($this->getUser()->getGuardUser())?$this->getUser()->getGuardUser()->getId():-1;
       $q = null;
@@ -50,8 +39,7 @@ class eventComponents extends myFrontModuleComponents
 
   public function executeGeoEventsList()
   {
-      $this->availableStatus = Doctrine::getTable('EventStatus')->getAll();
-
+    $this->availableStatus = Doctrine::getTable('EventStatus')->getAll();
       $userId = ($this->getUser()->getGuardUser())?$this->getUser()->getGuardUser()->getId():-1;
       $q = null;
       Doctrine::getTable('Event')->forUser($this->getUser()->getGuardUser(), $q)->filterByCategoryName('cita', $q);
@@ -81,18 +69,24 @@ class eventComponents extends myFrontModuleComponents
 
   public function executeAgentAssignDates()
   {
-      
      $endDate = new sfDate($this->getRequestParameter('date_end', time()));
      $endDate->addDay(1)->clearTime();
      $startDate = new sfDate($this->getRequestParameter('date_start', $endDate->copy()->subtractWeek(2)->get()));
      $userId = ($this->getUser()->getGuardUser())?$this->getUser()->getGuardUser()->getId():-1;
-      $q = null;
+     $q = null;
       
-      Doctrine::getTable('Event')->reportStarting($startDate->dump(), $q)->reportEnding($endDate->dump(), $q);
+     Doctrine::getTable('Event')->reportStarting($startDate->dump(), $q)->reportEnding($endDate->dump(), $q);
       
-      $this->agentList = Doctrine::getTable('Agent')->createQuery()->execute();
-      
-      $this->eventPager = $this->getPager($q);
+     $this->agentList = Doctrine::getTable('Agent')->createQuery()->execute();
+     
+     $eventList = $q->execute();
+     foreach ($eventList as $event){
+         $evDate = new sfDate($event->getDateStart());
+         $evDate->clearTime();
+         $agentList = UserAvailabilityTable::getAvailableAgents($evDate->get());
+         $this->agentList[$event->getId()] = $agentList;
+     }
+     $this->eventPager = $this->getPager($q);
   }
 
   public function executeReportDatesByCityConfig()
@@ -112,9 +106,9 @@ class eventComponents extends myFrontModuleComponents
 
   public function executePerAgentDateChart()
   {
-        $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
+    $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
+    		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
     	$arkChart = new arkPChart('Reporte General de Citas por Agente', 'perDayAgentDateChart');
         $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
@@ -169,22 +163,24 @@ class eventComponents extends myFrontModuleComponents
             $percent = ($porCienSerie[$index])?$porCienSerie[$index]:'0%';
             $arkChart->addLabel('Agentes', $agentNames[$index], $percent);
     	} */
-        $arkChart->draw();
-        echo $arkChart->render();
+        if (!$arkChart->isGraphEmpty()){
+            $arkChart->draw();
+            echo $arkChart->render();
+        }
     	return true;
   }
 
   public function executePerAgentDateList()
   {
-    $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
+        $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
+    		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
         $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
         $events = $q->execute();
         $agents = array();
         foreach ($events as $e){
-			$user = $e->getDmUser();
+    			$user = $e->getDmUser();
             if (count($user) && $user[0]->hasGroup('agente')){
                 if (!array_key_exists($e->getDmUserId(), $agents)){
                     $agents[$e->getDmUserId()] = array();
@@ -232,9 +228,9 @@ class eventComponents extends myFrontModuleComponents
 
   public function executePerTelemarketerDateChart()
   {
-        $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
+    $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-	$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
+    	$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
     	$arkChart = new arkPChart('Reporte General de Citas por Telemarcador', 'perTMDateChart');
         $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
@@ -269,6 +265,7 @@ class eventComponents extends myFrontModuleComponents
             if (count($statusSeries[$s->getName()])) 
                 $arkChart->addSerie($s->getName(), $statusSeries[$s->getName()]);
         }
+        
         $agentNames = array();
         foreach (array_keys($agents) as $agk){
             array_push($totalSerie, $agents[$agk]['Total']);
@@ -281,23 +278,27 @@ class eventComponents extends myFrontModuleComponents
         }
         if (count($totalSerie))
             $arkChart->addSerie('Total', $totalSerie);
+        
         if (count($agentNames))
             $arkChart->addSerie('Telemarcador', $agentNames, true);
+        
         /*for ($index = 0; $index < count($agentNames); $index++) {
             $percent = ($porCienSerie[$index])?$porCienSerie[$index]:'0%';
             $arkChart->addLabel('Telemarcador', $agentNames[$index], $percent);
     	}*/
-        $arkChart->draw();
-        echo $arkChart->render();
+        if (!$arkChart->isGraphEmpty()){
+            $arkChart->draw();
+            echo $arkChart->render();
+        }
     	return true;
   }
 
   public function executePerTelemarketerDateList()
   {
-        // Your code here
+    // Your code here
         $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
+    		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
         $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
         $events = $q->execute();
@@ -347,98 +348,75 @@ class eventComponents extends myFrontModuleComponents
 
   public function executePerMonthDateChart()
   {
-        $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
+    $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
+    		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
         // initializing series first
         $totalDatesPerDay = array();
         $selectedDaysList = array();
-
         $startDate = new sfDate($startingDate);
         $endDate = new sfDate($endingDate);
-
         $endingDate = $endDate->copy()->addDay(1)->dump();  // parche para que grafique tambien hasta lo que va de dia cuando es por defecto
-
         $startDate->firstDayOfMonth()->clearTime(); $endDate->finalDayOfMonth()->clearTime();
-
         $cursorDate = $startDate->copy();
         while ($cursorDate->get()<= $endDate->get()){
             $totalDatesPerDay[$cursorDate->get()] = 0;
             array_push($selectedDaysList,date('M', $cursorDate->get()));
-
             $cursorDate->addMonth(1);
         }
-
         // getting data
         $q = null;
         Doctrine::getTable('Event')->starting($startingDate, $q)->reportEnding($endingDate, $q);
-
         $calls = $q->execute();
-
         foreach ($calls as $c){
             $date = new sfDate($c->getCreatedAt());
-
             $date->firstDayOfMonth()->clearTime();
             $totalDatesPerDay[$date->get()]++;
         }
     	$arkChart = new arkPChart('Citas Mensuales', 'perMonthDateChart');
-
         $arkChart->AddSerie('Meses', $selectedDaysList, true);
         $arkChart->AddSerie('Citas', array_values($totalDatesPerDay));
-
-	$arkChart->draw();
+    	$arkChart->draw();
     	// adding % labels
     	/*for ($index = 0; $index < count($SerieX); $index++) {
             $arkChart->addLabel('Citas Finalizadas', $SerieX[$index],$SeriePorciento[$index]);
-	}*/
-
+    	}*/
         echo $arkChart->render();
-	return true;
+    	return true;
   }
 
   public function executePerMonthDateList()
   {
-        // initializing series first
+    // initializing series first
         $totalDatesPerMonth= array();
         $selectedDaysList = array();
-
         $startingDate = $this->getRequest()->getParameter('dateStart');
         $endingDate = $this->getRequest()->getParameter('dateEnd');
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
-
+    		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
         $startDate = new sfDate($startingDate);
         $endDate = new sfDate($endingDate);
-
         $startDate->firstDayOfMonth()->clearTime(); $endDate->finalDayOfMonth()->addDay(1)->clearTime();
-
-	$startingDate = $startDate->dump(); $endingDate = $endDate->dump();
-
+    	$startingDate = $startDate->dump(); $endingDate = $endDate->dump();
         $cursorDate = $endDate->copy();
         while ($cursorDate->get()> $startDate->get()){
             $cursorDate->firstDayOfMonth()->subtractMonth(1);
             $totalDatesPerMonth[$cursorDate->get()] = 0;
             array_push($selectedDaysList,$cursorDate->get());
         }
-
-
-        $q = null;
+     $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
-
         $calls = $q->execute();
-
         foreach ($calls as $c){
             $date = new sfDate($c->getCreatedAt());
             $date->firstDayOfMonth()->clearTime();
             $totalDatesPerMonth[$date->get()]++;
         }
-
         // finally filling list array data
          $this->showColumns = array(
           'Fecha'=>array('label'=>'Mes', 'href'=>'','extra_clases'=>'', 'is_relation'=>0, 'type'=>'string'),
-	  'Total'=>array('label'=>'Total', 'href'=>'', 'is_relation'=>0, 'type'=>'string')
+    	  'Total'=>array('label'=>'Total', 'href'=>'', 'is_relation'=>0, 'type'=>'string')
          );
           $this->listArray = array();
-
           foreach($selectedDaysList as $day)
           {
               array_push($this->listArray,  array(
@@ -450,42 +428,30 @@ class eventComponents extends myFrontModuleComponents
 
   public function executePerDayDateList()
   {
-        // initializing series first
+    // initializing series first
         $totalDatesPerDay = array();
         $selectedDaysList = array();
-
         $startingDate = $this->getRequest()->getParameter('dateStart');
         $endingDate = $this->getRequest()->getParameter('dateEnd');
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
-
+        $endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
         $startDate = new sfDate($startingDate);
         $endDate = new sfDate($endingDate);
-
         $endingDate = $endDate->copy()->addDay(1)->dump();  // parche para que grafique tambien hasta lo que va de dia cuando es por defecto
-
         $startDate->clearTime(); $endDate->clearTime();
-
         $cursorDate = $endDate->copy();
         while ($cursorDate->get()>= $startDate->get()){
             $totalDatesPerDay[$cursorDate->get()] = 0;
             array_push($selectedDaysList,$cursorDate->get());
-
             $cursorDate->subtractDay(1);
         }
-
-
         $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
-
         $calls = $q->execute();
-
         foreach ($calls as $c){
             $date = new sfDate($c->getCreatedAt());
-
             $date->clearTime();
             $totalDatesPerDay[$date->get()]++;
         }
-
         // finally filling list array data
          $this->showColumns = array(
           'Fecha'=>array('label'=>'Fecha', 'href'=>'', 'extra_clases'=>'', 'is_relation'=>0, 'type'=>'date'),
@@ -503,55 +469,41 @@ class eventComponents extends myFrontModuleComponents
 
   public function executePerDayDateChart()
   {
-        $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
+    $startingDate = $this->getRequest()->getParameter('dateStart').' 00:00:00';
         $endingDate = $this->getRequest()->getParameter('dateEnd').' 00:00:00';
-		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
-
-
-        // initializing series first
+    		$endingDate = new sfDate($endingDate); $endingDate = $endingDate->addDay(1)->dump();
+     // initializing series first
         $totalDatesPerDay = array();
         $selectedDaysList = array();
-
         $startDate = new sfDate($startingDate);
         $endDate = new sfDate($endingDate);
-
         $endingDate = $endDate->copy()->addDay(1)->dump();  // parche para que grafique tambien hasta lo que va de dia cuando es por defecto
-
         $startDate->clearTime(); $endDate->clearTime();
-
         $cursorDate = $startDate->copy();
         while ($cursorDate->get()<= $endDate->get()){
             $totalDatesPerDay[$cursorDate->get()] = 0;
             array_push($selectedDaysList,$cursorDate->getDay());
-
             $cursorDate->addDay(1);
         }
-
         // getting data
         $q = null;
         Doctrine::getTable('Event')->reportStarting($startingDate, $q)->reportEnding($endingDate, $q);
-
         $dates = $q->execute();
-
         foreach ($dates as $c){
             $date = new sfDate($c->getCreatedAt());
-
             $date->clearTime();
             $totalDatesPerDay[$date->get()]++;
         }
     	$arkChart = new arkPChart('Citas Diarias', 'perDayDateChart');
-
         $arkChart->AddSerie('Dias', $selectedDaysList, true);
         $arkChart->AddSerie('Total de Citas', array_values($totalDatesPerDay));
-
-	$arkChart->draw();
+    	$arkChart->draw();
     	// adding % labels
     	/*for ($index = 0; $index < count($SerieX); $index++) {
             $arkChart->addLabel('Citas Finalizadas', $SerieX[$index],$SeriePorciento[$index]);
-	}*/
-
+    	}*/
         echo $arkChart->render();
-	return true;
+    	return true;
   }
 
   public function executeReportDatesByDayConfig()
@@ -562,6 +514,24 @@ class eventComponents extends myFrontModuleComponents
   public function executeReportDatesByMonthConfig()
   {
     // Your code here
+  }
+
+  public function executeEventLegend()
+  {
+      $this->legends = array(
+          'Estados' => array(
+              '<div class="color" style="background-color:#7F00FF;"></div>'=>'No Show',
+              '<div class="color" style="background-color:#CC3333;"></div>'=>'Cancelado',
+              '<div class="color" style="background-color:#9ECE00;"></div>'=>'Cerrado',
+              '<div class="color" style="background-color:#ABB408;"></div>'=>'Finalizado',
+              '<div class="color" style="background-color:#09C2F1;"></div>'=>'Reasignado',
+    	      '<div class="color" style="background-color:#2F929F;"></div>'=>'Asignado',
+    	      '<div class="color" style="background-color:#EFA32D;"></div>'=>'Seguimiento'
+          ),
+          'Tipos de Eventos' => array(
+              '<span class="ark-icon-2-16 ark-icon-meeting ark-icon-left"></span>'=>'Cita',
+          )
+      );
   }
 
 

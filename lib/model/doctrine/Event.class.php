@@ -19,9 +19,6 @@ class Event extends BaseEvent
     public function  __toString() {
         return sprintf('%s #%s - %s', $this->getEventCategory(), $this->getId(), ($this->getAddressId())?$this->getAddress():$this->getProperty()->getAddress());
     }
-    public function getTitle(){
-        return sprintf('%s', $this->getClient());
-    }
     public function buildEventInformationBasics(){
       //  style label.green also available in tipsy-addons.css
       $info = '';

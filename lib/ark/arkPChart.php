@@ -79,7 +79,9 @@ class arkPChart{
         }
         return (is_null($this->FileName))? '':$this->FileName;
    }
-     
+   public function isGraphEmpty(){
+       return !$this->pData->GetData();
+   }
    protected function slugify($text)
    {
 	// replace all non letters or digits by -

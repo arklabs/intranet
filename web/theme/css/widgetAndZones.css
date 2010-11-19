@@ -1,3 +1,6 @@
+.clear { clear: both;}
+.widget-fl { float: left !important; }
+.widget-fr { float: right;}
 .bg-radial-gradient{
     background: url('/theme/images/bg-radial-gradient.gif') fixed 230px top no-repeat;
 }

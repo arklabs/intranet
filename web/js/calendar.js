@@ -9,12 +9,12 @@ function fullcalendarinit() {
                 header: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
+                        right: getAgendaAvailableViews()
                 },
                 editable: true,
                 events: getEventsURL(),
                 eventClick: function(event) {
-                    parent.$.fn.colorbox({href: event.url, width:"80%", height:"80%", iframe:true, "css": ["/dmCorePlugin/lib/colorbox/theme3/colorbox.css"],"js":["/dmCorePlugin/lib/colorbox/jquery.colorbox.min.js"]});
+                    eventClick(event);
                     return false;
                 },
                 eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
@@ -40,34 +40,18 @@ function fullcalendarinit() {
                         });
                     }
                },
-               dayClick: function(date, allDay, jsEvent, view) {
-                   parent.$.fn.colorbox({href: getDayClickUrl()+date.getUTCFullYear()+'-'+ date.getMonth() +'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+"/allDay/"+allDay+"/dm_embed/1", width:"70%", height:"80%", iframe:true, "css": ["/dmCorePlugin/lib/colorbox/theme3/colorbox.css"],"js":["/dmCorePlugin/lib/colorbox/jquery.colorbox.min.js"]});
+                dayClick: function(date, allDay, jsEvent, view) {
+                   dayClick(date, allDay, jsEvent, view);
                 },
                 eventRender: function(event, element) {
-                     view = $('#calendar').fullCalendar('getView');
-                     tmp = element.find('a').html('<span><div class="ev-ct-holder">'+'</div>'+element.find('a').html());
-                     if (view.name != 'month' &&  !event.allDay){
-                        element.find('a>span:last').after($('<br/><span class="fc-ev-description">'+event.description+'</span>'));
-                     }
-                     if ((view.name == 'month' || event.allDay) && event.description!='') {
-                         element.attr("original-title", event.description);
-                         element.tipsy({fade: true, gravity: $.fn.tipsy.autoNS, live: true,  html: true, title: function(){
-                                 tit = $.ajax({
-                                       type: "GET",
-                                       url: "/index.php/+/event/getEventBasics/",
-                                       data: "event-id="+event.id,
-                                       async: false
-                                 }).responseText;
-                                 return tit;
-                            }
-                        });
-                     }
+                     eventRender(event, element);
                 },
                 loading: function(isLoading){
                     if (isLoading)
                         $('#loader').show();
-                    else
+                    else{
                         $('#loader').hide();
+                    }
                 }
           });
           // after calendar initialization capture colorbox on close

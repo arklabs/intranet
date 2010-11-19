@@ -17,6 +17,8 @@
  * 
  * 
  * 
+ * 
+ * 
  */
 class mainComponents extends myFrontModuleComponents
 {
@@ -98,11 +100,11 @@ class mainComponents extends myFrontModuleComponents
     ->addChild('Dashboard', '@homepage')->liClass('nav-top-item no-childs')->end()
     ->addChild('Reportes', _link('main/reportes'))->liClass('nav-top-item no-childs')->credentials(array('viewReports_front'))->end()
     ->addChild('Recepci&oacute;n', _link('main/recepcion'))->liClass('nav-top-item no-childs')->credentials(array('listIncommingCalls_front'))->end()
-    ->addChild('Citas')->label('<span>Citas</span>')->liClass('nav-top-item')->credentials(array('listClientFiles_front', 'listEvents_front', 'viewClientFileCalendar_front', 'viewEventCalendar_front'))
-            ->addChild('Calendario de Citas',$this->getHelper()->link('evento/fullCalendar'))->liClass('nav-trackable')->credentials('viewEventCalendar_front')->end()
+    ->addChild('Herramientas')->label('<span>Herramientas</span>')->liClass('nav-top-item')->credentials(array('listClientFiles_front', 'listEvents_front', 'viewClientFileCalendar_front', 'viewEventCalendar_front'))
+            ->addChild('Calendarios',$this->getHelper()->link('event/calendarioCitas'))->liClass('nav-trackable')->credentials('viewEventCalendar_front')->end()
             ->addChild('Listado de Citas',  $this->getHelper()->link('event/list'))->liClass('nav-trackable')->credentials('listEvents_front')->end()
             ->addChild('Asignar Citas',  $this->getHelper()->link('event/asignarCitas'))->liClass('nav-trackable')->credentials('assignDates_front')->end()
-            ->addChild('Consultar Fraseologias',  $this->getHelper()->link('event/fraseologias'))->liClass('nav-trackable')->end()
+            ->addChild('Fraseologias',  $this->getHelper()->link('event/fraseologias'))->liClass('nav-trackable')->end()
             ->addChild('Calendario de Trámites',  $this->getHelper()->link('clientFile/fullCalendar'))->liClass('nav-trackable')->credentials('viewClientFileCalendar_front')->end()
             ->addChild('Listado de Trámites',  $this->getHelper()->link('clientFile/list'))->liClass('nav-trackable')->credentials('listClientFiles_front')->end()
     ->end()
@@ -163,24 +165,7 @@ class mainComponents extends myFrontModuleComponents
 
   public function executeLegend()
   {
-    $this->legends = array(
-          'Estados' => array(
-              '<div class="color" style="background-color:#7F00FF;"></div>'=>'No Show',
-              '<div class="color" style="background-color:#CC3333;"></div>'=>'Cancelado',
-              '<div class="color" style="background-color:#9ECE00;"></div>'=>'Cerrado',
-              '<div class="color" style="background-color:#ABB408;"></div>'=>'Finalizado',
-              '<div class="color" style="background-color:#09C2F1;"></div>'=>'Reasignado',
-    	      '<div class="color" style="background-color:#2F929F;"></div>'=>'Asignado',
-    		  '<div class="color" style="background-color:#EFA32D;"></div>'=>'Seguimiento'
-          ),
-          'Tipos de Eventos' => array(
-              '<span class="ark-icon-2-16 ark-icon-meeting ark-icon-left"></span>'=>'Cita',
-              '<span class="ark-icon-2-16 ark-icon-private ark-icon-left"></span>'=>'Privado',
-              '<span class="ark-icon-2-16 ark-icon-reminder ark-icon-left"></span>'=>'Recordatorio',
-              '<span class="ark-icon-2-16 ark-icon-bussiness-meeting ark-icon-left"></span>'=>'Reuni&oacute;n'
-          )
-      );
-      //$this->legend_name = 'Leyenda de Mierda';
+    //$this->legend_name = 'Leyenda de Mierda';
       //$this->elements = array(
           //);
     // Your code here
@@ -275,6 +260,28 @@ class mainComponents extends myFrontModuleComponents
     // Your code here
   }
 
-  
+  public function executeCalendarsDashBoard()
+  {
+    if (is_null(self::$_ParsedDashYamlFile)){
+              // parse sidebar configuration yml file.
+              $configFile = sfConfig::get('sf_app_dir') . '/config/qdashboard.yml';
+                if (!file_exists($configFile)) {
+                    return;
+                }
+                self::$_ParsedDashYamlFile = sfYaml::load($configFile);
+          }
+          $config = self::$_ParsedDashYamlFile;
+          $this->dashDescription = $config['dashboards'];
+          $this->dashDescription = $this->dashDescription['calendars'];
+          if (is_null($this->requestedDashBoardName)||$this->requestedDashBoardName==''){
+                return ''; // dashboard name most be passed
+          }
+  }
+
+  public function executeHorizontalSeparator()
+  {
+    // Your code here
+  }
+
 
 }

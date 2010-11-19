@@ -12,7 +12,7 @@ class EventPublicTable extends EventRootTable
         if (is_null($q))
         {
             $q = Doctrine_Query::create()
-            ->from('Event e');
+            ->from('EventPublic e');
         }
         $alias = $q->getRootAlias();
 
@@ -25,7 +25,7 @@ class EventPublicTable extends EventRootTable
         if (is_null($q))
         {
             $q = Doctrine_Query::create()
-            ->from('Event e');
+            ->from('EventPublic e');
         }
         $alias = $q->getRootAlias();
 
@@ -38,11 +38,10 @@ class EventPublicTable extends EventRootTable
         if (is_null($q))
         {
             $q = Doctrine_Query::create()
-            ->from('Event e');
+            ->from('EventPublic e');
         }
         // getting public user id
-        $publicUser = Doctine::getTable('DmUser')->createQuery('u')->where('u.username = ?','public')->fetchOne();
-
+        $publicUser = Doctrine::getTable('DmUser')->createQuery('u')->where('u.username = ?','public')->fetchOne();
         $alias = $q->getRootAlias();
         $user_id = $publicUser->getId();
         

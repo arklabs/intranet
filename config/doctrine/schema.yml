@@ -47,7 +47,15 @@ Telemarker:
     type: column_aggregation
     keyField: type
     keyValue: Telemarker
-
+UserAvailability:
+  columns:
+    user_id:      { type: integer, notnull: true }
+    timestamp:    { type: integer, notnull: true }
+  relations:
+    DmUser:
+      local: user_id
+      foreign: id
+      type: one
 ZipCode:
   columns:
     zip_code:     { type: integer, notnull: true }
@@ -508,10 +516,11 @@ EventRoot:
     description:      { type: clob, notnull: true         }
     is_active:        { type: boolean, notnull: true, default: true }
     is_new:           { type: boolean, default: true, notnull: true }
-    address_id:       { type: integer, notnull: false }
+    address_id:       { type: integer, notnull: false     }
     dm_user_id:       { type: integer, notnull: false     }
-    category_id:      { type: integer, notnull: true      }
-    status_id:        { type: integer, notnull: true      }
+    category_id:      { type: integer                     }
+    status_id:        { type: integer                     }
+    title:            { type: string(255)                 }
   relations:
     Address:
       local: address_id
@@ -545,9 +554,9 @@ Event:
     keyValue: Cita
   columns:
     client_id:        { type: integer 					     }
-    property_id:      { type: integer, notnull: true }
+    property_id:      { type: integer                }
     phraseology_id:   { type: integer 					     }
-    service_id:       { type: integer, notnull: true }
+    service_id:       { type: integer                }
   relations:
     FileType:
       local: service_id

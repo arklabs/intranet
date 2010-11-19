@@ -11,7 +11,7 @@ if (!count($event->getDmUser()) ||  $event->getEventStatus() == 'Pendiente' || $
 	$response = _tag('label.pending', $event->getEventStatus());
 	$response.= _open('select.ev-asign-agent-list', array('id'=>$event->getId()));
 	$response.= _open('option',array('value'=>-1)).'Seleccione un agente'._close('option');
-	foreach ($agentList as $a){
+	foreach ($agentList[$event->getId()] as $a){
 		$response.= _open('option', array('value'=>$a->getId())).$a._close('option');
 	}
 	$response.= _close('select');

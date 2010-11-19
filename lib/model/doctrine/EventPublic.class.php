@@ -12,4 +12,34 @@
  */
 class EventPublic extends BaseEventPublic
 {
+    public function  __toString() {
+        return sprintf('%s - %s', $this->getEventCategory(), $this->getTitle());
+    }
+    public function buildEventInformationBasics(){
+      //  style label.green also available in tipsy-addons.css
+      $info = '';
+      $context = sfContext::getInstance();
+
+      $info.= $context->getHelper()->tag('h3 style="color: white important!;"', $this);
+
+      $startDate = explode(' ', $this->getDateStart()); $startHour = $startDate[1];$startDate = $startDate[0];
+      $endDate = explode(' ', $this->getDateEnd()); $endHour = $endDate[1];$endDate = $endDate[0];
+
+      $date = (($startDate != $endDate)?$startDate.' - '.$endDate: $startDate);
+      $hour = (($startHour != $endHour)?$startHour.' - '.$endHour: $startHour);
+      $fecha = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Fecha: ').$date);
+      $hora = $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Hora: ').$hour);
+
+      $detalles= $context->getHelper()->tag('label', $context->getHelper()->tag('b', 'Detalles: ')).$context->getHelper()->tag('p',$this->getDescription());
+
+      // Info de Hipotecas
+
+
+      $table = $context->getHelper()->table('v-align=top')->head('','');
+      $table->body($marketer, $contact);
+      $table->body($fecha, $hora);
+      $table->body($detalles,'');
+
+      return $info.$table;
+  }
 }

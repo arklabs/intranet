@@ -6,17 +6,56 @@
 
 <div id="calendar"> </div>
 <script type="text/javascript">
+    function eventRender(event, element){
+        view = $('#calendar').fullCalendar('getView');
+                     tmp = element.find('a').html('<span><div class="ev-ct-holder">'+'</div>'+element.find('a').html());
+                     if (view.name != 'month' &&  !event.allDay){
+                        element.find('a>span:last').after($('<br/><span class="fc-ev-description">'+event.description+'</span>'));
+                     }
+                     if ((view.name == 'month' || event.allDay) && event.description!='') {
+                         element.attr("original-title", event.description);
+                         element.tipsy({fade: true, gravity: $.fn.tipsy.autoNS, live: true,  html: true, title: function(){
+                                 tit = $.ajax({
+                                       type: "GET",
+                                       url: getEventTooltipUrl(),
+                                       data: "event-id="+event.id,
+                                       async: false
+                                 }).responseText;
+                                 return tit;
+                            }
+                        });
+                     }
+    }
+    function getAgendaAvailableViews()
+    {
+        return 'month,agendaWeek,agendaDay';
+    }
+    function dayClick(date, allDay, jsEvent, view){
+        <?php if ($sf_user->hasPermission('editPublicCalendarEvents_front') || $sf_user->isSuperAdmin()):?>
+        parent.$.fn.colorbox({href: getDayClickUrl()+date.getUTCFullYear()+'-'+ date.getMonth() +'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+"/allDay/"+allDay+"/dm_embed/1", width:"70%", height:"80%", iframe:true, "css": ["/dmCorePlugin/lib/colorbox/theme3/colorbox.css"],"js":["/dmCorePlugin/lib/colorbox/jquery.colorbox.min.js"]});
+        <?php endif;?>
+        return false;
+    }
+    function eventClick(event){
+        <?php if ($sf_user->hasPermission('editPublicCalendarEvents_front')  || $sf_user->isSuperAdmin()):?>
+            parent.$.fn.colorbox({href: event.url, width:"80%", height:"80%", iframe:true, "css": ["/dmCorePlugin/lib/colorbox/theme3/colorbox.css"],"js":["/dmCorePlugin/lib/colorbox/jquery.colorbox.min.js"]});
+        <?php endif; ?>
+        return false;
+    }
+    function getEventTooltipUrl(){
+        return "/index.php/+/eventPublic/getEventBasics/";
+    }
     function getEventsURL(){
         return "/index.php/+/eventPublic/getMyEvents";
     }
     function getMoveEventUrl(){
-        return "/index.php/+/event/moveEvent";
+        return "/index.php/+/eventPublic/moveEvent";
     }
     function getEventResizeUrl(){
-        return "/index.php/+/event/changeEnd";
+        return "/index.php/+/eventPublic/changeEnd";
     }
     function getDayClickUrl(){
-        return "/admin.php/+/event/new/date/";
+        return "/admin.php/+/eventPublic/new/date/";
     }
 </script>
 <script type="text/javascript" src="/js/calendar.js">

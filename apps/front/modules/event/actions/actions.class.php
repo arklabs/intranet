@@ -57,7 +57,7 @@ class eventActions extends myFrontModuleActions
                 $tmp = new sfDate($event->getDateStart());
                 $eventDescription = array(
                                         'id'=>$event->getId(),
-                                        'title'=>$event->getTitle(),
+                                        'title'=>$event->getClient()->__toString(),
                                         'start'=>$event->getDateStart(),
                                         'end'=>$event->getDateEnd(),
                                         'className'=>$eventAditionalClasses,

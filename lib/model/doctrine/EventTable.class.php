@@ -97,7 +97,7 @@ class EventTable extends myDoctrineTable
         if (is_null($q))
         {
             $q = Doctrine_Query::create()
-            ->from('Event e');
+            ->from('Event e')->leftJoin('e.Client client');
         }
         $alias = $q->getRootAlias();
         $defStatus = Doctrine::getTable('EventStatus')->getDefaultValue();
@@ -108,7 +108,7 @@ class EventTable extends myDoctrineTable
         if (is_null($q))
         {
             $q = Doctrine_Query::create()
-            ->from('Event e');
+            ->from('Event e')->leftJoin('e.Client client');;
         }
         $alias = $q->getRootAlias();
 
@@ -210,7 +210,7 @@ class EventTable extends myDoctrineTable
         if (is_null($q))
         {
             $q = Doctrine_Query::create()
-            ->from('Event e');
+            ->from('Event e')->leftJoin('e.Client client');;
         }
         $alias = $q->getRootAlias();
         $user_id = $dmUserInstance->getId();

@@ -93,6 +93,20 @@
 .ark-icon-assign-dates{
     background-position: -96px -144px;
 }
+
+.ark-icon-av-calendar{
+    background-position: -48px -432px;
+}
+.ark-icon-private-calendar{
+    background-position: -96px -432px;
+}
+.ark-icon-public-calendar{
+    background-position: -144px -432px;
+}
+.ark-icon-feedback-history{
+    background-position: 0 -432px;
+}
+
 /************ Shortcut Buttons ************/
 .dashboard{ 
 	margin: 60px;

@@ -2,7 +2,7 @@
 use_stylesheet('another-ui/jquery-ui-1.8.2.custom');
 use_stylesheet('ark-icons-2-16');
 use_javascript('enable-tooglable-fieldset');
-echo _tag('h2.fieldset_title.ui-helper-reset.collapsable-box-header style="margin-left: 20px;"', '<span class="ui-icon ui-icon-triangle-1-e fieldset_icon"></span><span class="fieldset_name">Leyendas</span>');
+echo _tag('h2.fieldset_title.ui-helper-reset.collapsable-box-header style=""', '<span class="ui-icon ui-icon-triangle-1-e fieldset_icon"></span><span class="fieldset_name">Leyenda</span>');
 echo _open('div.fieldset_content.ui-helper-reset.ui-accordion-content-active.ui-helper-hidden.collapsable-box');
 foreach(array_keys($legends) as $legend_name)
     {

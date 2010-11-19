@@ -27,7 +27,12 @@
 .ark-icon-insert-client{
     background-position: -75px 0;
 }
-
+.ark-icon-insert-date{
+   background-position: -165px 0;
+}
+.ark-icon-view-date-summary{
+   background-position: -150px 0;
+}
 .ark-icon-insert-active{
     background-position: -60px 0;
 }

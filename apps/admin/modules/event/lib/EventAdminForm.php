@@ -78,9 +78,7 @@ class EventAdminForm extends BaseEventForm
                                             'value'=>$this->getObject()->getProperty()
                                          )));
 	 }
-     $this->setWidget('category_id', new arkAlternativeEventChoiceWidget(array('WatchLabel'=>'Cita','WatchedWidgetHtmlId'=>'sf_admin_form_field_client_id','model' => $this->getRelatedModelName('EventCategory'), 'add_empty' => false)), array());
-     $this->getWidget('category_id')->setAttribute('id','watchedSelectBox');
-     $this->getValidatorSchema()->setPostValidator(new sfValidatorAnd(array(new arkForceDateClientRelation(), new arkValidateClientPropertyRelation())));
+     $this->getValidatorSchema()->setPostValidator(new arkValidateClientPropertyRelation());
      
      if ($this->isNew() || (!$this->eventIsAssignedToThisUser() && (!$context->getUser()->hasPermission('eventChangeStatus') && !$this->thisUserOwnTheEvent()) && !$context->getUser()->isSuperAdmin())){ // poniendo pendiente la nueva cita
   	 	$this->setWidget('status_id', new sfWidgetFormInputHidden());
@@ -90,14 +88,31 @@ class EventAdminForm extends BaseEventForm
 		else 
 			$this->getWidget('status_id')->setAttribute('value', $this->getObject()->getStatusId());
 	 }
-		
+     $this->setCategoryWidget();
      $this->setBackAndNewClientWidgets($request);
      $this->validateDocumentList();
      $this->getValidatorSchema()->setOptions('allow_extra_fields', true);
      $this->embedAddressRelation();
      $this->getValidator('Address')->setOption('required', false);
+     $this->getValidator('client_id')->setOption('required', true);
+     $this->getValidator('property_id')->setOption('required', true);
+     $this->getValidator('status_id')->setOption('required', true);
+     $this->getValidator('service_id')->setOption('required', true);
      $this->validatorSchema['Address']['address']->setOption('required', false);
      $this->validatorSchema['Address']['zip_code']->setOption('required', false);
+  }
+  protected function setCategoryWidget(){
+      $this->setWidget('category_id', new sfWidgetFormInputHidden());
+      if (!$this->isNew()){
+          $result = array();
+          foreach (Doctrine::getTable('EventCategory')->createQuery()->execute() as $ec){
+              if ($ec->getName()!='Cita'){
+                  $this->getWidget('category_id')->setAttribute('value', $ec->getId());
+                  break;
+              }
+          }
+      }
+      
   }
   protected function embedAddressRelation(){
       $prefix  = dmString::modulize($this->getModelName()).'_admin_form_Address_';

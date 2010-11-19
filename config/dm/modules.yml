@@ -12,6 +12,7 @@ Content:
         myStyledList:
         userInfo:
         mainDashBoard:
+        calendarsDashBoard:
         legend:
         tramitlegend:
         geolocalizador:
@@ -22,6 +23,7 @@ Content:
         reportCore:
         reportDashBoardAutoToogle:
         assignDatesRangeSelector:
+        horizontalSeparator: 
   Usuarios:
     dm_user:
     client:
@@ -30,7 +32,6 @@ Content:
       components:
         list: 
         geoClientsList:
-        ##summary:
         show: 
     agent:
       name: Agente|Agentes
@@ -44,6 +45,15 @@ Content:
         datesByTelemarkerChart:
     source:
       name: Fuente|Fuentes
+    user_availability:
+      name: Disponibilidad | Disponibilidad
+      front: true
+      admin: false
+      components:
+        changeAvailabilities:
+          name: Cambiar disponibilidades
+        availabilityCalendar:
+          name: Calendario de Disponibilidad
   Propiedades:
     #property_list:
     #  name: T-RE+Prop| T-RE+Props
@@ -125,19 +135,23 @@ Content:
   #Departamentos:
   #  department:
   #    name: Departamento|Departamentos
-  #Eventos:
-  #  event_public:
-  #    name: Evento P&uacute;blico|Eventos P&uacute;blicos
-  #    page: false
-  #    components:
-  #      publicCalendar:
-  #        name: Calendario Publico
-  #  event_root:
-  #    name: Reuni&oacute;n &oacute; Recordatorio|Reuniones o Recordatorios
-  #    page: false
-  #    components:
-  #      privateCalendar:
-  #        name: Calendario Privado
+  Eventos:
+    event_public:
+      name: Evento P&uacute;blico|Eventos P&uacute;blicos
+      page: false
+      components:
+        publicCalendarLeyend:
+          name: Leyenda
+        publicCalendar:
+          name: Calendario Publico
+    event_root:
+      name: Privado &oacute; Recordatorio|Privados o Recordatorios
+      page: false
+      components:
+        privateCalendar:
+          name: Calendario Privado
+        privateCalendarLegend:
+          name: Leyenda
   Citas:
     client_file:
       page: false
@@ -165,7 +179,9 @@ Content:
         fullcalendar:
         form:
         list:
-        show: 
+        show:
+        eventLegend:
+          name: Legend
         reportDatesByCityConfig:
         reportDatesByAgentConfig:
         reportDatesByTelemarkerConfig:

@@ -1,5 +1,46 @@
 dashboards:
-  incomming-calls: 
+  calendars: 
+    citas:
+      title: Calendario de <br/>Citas
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-event-calendar:
+      url: event/calendarioCitas
+      params:
+      credentials:
+        viewEventCalendar_front:
+    privado:
+      title: Calendario <br/>Privado
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-private-calendar:
+      url: event/calendarioPrivado
+      params:
+      credentials:
+        viewPrivateCalendar_front:
+    publico:
+      title: Calendario <br/>P&uacute;blico
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-public-calendar:
+      url: event/calendarioPublico
+      params:
+      credentials:
+        viewPublicCalendar_front:
+    disponiblidad:
+      title: Calendario de<br/>Disponibilidad
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-av-calendar:
+      url: event/calendarioDeDisponibilidad
+      params:
+      credentials:
+        viewAvailabilityCalendar_front:
+  incomming-calls:
     prospecto:
       title: Prospecto <br/><br/>
       extra-classes:
@@ -169,13 +210,43 @@ dashboards:
       credentials:
         viewReportIncommingCallsPerReason_front:
   main: ## quick dashboard for calendar
+    privado:
+      title: Calendario <br/>Privado
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-private-calendar:
+      url: event/calendarioPrivado
+      params:
+      credentials:
+        viewPrivateCalendar_front:
+    publico:
+      title: Calendario <br/>P&uacute;blico
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-public-calendar:
+      url: event/calendarioPublico
+      params:
+      credentials:
+        viewPublicCalendar_front:
+    disponiblidad:
+      title: Calendario de<br/>Disponibilidad
+      extra-classes:
+      holder-classes:
+        ark-icons-48:
+        ark-icon-av-calendar:
+      url: event/calendarioDeDisponibilidad
+      params:
+      credentials:
+        viewAvailabilityCalendar_front:
     calendario-ev:
       title: Calendario de <br/>Citas
       extra-classes:
-      holder-classes: 
+      holder-classes:
         ark-icons-48:
         ark-icon-event-calendar:
-      url: evento/fullCalendar
+      url: event/calendarioCitas
       params:
       credentials:
         viewEventCalendar_front:
