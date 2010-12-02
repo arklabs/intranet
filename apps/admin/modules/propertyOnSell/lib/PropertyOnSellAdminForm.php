@@ -31,7 +31,7 @@ class PropertyOnSellAdminForm extends BasePropertyOnSellForm
     $this->embedAddressRelation();
   }
   protected function embedAddressRelation(){
-      $prefix  = dmString::modulize($this->getModelName()).'_admin_form_Address_';
+      $prefix  = dmString::underscore($this->getModelName()).'_admin_form_Address_';
       $this->embedRelation('Address');
       $this->getValidator('address_id')->setOption('required', false);
       $this->widgetSchema['Address']->setLabels(array(

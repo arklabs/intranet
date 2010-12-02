@@ -103,7 +103,7 @@ class EventAdminForm extends BaseEventForm
   }
   protected function setCategoryWidget(){
       $this->setWidget('category_id', new sfWidgetFormInputHidden());
-      if (!$this->isNew()){
+      if ($this->isNew()){
           $result = array();
           foreach (Doctrine::getTable('EventCategory')->createQuery()->execute() as $ec){
               if ($ec->getName()!='Cita'){
@@ -115,7 +115,7 @@ class EventAdminForm extends BaseEventForm
       
   }
   protected function embedAddressRelation(){
-      $prefix  = dmString::modulize($this->getModelName()).'_admin_form_Address_';
+      $prefix  = dmString::underscore($this->getModelName()).'_admin_form_Address_';
       $this->getValidator('address_id')->setOption('required', false);
       $this->embedRelation('Address');
       $this->widgetSchema['Address']->setLabels(array(

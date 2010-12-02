@@ -52,6 +52,23 @@ class PropertyPaymentAdminForm extends BasePropertyPaymentForm
         $this->setWidget('new_property', new sfWidgetFormInputHidden(array(), array('value'=>$this->getObject()->getPropertyId())));
 
     }
+    $context = dmContext::getInstance();
+    $request = $context->getRequest();
+    $routing = $context->getRouting();
+    
+    $this->setWidget('bank_id',
+                 new dmIncrementalAutoCompleteFormField(array(
+                     'owner_form'=>$this,
+                     'field_name'=>'bank_id',
+                     'url'=>$routing->generate('bank',array('action'=>'bankAjaxChoices'))
+                     )
+                 )
+     );
+    $this->setValidator('bank_id', new sfValidatorString(array('required'=>$this->getValidator('bank_id')->getOption('required'))));
     $this->getValidatorSchema()->setOption('allow_extra_fields', true); 
+  }
+  public function  save($con = null) {
+        $this->values = $this->getWidget('bank_id')->save('bank_id');
+        return parent::save($con);
   }
 }

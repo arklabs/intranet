@@ -13,6 +13,11 @@ require_once dirname(__FILE__).'/../lib/bankGeneratorHelper.class.php';
  */
 class bankActions extends autoBankActions
 {
+  public function executeBankAjaxChoices($request)
+  {
+        $this->getResponse()->setContentType('application/json');
+        return $this->renderText(json_encode(dmIncrementalAutoCompleteFormField::getChoices('Bank', $request->getParameter('q'), 10)));
+  }
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

@@ -21,9 +21,17 @@ class arkPChart{
      $this->pData = new pData();
      $this->arkPCache = new arkPCache(sfConfig::get('sf_root_dir').'/web/cache/');
      $this->pChart = new pChart($this->CanvasWidth,$this->CanvasHeight);
+     $this->pChart->setColorPalette(1, 237, 147, 8);
+     $this->pChart->setColorPalette(2, 224, 176, 46);
+     $this->pChart->setColorPalette(3, 92, 224, 46);
+     $this->pChart->setColorPalette(4, 223, 46, 116);
+     $this->pChart->setColorPalette(5, 174, 47, 223);
+     $this->pChart->setColorPalette(6, 46, 151, 223);
+     $this->pChart->setColorPalette(7, 187, 223, 46);
+     $this->pChart->setColorPalette(8, 224, 100, 46);
+     $this->pChart->setColorPalette(9,42, 42, 255);
      $this->pChart->setColorPalette(10,255,0,0);
-     $this->pChart->setColorPalette(9,0,255,0);
-     $this->pChart->setColorPalette(8,0,0,255);
+     
    }
 
    public function addSerie($serieName, $serieArray, $isAbsciseLabelSerie = false){
